@@ -15,7 +15,7 @@ interface ResumeCardProps {
   subtitle?: string;
   href?: string;
   period: string;
-  description?: string[];
+  description?: readonly string[];
 }
 export const ResumeCard = ({
   logoUrl,

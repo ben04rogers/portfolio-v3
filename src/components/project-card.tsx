@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
-
+import { Icons } from "@/components/icons";
 interface Props {
   title: string;
   href?: string;
@@ -103,7 +103,10 @@ export function ProjectCard({
             {links?.map((link, idx) => (
               <Link href={link?.href} key={idx} target="_blank">
                 <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
-                  {link.icon}
+                  {link.icon === "globe" && <Icons.globe className="size-3" />}
+                  {link.icon === "github" && (
+                    <Icons.github className="size-3" />
+                  )}
                   {link.type}
                 </Badge>
               </Link>
