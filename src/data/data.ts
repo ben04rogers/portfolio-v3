@@ -196,6 +196,13 @@ export const educationData = [
     logoUrl: "/qut.png",
     start: "2018",
     end: "2023",
+    description: [
+      "GPA 6.2/7",
+      "Major in Computer Science",
+      "Minor in Networks and Security",
+      "Minor in Mobile Applications",
+      "Science Deans List - 2019 and 2021",
+    ],
   },
 ] as const;
 
