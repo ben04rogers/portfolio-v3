@@ -132,15 +132,16 @@ export default function Page() {
         <div className="flex min-h-0 flex-col gap-y-3">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter">
-                My Skills
-              </h2>
+              <h2 className="text-3xl font-bold tracking-tighter">My Skills</h2>
             </div>
           </BlurFade>
 
           <div className="divide-y divide-gray-200 dark:divide-gray-700">
             {DATA.skills.map((group, groupIndex) => (
-              <BlurFade key={group.category} delay={BLUR_FADE_DELAY * 10 + groupIndex * 0.1}>
+              <BlurFade
+                key={group.category}
+                delay={BLUR_FADE_DELAY * 10 + groupIndex * 0.1}
+              >
                 <div className="flex flex-col sm:flex-row py-6 gap-4 sm:gap-8">
                   <div className="sm:w-1/4 text-left font-semibold text-gray-700 dark:text-gray-300 text-base">
                     {group.category}
@@ -150,7 +151,11 @@ export default function Page() {
                     {group.skills.map((skill, skillIndex) => (
                       <BlurFade
                         key={skill.name}
-                        delay={BLUR_FADE_DELAY * 11 + groupIndex * 0.1 + skillIndex * 0.05}
+                        delay={
+                          BLUR_FADE_DELAY * 11 +
+                          groupIndex * 0.1 +
+                          skillIndex * 0.05
+                        }
                       >
                         <Badge
                           variant="secondary"

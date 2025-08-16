@@ -43,7 +43,7 @@ export const DATA = {
         { name: "Tailwind CSS", icon: "logos:tailwindcss-icon" },
         { name: "Webpack", icon: "logos:webpack" },
         { name: "Single Page Applications" },
-        { name: "Responsive Design" }
+        { name: "Responsive Design" },
       ],
     },
     {
@@ -91,14 +91,14 @@ export const DATA = {
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://dub.sh/dillion-github",
+        url: "https://github.com/ben04rogers",
         icon: Icons.github,
 
         navbar: true,
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://dub.sh/dillion-linkedin",
+        url: "https://www.linkedin.com/in/ben-rogers-dev/",
         icon: Icons.linkedin,
 
         navbar: true,
@@ -168,7 +168,7 @@ export const DATA = {
       logoUrl: "/qut.png",
       start: "2018",
       end: "2023",
-    }
+    },
   ],
   projects: [
     {

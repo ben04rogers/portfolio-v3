@@ -20,10 +20,7 @@ export function Contact({ delay = 0 }: ContactProps) {
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Please contact me directly at{" "}
-              <a
-                className="underline"
-                href="mailto:benrogers1299@outlook.com"
-              >
+              <a className="underline" href="mailto:benrogers1299@outlook.com">
                 benrogers1299@outlook.com
               </a>{" "}
               or through this form.
@@ -61,16 +58,15 @@ export function Contact({ delay = 0 }: ContactProps) {
               maxLength={5000}
             />
             <button
-                type="submit"
-                className="group flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-900 text-white rounded-full outline-none transition-all focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 dark:bg-white dark:bg-opacity-10 disabled:scale-100 disabled:bg-opacity-65"
+              type="submit"
+              className="group flex items-center justify-center gap-2 h-[3rem] w-[8rem] bg-gray-900 text-white rounded-full outline-none transition-all focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 dark:bg-white dark:bg-opacity-10 disabled:scale-100 disabled:bg-opacity-65"
             >
-
-                Submit{" "}
-                <FaPaperPlane className="text-xs opacity-70 transition-all group-hover:translate-x-1 group-hover:-translate-y-1" />{" "}
+              Submit{" "}
+              <FaPaperPlane className="text-xs opacity-70 transition-all group-hover:translate-x-1 group-hover:-translate-y-1" />{" "}
             </button>
           </form>
         </BlurFade>
       </div>
     </section>
   );
-} 
+}
