@@ -156,7 +156,7 @@ export default function Page() {
                           variant="secondary"
                           className="flex items-center gap-2 px-3 py-1.5 text-sm font-normal"
                         >
-                          {skill.icon && (
+                          {"icon" in skill && skill.icon && (
                             <Icon icon={skill.icon} className="text-base" />
                           )}
                           <span>{skill.name}</span>
@@ -170,7 +170,7 @@ export default function Page() {
           </div>
         </div>
       </section>
-      
+
       <Contact delay={BLUR_FADE_DELAY * 16} />
     </main>
   );
