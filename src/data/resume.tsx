@@ -73,11 +73,10 @@ export const DATA = {
     {
       category: "Tools",
       skills: [
-        { name: "Git", icon: "logos:git-icon" },
-        { name: "GitHub", icon: "logos:github-icon" },
         { name: "Sentry", icon: "logos:sentry-icon" },
         { name: "New Relic", icon: "logos:new-relic-icon" },
         { name: "Grafana", icon: "logos:grafana" },
+        { name: "Sumo Logic", icon: "logos:" }
       ],
     },
   ],
@@ -122,8 +121,18 @@ export const DATA = {
       logoUrl: "/humanforce.png",
       start: "January 2024",
       end: "Present",
-      description:
-        "Software engineer in the Humanforce platform team. We are a feature enablement team dedicated to developing features for developers, ensuring they are easier to create. We also look after issues of scale and technical debt for developers and the platform.",
+      description: [
+        "Worked on web applications serving 600,000+ users with a modern tech stack including a Laravel backend (PHP) with GraphQL endpoints, a React SPA frontend (TypeScript), event‑driven Node.js (TypeScript) microservices, and also AWS Lambda backends (TypeScript).",
+        "Enhanced the email log in intelliHR by integrating AWS SES and a microservice to track bounce, complaint, and delivery status, allowing users to retry failed messages.",
+        "Built user management features for a multi-tenant infrastructure management system, enabling administrators to create users, assign companies, and define permissions (TypeScript, Angular, Lambda, API Gateway, DynamoDB).",
+        "Developed backend APIs for the intelliHR‑Thrive mobile app integration, streamlining in‑app form completion and boosting task completion rates.",
+        "Automated pruning of large database tables to reduce data growth and lower long‑term storage costs.",
+        "Setup Sumo Logic in Node.js and .NET lambdas to standardise logging format across codebases.",
+        "PHP and Laravel version upgrades, ensuring best practices across services.",
+        "Implemented comprehensive testing across the stack using Playwright, PHPUnit, Jest and Cypress.",
+        "Migrated legacy REST endpoints to GraphQL."
+      ],
+
     },
     {
       company: "The University of Queensland",
@@ -133,8 +142,15 @@ export const DATA = {
       logoUrl: "/uq.png",
       start: "November 2022",
       end: "January 2024",
-      description:
-        "Full-stack software engineer in the Application Development and Support team. Worked on web applications such as CAHP (Casual Academic Hire and Payment), UQ Maps, UQ Donations, and Programs and Courses.",
+      description: [
+        "Worked on various web applications for the university such as CAHP (Casual Academic Hire and Payment), UQ Maps, Programs and Courses, my.UQ.",
+        "Developed a system for staff to validate their timesheets in CAHP.",
+        "Developed an events feed microservice using Node.js, AWS Lambda, Docker, and DynamoDB.",
+        "Worked on an automated pipeline for UQ Donations using AWS, CDK, Code Pipeline and Docker.",
+        "Developed React components for the UQ design system to reuse across different applications.",
+        "Used many different technologies including TypeScript, React, Node.js, PHP, Symfony, MySQL, AWS, DynamoDB, Lambda, Jenkins and Oracle.",
+        "Developed an automated access control system to ensure students completed the mandatory UQ Respect module before accessing Blackboard, using Node.js, TypeScript, Express.js, MySQL, Jenkins, and the Blackboard API to grant or revoke access based on completion status."
+      ],
     },
     {
       company: "YouPay",
@@ -145,8 +161,15 @@ export const DATA = {
       logoUrl: "/youpay.png",
       start: "February 2022",
       end: "November 2022",
-      description:
-        "Developed new features using Laravel, Vue.js, PHP, JavaScript, Tailwind CSS, MySQL and REST APIs. Created an email notification system for merchants to receive weekly/monthly summaries of YouPay carts created, paid and cancelled. Integrated YouPay into dozens of stores.",
+      description: [
+        "Developed new features using Laravel, Vue.js, PHP, JavaScript, Tailwind CSS, MySQL and REST APIs.",
+        "Developed an email notification system for merchants to subscribe to weekly/monthly summaries of YouPay carts created, paid and cancelled on their store. The emails would also compare the current week/month with the previous.",
+        "Worked on signup and login flows using Vue.js and Laravel.",
+        "Built a one-click feature to automatically generate a branded “About YouPay” page on merchants’ Shopify stores, streamlining onboarding and boosting merchant adoption.",
+        "Maintenance of Laravel Nova merchant dashboard.",
+        "Integrated YouPay into dozens of Shopify stores.",
+        "Reviewed code for colleagues."
+      ],
     },
     {
       company: "M3 Digital",
@@ -156,8 +179,12 @@ export const DATA = {
       logoUrl: "/m3digital.jpg",
       start: "September 2021",
       end: "February 2022",
-      description:
-        "Front-end development for a variety of Shopify stores such as FitazFK, Rider Collective, Masseuse Massage, Francesca Jewellery and Salty Captain. Developed high quality landing pages and front end features using HTML, CSS, SCSS, JavaScript and Liquid.",
+      description: [
+        "Worked on variety of Shopify stores such as FitazFK, Rider Collective, Masseuse Massage, Francesca Jewellery and Salty Captain.",
+        "Developed custom front end features and sections using HTML, CSS, SCSS, JavaScript, and Liquid.",
+        "Developed high quality landing pages from scratch with modular CSS and JS practices for maintainability.",
+        "Integrated many third party plugins within existing stores, e.g. Calendly for customer bookings and Preezie for product recommendations."
+      ],
     },
   ],
   education: [
