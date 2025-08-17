@@ -46,7 +46,7 @@ export function ProjectCard({
     <motion.div ref={ref} className="group mb-3 sm:mb-8 last:mb-0">
       <section className="bg-gray-100 max-w-[58rem] border border-black/5 rounded-lg overflow-hidden hover:bg-gray-200 transition dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
         <div className="flex flex-col lg:flex-row">
-          <div className="p-6 lg:w-2/3 flex flex-col h-full">
+          <div className="p-6 lg:w-1/2 flex flex-col h-full">
             <h3 className="text-xl font-semibold mb-2">{title}</h3>
 
             <Markdown className="leading-relaxed text-gray-700 dark:text-white/70 mb-3 prose max-w-full text-pretty font-sans text-sm dark:prose-invert">
@@ -128,8 +128,7 @@ export function ProjectCard({
             </div>
           </div>
 
-          {/* Image/Video Section */}
-          <div className="lg:w-1/3 lg:flex lg:items-end lg:justify-end">
+          <div className="hidden lg:flex lg:w-1/2 lg:items-end lg:justify-end">
             {image && (
               <Image
                 src={image}

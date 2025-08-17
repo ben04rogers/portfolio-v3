@@ -231,7 +231,7 @@ export const projectsData = [
         icon: "github",
       },
     ],
-    image: "",
+    image: "/job-portal.png",
     video: "",
   },
   {
@@ -240,7 +240,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Cryptocurrency sentiment analysis website based on Twitter posts. Users can see the overall sentiment (positive, negative or neutral) of different Cryptocurrencies based on what people are currently posting on Twitter. Users can also see keywords and an average sentiment score. Stateless application that uses Elasticache and S3 on AWS. It also used EC2 and auto-scaling to manage demand.",
+      "Cryptocurrency sentiment analysis website that analyzes Twitter posts to determine sentiment for different cryptocurrencies, built with React, Express.js, and AWS services including EC2, S3, and Elasticache with auto-scaling.",
     technologies: ["JavaScript", "React", "Express.js", "AWS"],
     links: [
       {
@@ -254,7 +254,7 @@ export const projectsData = [
         icon: "globe",
       },
     ],
-    image: "",
+    image: "/crypto-sentiment.png",
     video: "",
   },
   {
@@ -263,7 +263,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Client-server system written in Java for trading of virtual assets within departments of a company. Facilitated trades via a marketplace model where users can buy and sell assets. Admins of an organisation can create assets, users and modify details. Uses MariaDB as a database and Swing for the GUI.",
+      "Java-based desktop application for trading virtual assets within company departments using a marketplace model. Built with MariaDB and Swing GUI.",
     technologies: ["Java", "MariaDB", "Swing"],
     links: [
       {
@@ -272,7 +272,7 @@ export const projectsData = [
         icon: "github",
       },
     ],
-    image: "",
+    image: "/asset-trading.jpg",
     video: "",
   },
   {
@@ -290,7 +290,7 @@ export const projectsData = [
         icon: "github",
       },
     ],
-    image: "",
+    image: "/computer-auction.png",
     video: "",
   },
   {
@@ -299,7 +299,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Console app that manages tasks in a project. Users can load projects from a file and generate a seqeuence to complete them in, based on each task's dependencies. Users can also find earliest possible commencement time of each task, add new tasks, update tasks, remove tasks, and save the results to a text file.",
+      "Console application for project task management with dependency-based sequencing, built in C#.",
     technologies: ["C#"],
     links: [
       {
@@ -308,7 +308,7 @@ export const projectsData = [
         icon: "github",
       },
     ],
-    image: "",
+    image: "/task-manager.png",
     video: "",
   },
   {
@@ -331,7 +331,7 @@ export const projectsData = [
         icon: "globe",
       },
     ],
-    image: "",
+    image: "/binary-game.png",
     video: "",
   },
 ] as const;
