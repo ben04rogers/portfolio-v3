@@ -1,16 +1,16 @@
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { BiLinkExternal } from "react-icons/bi";
+import { AiFillGithub, AiFillYoutube } from "react-icons/ai";
+import { Icon } from "@iconify/react";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Markdown from "react-markdown";
-import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 interface Props {
   title: string;
   href?: string;
@@ -40,80 +40,120 @@ export function ProjectCard({
   links,
   className,
 }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+
   return (
-    <Card
-      className={
-        "flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full"
-      }
-    >
-      <Link
-        href={href || "#"}
-        className={cn("block cursor-pointer", className)}
-      >
-        {video && (
-          <video
-            src={video}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="pointer-events-none mx-auto h-40 w-full object-cover object-top" // needed because random black line at bottom of video
-          />
-        )}
-        {image && (
-          <Image
-            src={image}
-            alt={title}
-            width={500}
-            height={300}
-            className="h-40 w-full overflow-hidden object-cover object-top"
-          />
-        )}
-      </Link>
-      <CardHeader className="px-2">
-        <div className="space-y-1">
-          <CardTitle className="mt-1 text-base">{title}</CardTitle>
-          <time className="font-sans text-xs">{dates}</time>
-          <div className="hidden font-sans text-xs underline print:visible">
-            {link?.replace("https://", "").replace("www.", "").replace("/", "")}
+    <motion.div ref={ref} className="group mb-3 sm:mb-8 last:mb-0">
+      <section className="bg-gray-100 max-w-[58rem] border border-black/5 rounded-lg overflow-hidden hover:bg-gray-200 transition dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
+        <div className="flex flex-col lg:flex-row">
+          <div className="p-6 lg:w-2/3 flex flex-col h-full">
+            <h3 className="text-xl font-semibold mb-2">{title}</h3>
+
+            <Markdown className="leading-relaxed text-gray-700 dark:text-white/70 mb-3 prose max-w-full text-pretty font-sans text-sm dark:prose-invert">
+              {description}
+            </Markdown>
+
+            <div className="flex">
+              {link && (
+                <Button asChild variant="default" size="sm" className="mr-2">
+                  <a href={link} target="_blank" rel="noopener noreferrer">
+                    <BiLinkExternal className="mr-1" /> Live
+                  </a>
+                </Button>
+              )}
+
+              {links &&
+                links.length > 0 &&
+                links.map((linkItem, idx) => {
+                  if (
+                    linkItem.type.toLowerCase().includes("demo") ||
+                    linkItem.type.toLowerCase().includes("video")
+                  ) {
+                    return (
+                      <Button
+                        key={idx}
+                        asChild
+                        variant="default"
+                        size="sm"
+                        className="mr-2"
+                      >
+                        <a
+                          href={linkItem.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <AiFillYoutube className="mr-1" /> Demo
+                        </a>
+                      </Button>
+                    );
+                  } else if (linkItem.type.toLowerCase().includes("github")) {
+                    return (
+                      <Button
+                        key={idx}
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="mr-2"
+                      >
+                        <a
+                          href={linkItem.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <AiFillGithub className="mr-1 opacity-70" />{" "}
+                          <span className="opacity-70">GitHub</span>
+                        </a>
+                      </Button>
+                    );
+                  } else {
+                    return (
+                      <Button
+                        key={idx}
+                        asChild
+                        variant="default"
+                        size="sm"
+                        className="mr-2"
+                      >
+                        <a
+                          href={linkItem.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <BiLinkExternal className="mr-1" /> {linkItem.type}
+                        </a>
+                      </Button>
+                    );
+                  }
+                })}
+            </div>
           </div>
-          <Markdown className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert">
-            {description}
-          </Markdown>
+
+          {/* Image/Video Section */}
+          <div className="lg:w-1/3 lg:flex lg:items-end lg:justify-end">
+            {image && (
+              <Image
+                src={image}
+                alt={title}
+                width={500}
+                height={300}
+                quality={95}
+                className="w-full h-64 lg:h-auto lg:max-w-md rounded-lg shadow-lg object-cover"
+              />
+            )}
+
+            {video && (
+              <video
+                src={video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-64 lg:h-auto lg:max-w-md rounded-lg shadow-lg object-cover"
+              />
+            )}
+          </div>
         </div>
-      </CardHeader>
-      <CardContent className="mt-auto flex flex-col px-2">
-        {tags && tags.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-1">
-            {tags?.map((tag) => (
-              <Badge
-                className="px-1 py-0 text-[10px]"
-                variant="secondary"
-                key={tag}
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="px-2 pb-2">
-        {links && links.length > 0 && (
-          <div className="flex flex-row flex-wrap items-start gap-1">
-            {links?.map((link, idx) => (
-              <Link href={link?.href} key={idx} target="_blank">
-                <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
-                  {link.icon === "globe" && <Icons.globe className="size-3" />}
-                  {link.icon === "github" && (
-                    <Icons.github className="size-3" />
-                  )}
-                  {link.type}
-                </Badge>
-              </Link>
-            ))}
-          </div>
-        )}
-      </CardFooter>
-    </Card>
+      </section>
+    </motion.div>
   );
 }

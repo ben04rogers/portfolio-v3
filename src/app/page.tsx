@@ -1,3 +1,5 @@
+"use client";
+
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { ProjectCard } from "@/components/project-card";
@@ -14,10 +16,16 @@ import {
 import Markdown from "react-markdown";
 import { Icon } from "@iconify/react";
 import { Contact } from "@/components/contact";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
+  const [selectedSkillCategory, setSelectedSkillCategory] = useState<string>(
+    skillsData[0]?.category || "",
+  );
+
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
       <section id="hero">
@@ -115,7 +123,7 @@ export default function Page() {
               </h2>
             </div>
           </BlurFade>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto">
+          <div className="grid gap-5 max-w-[800px] mx-auto">
             {projectsData.map((project, id) => (
               <BlurFade
                 key={project.title}
@@ -138,50 +146,57 @@ export default function Page() {
         </div>
       </section>
       <section id="skills">
-        <div className="flex min-h-0 flex-col gap-y-3">
+        <div className="flex min-h-0 flex-col gap-y-6">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <h2 className="text-3xl font-bold tracking-tighter">My Skills</h2>
             </div>
           </BlurFade>
 
-          <div className="divide-y divide-gray-200 dark:divide-gray-700">
-            {skillsData.map((group, groupIndex) => (
-              <BlurFade
-                key={group.category}
-                delay={BLUR_FADE_DELAY * 10 + groupIndex * 0.1}
-              >
-                <div className="flex flex-col sm:flex-row py-6 gap-4 sm:gap-8">
-                  <div className="sm:w-1/4 text-left font-semibold text-gray-700 dark:text-gray-300 text-base">
-                    {group.category}
-                  </div>
+          <BlurFade delay={BLUR_FADE_DELAY * 10}>
+            <div className="flex flex-wrap justify-center gap-3">
+              {skillsData.map((group) => (
+                <Button
+                  key={group.category}
+                  variant={
+                    selectedSkillCategory === group.category
+                      ? "default"
+                      : "outline"
+                  }
+                  size="sm"
+                  onClick={() => setSelectedSkillCategory(group.category)}
+                  className="px-4 py-2"
+                >
+                  {group.category}
+                </Button>
+              ))}
+            </div>
+          </BlurFade>
 
-                  <div className="sm:w-3/4 flex flex-wrap gap-2">
-                    {group.skills.map((skill, skillIndex) => (
-                      <BlurFade
-                        key={skill.name}
-                        delay={
-                          BLUR_FADE_DELAY * 11 +
-                          groupIndex * 0.1 +
-                          skillIndex * 0.05
-                        }
+          <BlurFade delay={BLUR_FADE_DELAY * 11}>
+            <div className="flex justify-center">
+              <div className="flex flex-wrap gap-3 max-w-2xl justify-center">
+                {skillsData
+                  .find((group) => group.category === selectedSkillCategory)
+                  ?.skills.map((skill, skillIndex) => (
+                    <BlurFade
+                      key={skill.name}
+                      delay={BLUR_FADE_DELAY * 12 + skillIndex * 0.05}
+                    >
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center gap-2 px-3 py-1.5 text-sm font-normal"
                       >
-                        <Badge
-                          variant="secondary"
-                          className="flex items-center gap-2 px-3 py-1.5 text-sm font-normal"
-                        >
-                          {"icon" in skill && skill.icon && (
-                            <Icon icon={skill.icon} className="text-base" />
-                          )}
-                          <span>{skill.name}</span>
-                        </Badge>
-                      </BlurFade>
-                    ))}
-                  </div>
-                </div>
-              </BlurFade>
-            ))}
-          </div>
+                        {"icon" in skill && skill.icon && (
+                          <Icon icon={skill.icon} className="text-base" />
+                        )}
+                        <span>{skill.name}</span>
+                      </Badge>
+                    </BlurFade>
+                  ))}
+              </div>
+            </div>
+          </BlurFade>
         </div>
       </section>
 
