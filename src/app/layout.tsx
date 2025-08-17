@@ -11,7 +11,7 @@ import "./globals.css";
 const fontSans = Ubuntu({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: "400"
+  weight: "400",
 });
 
 export const metadata: Metadata = {
