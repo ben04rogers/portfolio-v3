@@ -217,7 +217,7 @@ export const educationData = [
 
 export const projectsData = [
   {
-    title: "Developer Job Matching Portal",
+    title: "Developer Job Portal",
     href: "https://github.com/ben04rogers/ozdevs-v2",
     dates: "2023",
     active: true,
