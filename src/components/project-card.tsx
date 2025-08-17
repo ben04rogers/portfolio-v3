@@ -55,9 +55,14 @@ export function ProjectCard({
 
             <div className="flex">
               {link && (
-                <Button asChild variant="default" size="sm" className="mr-2">
+                <Button
+                  asChild
+                  variant="default"
+                  size="sm"
+                  className="mr-2 text-sm"
+                >
                   <a href={link} target="_blank" rel="noopener noreferrer">
-                    <BiLinkExternal className="mr-1" /> Live
+                    <BiLinkExternal className="mr-1 w-4 h-4" /> Live
                   </a>
                 </Button>
               )}
@@ -75,14 +80,14 @@ export function ProjectCard({
                         asChild
                         variant="default"
                         size="sm"
-                        className="mr-2"
+                        className="mr-2 text-sm"
                       >
                         <a
                           href={linkItem.href}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <AiFillYoutube className="mr-1" /> Demo
+                          <AiFillYoutube className="mr-1 w-4 h-4" /> Demo
                         </a>
                       </Button>
                     );
@@ -93,14 +98,14 @@ export function ProjectCard({
                         asChild
                         variant="outline"
                         size="sm"
-                        className="mr-2"
+                        className="mr-2 text-sm"
                       >
                         <a
                           href={linkItem.href}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <AiFillGithub className="mr-1 opacity-70" />{" "}
+                          <AiFillGithub className="mr-1 w-4 h-4 opacity-70" />{" "}
                           <span className="opacity-70">GitHub</span>
                         </a>
                       </Button>
@@ -112,14 +117,15 @@ export function ProjectCard({
                         asChild
                         variant="default"
                         size="sm"
-                        className="mr-2"
+                        className="mr-2 text-sm"
                       >
                         <a
                           href={linkItem.href}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <BiLinkExternal className="mr-1" /> {linkItem.type}
+                          <BiLinkExternal className="mr-1 w-4 h-4" />{" "}
+                          {linkItem.type}
                         </a>
                       </Button>
                     );
