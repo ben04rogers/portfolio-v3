@@ -18,12 +18,12 @@ export const skillsData = [
   {
     category: "Backend",
     skills: [
+      { name: "Node.js", icon: "logos:nodejs-icon" },
+      { name: "Laravel", icon: "logos:laravel" },
       { name: "TypeScript", icon: "logos:typescript-icon" },
       { name: "PHP", icon: "logos:php" },
       { name: "C#", icon: "logos:c-sharp" },
       { name: "Python", icon: "logos:python" },
-      { name: "Laravel", icon: "logos:laravel" },
-      { name: "Node.js", icon: "logos:nodejs-icon" },
       { name: "SQL", icon: "ph:file-sql" },
       { name: "PostgreSQL", icon: "logos:postgresql" },
       { name: "MySQL", icon: "logos:mysql-icon" },
@@ -56,7 +56,6 @@ export const skillsData = [
       { name: "Kubernetes", icon: "logos:kubernetes" },
       { name: "Jenkins", icon: "logos:jenkins" },
       { name: "GitHub Actions", icon: "logos:github-actions" },
-      { name: "Linux", icon: "logos:linux-tux" },
       { name: "CI/CD", icon: "material-symbols:sync" },
       { name: "Infrastructure as Code", icon: "material-symbols:code" },
     ],
@@ -81,6 +80,7 @@ export const skillsData = [
   {
     category: "Tools",
     skills: [
+      { name: "Linux", icon: "logos:linux-tux" },
       { name: "Sentry", icon: "logos:sentry-icon" },
       { name: "New Relic", icon: "logos:new-relic-icon" },
       { name: "Grafana", icon: "logos:grafana" },
