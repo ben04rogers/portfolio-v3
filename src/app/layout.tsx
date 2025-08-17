@@ -4,13 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { personalData } from "@/data/data";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-const fontSans = FontSans({
+const fontSans = Ubuntu({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: "400"
 });
 
 export const metadata: Metadata = {
