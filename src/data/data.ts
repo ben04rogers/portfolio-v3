@@ -24,7 +24,7 @@ export const skillsData = [
       { name: "Python", icon: "logos:python" },
       { name: "Laravel", icon: "logos:laravel" },
       { name: "Node.js", icon: "logos:nodejs-icon" },
-      { name: "SQL", icon: "material-symbols:database" },
+      { name: "SQL", icon: "ph:file-sql" },
       { name: "PostgreSQL", icon: "logos:postgresql" },
       { name: "MySQL", icon: "logos:mysql-icon" },
       { name: "DynamoDB", icon: "logos:aws-dynamodb" },
