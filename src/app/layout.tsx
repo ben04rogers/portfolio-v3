@@ -5,6 +5,7 @@ import { personalData } from "@/data/data";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -15,7 +16,7 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   metadataBase: new URL(personalData.url),
   title: {
-    default: personalData.name,
+    default: "Ben Rogers | Software Engineer",
     template: `%s | ${personalData.name}`,
   },
   description: personalData.description,
@@ -64,6 +65,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider delayDuration={0}>
             {children}
+            <Toaster position="top-right" />
             <Navbar />
           </TooltipProvider>
         </ThemeProvider>

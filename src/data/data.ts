@@ -222,7 +222,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Reverse Job board for companies looking to hire developers in Australia. Filter by experience, location and keyboards. Companies can pay a monthly fee to be able to message developers on the site and view their information.",
+      "Job portal for companies looking to hire developers in Australia. Filter by experience, location and keyboards. Companies can pay a monthly fee to be able to message developers on the site and view their information. Built with Laravel.",
     technologies: ["PHP", "Laravel", "JavaScript", "Tailwind", "MySQL"],
     links: [
       {
