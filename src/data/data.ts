@@ -240,7 +240,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Cryptocurrency sentiment analysis website that analyzes Twitter posts to determine sentiment for different cryptocurrencies, built with React, Express.js, and AWS services including EC2, S3, and Elasticache with auto-scaling.",
+      "Cryptocurrency sentiment analysis website that analyses Twitter posts to determine sentiment for different cryptocurrencies, built with React, Express.js, and AWS services including EC2, S3, and Elasticache with auto-scaling.",
     technologies: ["JavaScript", "React", "Express.js", "AWS"],
     links: [
       {
