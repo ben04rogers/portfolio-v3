@@ -129,7 +129,7 @@ export const experiencesData = [
     location: "Brisbane",
     title: "Software Engineer",
     logoUrl: "/humanforce.png",
-    start: "January 2024",
+    start: "Jan 2024",
     end: "Present",
     description: [
       "Worked on web applications serving 600,000+ users with a modern tech stack including a Laravel backend (PHP) with GraphQL endpoints, a React SPA frontend (TypeScript), event‑driven Node.js (TypeScript) microservices, and also AWS Lambda backends (TypeScript).",
@@ -149,8 +149,8 @@ export const experiencesData = [
     location: "Brisbane",
     title: "Software Engineer",
     logoUrl: "/uq.png",
-    start: "November 2022",
-    end: "January 2024",
+    start: "Nov 2022",
+    end: "Jan 2024",
     description: [
       "Worked on various web applications for the university such as CAHP (Casual Academic Hire and Payment), UQ Maps, Programs and Courses, my.UQ.",
       "Developed a system for staff to validate their timesheets in CAHP.",
@@ -168,8 +168,8 @@ export const experiencesData = [
     location: "Brisbane",
     title: "Software Developer",
     logoUrl: "/youpay.png",
-    start: "February 2022",
-    end: "November 2022",
+    start: "Feb 2022",
+    end: "Nov 2022",
     description: [
       "Developed new features using Laravel, Vue.js, PHP, JavaScript, Tailwind CSS, MySQL and REST APIs.",
       "Developed an email notification system for merchants to subscribe to weekly/monthly summaries of YouPay carts created, paid and cancelled on their store. The emails would also compare the current week/month with the previous.",
@@ -186,8 +186,8 @@ export const experiencesData = [
     location: "Brisbane",
     title: "Web Developer",
     logoUrl: "/m3digital.jpg",
-    start: "September 2021",
-    end: "February 2022",
+    start: "Sep 2021",
+    end: "Feb 2022",
     description: [
       "Worked on variety of Shopify stores such as FitazFK, Rider Collective, Masseuse Massage, Francesca Jewellery and Salty Captain.",
       "Developed custom front end features and sections using HTML, CSS, SCSS, JavaScript, and Liquid.",
@@ -203,8 +203,8 @@ export const educationData = [
     href: "https://www.qut.edu.au/",
     degree: "Bachelor of Information Technology (Computer Science)",
     logoUrl: "/qut.png",
-    start: "2018",
-    end: "2023",
+    start: "Feb 2018",
+    end: "Aug 2023",
     description: [
       "GPA 6.2/7",
       "Major in Computer Science",
