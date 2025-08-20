@@ -113,8 +113,8 @@ export const contactData = {
       icon: Icons.linkedin,
       navbar: true,
     },
-    email: {
-      name: "Send Email",
+    Email: {
+      name: "Email",
       url: "/#contact",
       icon: Icons.email,
       navbar: true,
