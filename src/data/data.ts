@@ -115,9 +115,9 @@ export const contactData = {
     },
     email: {
       name: "Send Email",
-      url: "#",
+      url: "/#contact",
       icon: Icons.email,
-      navbar: false,
+      navbar: true,
     },
   },
 } as const;
