@@ -138,9 +138,11 @@ export const experiencesData = [
       "Developed backend APIs for the intelliHR‑Thrive mobile app integration, streamlining in‑app form completion and boosting task completion rates.",
       "Automated pruning of large database tables to reduce data growth and lower long‑term storage costs.",
       "Setup Sumo Logic in Node.js and .NET lambdas to standardise logging format across codebases.",
-      "PHP and Laravel version upgrades, ensuring best practices across services.",
+      "Improved job data download performance by implementing a streaming mechanism, making downloads significantly faster and more memory-efficient.",
       "Implemented comprehensive testing across the stack using Playwright, PHPUnit, Jest and Cypress.",
       "Migrated legacy REST endpoints to GraphQL.",
+      "Led smooth PHP and Laravel version upgrades.",
+      "Setup ESLint and Prettier in CI/CD pipelines to enforce coding standards and consistent code quality across teams.",
     ],
   },
   {
