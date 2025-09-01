@@ -94,7 +94,7 @@ export const skillsData = [
 
 export const navbarData = [
   { href: "/", icon: HomeIcon, label: "Home" },
-  { href: "/blog", icon: NotebookIcon, label: "Blog" },
+  { href: "https://dev.to/ben04rogers", icon: NotebookIcon, label: "Blog" },
 ] as const;
 
 export const contactData = {
