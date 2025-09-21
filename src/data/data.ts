@@ -237,6 +237,24 @@ export const projectsData = [
     video: "",
   },
   {
+    title: "Project Management",
+    href: "https://github.com/ben04rogers/ozdevs-v2",
+    dates: "2023",
+    active: true,
+    description:
+      "Project management application featuring drag-and-drop kanban boards, user assignments, and team collaboration. Built with Laravel, React and Inertia.",
+    technologies: ["PHP", "Laravel", "React", "Inertia", "SQLite"],
+    links: [
+      {
+        type: "Github",
+        href: "https://github.com/ben04rogers/kanban-laravel",
+        icon: "github",
+      },
+    ],
+    image: "/project-management.png",
+    video: "",
+  },
+  {
     title: "Crypto Sentiment Analysis",
     href: "https://github.com/ben04rogers/cab432-assignment-2",
     dates: "2023",
