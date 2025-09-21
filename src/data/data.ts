@@ -313,24 +313,6 @@ export const projectsData = [
     image: "/computer-auction.png",
     video: "",
   },
-  // {
-  //   title: "Task Manager Console App",
-  //   href: "https://github.com/ben04rogers/task-manager",
-  //   dates: "2023",
-  //   active: true,
-  //   description:
-  //     "Console application for project task management with dependency-based sequencing, built in C#.",
-  //   technologies: ["C#"],
-  //   links: [
-  //     {
-  //       type: "Github",
-  //       href: "https://github.com/ben04rogers/task-manager",
-  //       icon: "github",
-  //     },
-  //   ],
-  //   image: "/task-manager.png",
-  //   video: "",
-  // },
   {
     title: "Arduino Binary Game",
     href: "https://github.com/ben04rogers/binary-game-microcontroller",

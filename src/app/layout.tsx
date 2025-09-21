@@ -12,6 +12,8 @@ const fontSans = Ubuntu({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: "400",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
