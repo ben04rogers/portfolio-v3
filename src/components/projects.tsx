@@ -15,6 +15,7 @@ export function Projects({ delay = 0 }: ProjectsProps) {
     title: string;
     description: string;
     detailedDescription?: string;
+    keyFeatures?: readonly string[];
     dates: string;
     technologies: readonly string[];
     images?: string[];
@@ -32,6 +33,8 @@ export function Projects({ delay = 0 }: ProjectsProps) {
     const modalProject = {
       title: project.title,
       description: project.description,
+      detailedDescription: project.detailedDescription,
+      keyFeatures: project.keyFeatures,
       dates: project.dates,
       technologies: project.technologies,
       images: project.image ? [project.image] : undefined,

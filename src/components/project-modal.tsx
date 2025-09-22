@@ -18,6 +18,7 @@ interface ProjectModalProps {
     title: string;
     description: string;
     detailedDescription?: string;
+    keyFeatures?: readonly string[];
     dates: string;
     technologies: readonly string[];
     images?: string[];
@@ -194,17 +195,36 @@ export const ProjectModal = memo(function ProjectModal({
 
             {/* Project Details */}
             <div className="space-y-4">
-              {/* Description */}
-              <div className="prose max-w-none dark:prose-invert">
+              <div className="prose max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-li:text-gray-700 dark:prose-li:text-white/70">
                 <Markdown className="text-gray-700 dark:text-white/70">
                   {project.detailedDescription || project.description}
                 </Markdown>
               </div>
 
-              {/* Technologies */}
+              {project.keyFeatures && project.keyFeatures.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Key Features
+                  </h3>
+                  <ul className="space-y-2 list-none ml-3">
+                    {project.keyFeatures.map((feature, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start text-gray-700 dark:text-white/70"
+                      >
+                        <span className="text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0">
+                          •
+                        </span>
+                        <span className="leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  Technologies Used
+                  Technologies
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, index) => (
