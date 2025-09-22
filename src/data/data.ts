@@ -31,7 +31,6 @@ export const skillsData = [
       { name: "REST APIs", icon: "lucide:cloud-cog" },
       { name: "GraphQL", icon: "logos:graphql" },
       { name: "Elasticsearch", icon: "logos:elasticsearch" },
-      { name: "Logstash", icon: "logos:logstash" },
     ],
   },
   {
