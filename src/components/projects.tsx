@@ -11,13 +11,34 @@ interface ProjectsProps {
 }
 
 export function Projects({ delay = 0 }: ProjectsProps) {
-  const [selectedProject, setSelectedProject] = useState<
-    (typeof projectsData)[0] | null
-  >(null);
+  const [selectedProject, setSelectedProject] = useState<{
+    title: string;
+    description: string;
+    detailedDescription?: string;
+    dates: string;
+    technologies: readonly string[];
+    images?: string[];
+    video?: string;
+    links?: readonly {
+      icon: React.ReactNode;
+      type: string;
+      href: string;
+    }[];
+  } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleProjectClick = (project: (typeof projectsData)[0]) => {
-    setSelectedProject(project);
+  const handleProjectClick = (project: any) => {
+    // Convert project data to match ProjectModal interface
+    const modalProject = {
+      title: project.title,
+      description: project.description,
+      dates: project.dates,
+      technologies: project.technologies,
+      images: project.image ? [project.image] : undefined,
+      video: project.video,
+      links: project.links,
+    };
+    setSelectedProject(modalProject);
     setIsModalOpen(true);
   };
 
@@ -54,11 +75,13 @@ export function Projects({ delay = 0 }: ProjectsProps) {
         </div>
       </div>
 
-      <ProjectModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        project={selectedProject || projectsData[0]}
-      />
+      {selectedProject && (
+        <ProjectModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          project={selectedProject}
+        />
+      )}
     </section>
   );
 }
