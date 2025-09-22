@@ -225,6 +225,13 @@ export const projectsData = [
     active: true,
     description:
       "Job portal for companies looking to hire developers in Australia. Filter by experience, location and keyboards. Companies can pay a monthly fee to be able to message developers on the site and view their information. Built with Laravel.",
+    detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations.
+
+**Key Features:**
+- Advanced filtering system by experience level, location, and technical skills
+- Company subscription model for accessing developer profiles and messaging
+- User authentication and profile management
+- Built-in messaging between developers and companies.`,
     technologies: ["PHP", "Laravel", "JavaScript", "Tailwind", "MySQL"],
     links: [
       {
@@ -234,6 +241,7 @@ export const projectsData = [
       },
     ],
     image: "/job-portal.png",
+    images: ["/job-portal.png"],
     video: "",
   },
   {
@@ -243,6 +251,14 @@ export const projectsData = [
     active: true,
     description:
       "Project management application featuring drag-and-drop kanban boards, user assignments, and team collaboration. Built with Laravel, React and Inertia.",
+    detailedDescription: `Minimalist kaban-style project management application to help teams manage their work. 
+
+**Key Features:**
+- Interactive drag-and-drop kanban boards for task management
+- Create multiple boards
+- Create cards on a board with a rich text editor for card descriptions
+- Assign users to cards
+- Share boards with users`,
     technologies: ["PHP", "Laravel", "React", "Inertia", "SQLite"],
     links: [
       {
@@ -252,6 +268,7 @@ export const projectsData = [
       },
     ],
     image: "/project-management.png",
+    images: ["/project-management.png"],
     video: "",
   },
   {
@@ -261,6 +278,13 @@ export const projectsData = [
     active: true,
     description:
       "Cryptocurrency sentiment analysis website that analyses Twitter posts to determine sentiment for different cryptocurrencies, built with React, Express.js, and AWS services including EC2, S3, and Elasticache with auto-scaling.",
+    detailedDescription: `An advanced sentiment analysis platform that processes social media data to provide real-time insights into cryptocurrency market sentiment. This cloud-native application demonstrates modern full-stack development practices with scalable AWS infrastructure.
+
+**Key Features:**
+- Real-time Twitter data collection and processing
+- Interactive data visualization and charts
+- Support for multiple cryptocurrencies
+- Auto-scaling infrastructure for handling traffic spikes`,
     technologies: ["JavaScript", "React", "Express.js", "AWS"],
     links: [
       {
@@ -275,6 +299,7 @@ export const projectsData = [
       },
     ],
     image: "/crypto-sentiment.png",
+    images: ["/crypto-sentiment.png"],
     video: "",
   },
   {
@@ -284,6 +309,13 @@ export const projectsData = [
     active: true,
     description:
       "Java-based desktop application for trading virtual assets within company departments using a marketplace model. Built with MariaDB and Swing GUI.",
+    detailedDescription: `A comprehensive desktop application that simulates an internal marketplace for trading virtual assets within company departments. This project demonstrates object-oriented programming principles and database integration in a real-world business context.
+
+**Key Features:**
+- Department-based user management and authentication
+- Virtual asset marketplace with bidding system
+- Transaction history and reporting
+- Asset categorisation and search functionality`,
     technologies: ["Java", "MariaDB", "Swing"],
     links: [
       {
@@ -293,6 +325,7 @@ export const projectsData = [
       },
     ],
     image: "/asset-trading.jpg",
+    images: ["/asset-trading.jpg"],
     video: "",
   },
   {
@@ -302,6 +335,16 @@ export const projectsData = [
     active: true,
     description:
       "Computer auction application built with Flask. The site allows users to register, bid on items, leave reviews, post new listings, manage listings, search by keyword, and keep a watch list.",
+    detailedDescription: `A full-featured auction platform specifically designed for computer hardware and electronics. This web application provides a complete marketplace experience with user management, bidding functionality, and comprehensive item management.
+
+**Key Features:**
+- User registration and authentication system
+- Item listing and management with image uploads
+- Real-time bidding system with automatic bid validation
+- Advanced search and filtering capabilities
+- User review and rating system
+- Watchlist functionality for tracking favorite items
+- Admin panel for platform management`,
     technologies: ["Python", "Flask", "Bootstrap", "SQLite"],
     links: [
       {
@@ -311,6 +354,7 @@ export const projectsData = [
       },
     ],
     image: "/computer-auction.png",
+    images: ["/computer-auction.png"],
     video: "",
   },
   {
@@ -320,6 +364,13 @@ export const projectsData = [
     active: true,
     description:
       "Binary game written in C that runs on an Arduino Uno using Tinkercad. The game aims to help users learn binary by challenging them to input different integers in their binary form within a time limit.",
+    detailedDescription: `An educational game designed to teach binary number concepts through interactive gameplay on Arduino hardware. This embedded systems project combines programming fundamentals with hardware interaction to create an engaging learning experience.
+
+**Key Features:**
+- Interactive LED display for visual feedback
+- Timer-based challenges to increase engagement
+- Score tracking and performance metrics
+- Real-time input validation`,
     technologies: ["C"],
     links: [
       {
@@ -334,6 +385,7 @@ export const projectsData = [
       },
     ],
     image: "/binary-game.png",
+    images: ["/binary-game.png"],
     video: "",
   },
 ] as const;

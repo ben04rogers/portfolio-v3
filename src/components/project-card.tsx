@@ -26,6 +26,7 @@ interface Props {
     href: string;
   }[];
   className?: string;
+  onClick?: () => void;
 }
 
 export function ProjectCard({
@@ -39,12 +40,24 @@ export function ProjectCard({
   video,
   links,
   className,
+  onClick,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <motion.div ref={ref} className="group mb-3 sm:mb-8 last:mb-0">
-      <section className="bg-gray-100 max-w-[58rem] border border-black/5 rounded-lg overflow-hidden hover:bg-gray-200 transition dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
+      <section 
+        className="bg-gray-100 max-w-[58rem] border border-black/5 rounded-lg overflow-hidden hover:bg-gray-200 transition dark:text-white dark:bg-white/10 dark:hover:bg-white/20 cursor-pointer active:scale-[0.98]"
+        onClick={handleClick}
+      >
         <div className="flex flex-col lg:flex-row">
           <div className="p-6 lg:w-1/2 flex flex-col h-full">
             <h3 className="text-xl font-semibold mb-2">{title}</h3>
@@ -60,6 +73,7 @@ export function ProjectCard({
                   variant="default"
                   size="sm"
                   className="mr-2 text-sm"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <a href={link} target="_blank" rel="noopener noreferrer">
                     <BiLinkExternal className="mr-1 w-4 h-4" /> Live
@@ -81,6 +95,7 @@ export function ProjectCard({
                         variant="default"
                         size="sm"
                         className="mr-2 text-sm"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <a
                           href={linkItem.href}
@@ -99,6 +114,7 @@ export function ProjectCard({
                         variant="outline"
                         size="sm"
                         className="mr-2 text-sm"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <a
                           href={linkItem.href}
@@ -118,6 +134,7 @@ export function ProjectCard({
                         variant="default"
                         size="sm"
                         className="mr-2 text-sm"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <a
                           href={linkItem.href}

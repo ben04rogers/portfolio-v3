@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
+import { ProjectModal } from "@/components/project-modal";
 import { projectsData } from "@/data/data";
 
 interface ProjectsProps {
@@ -9,6 +11,19 @@ interface ProjectsProps {
 }
 
 export function Projects({ delay = 0 }: ProjectsProps) {
+  const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProjectClick = (project: typeof projectsData[0]) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProject(null);
+  };
+
   return (
     <section id="projects">
       <div className="space-y-12 w-full py-12">
@@ -30,11 +45,18 @@ export function Projects({ delay = 0 }: ProjectsProps) {
                 image={project.image}
                 video={project.video}
                 links={project.links}
+                onClick={() => handleProjectClick(project)}
               />
             </BlurFade>
           ))}
         </div>
       </div>
+      
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        project={selectedProject || projectsData[0]}
+      />
     </section>
   );
 }
