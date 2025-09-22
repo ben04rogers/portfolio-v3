@@ -227,7 +227,7 @@ export const projectsData = [
       "Job portal for companies looking to hire developers in Australia. Filter by experience, location and keyboards. Companies can pay a monthly fee to be able to message developers on the site and view their information. Built with Laravel.",
     detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations.`,
     keyFeatures: [
-      "Advanced filtering system by experience level, location, and technical skills",
+      "Filter by experience level, location, and keywords",
       "Company subscription model for accessing developer profiles and messaging",
       "User authentication and profile management",
       "Built-in messaging between developers and companies",
