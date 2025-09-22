@@ -251,7 +251,7 @@ export const projectsData = [
     active: true,
     description:
       "Project management application featuring drag-and-drop kanban boards, user assignments, and team collaboration. Built with Laravel, React and Inertia.",
-    detailedDescription: `Minimalist kaban-style project management application to help teams manage their work.`,
+    detailedDescription: `Kanban project management application to help teams manage their work.`,
     keyFeatures: [
       "Interactive drag-and-drop kanban boards for task management",
       "Create multiple boards",
