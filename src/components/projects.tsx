@@ -11,10 +11,12 @@ interface ProjectsProps {
 }
 
 export function Projects({ delay = 0 }: ProjectsProps) {
-  const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<
+    (typeof projectsData)[0] | null
+  >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleProjectClick = (project: typeof projectsData[0]) => {
+  const handleProjectClick = (project: (typeof projectsData)[0]) => {
     setSelectedProject(project);
     setIsModalOpen(true);
   };
@@ -51,7 +53,7 @@ export function Projects({ delay = 0 }: ProjectsProps) {
           ))}
         </div>
       </div>
-      
+
       <ProjectModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

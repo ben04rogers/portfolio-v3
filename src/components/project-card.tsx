@@ -54,7 +54,7 @@ export function ProjectCard({
 
   return (
     <motion.div ref={ref} className="group mb-3 sm:mb-8 last:mb-0">
-      <section 
+      <section
         className="bg-gray-100 max-w-[58rem] border border-black/5 rounded-lg overflow-hidden hover:bg-gray-200 transition dark:text-white dark:bg-white/10 dark:hover:bg-white/20 cursor-pointer active:scale-[0.98]"
         onClick={handleClick}
       >

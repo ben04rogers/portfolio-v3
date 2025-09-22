@@ -33,61 +33,65 @@ interface ProjectModalProps {
 // Technology to icon mapping
 const getTechnologyIcon = (tech: string): string => {
   const iconMap: { [key: string]: string } = {
-    "PHP": "logos:php",
-    "Laravel": "logos:laravel",
-    "JavaScript": "logos:javascript",
-    "Tailwind": "logos:tailwindcss-icon",
-    "MySQL": "logos:mysql-icon",
-    "React": "logos:react",
-    "Inertia": "logos:inertia",
-    "SQLite": "logos:sqlite",
+    PHP: "logos:php",
+    Laravel: "logos:laravel",
+    JavaScript: "logos:javascript",
+    Tailwind: "logos:tailwindcss-icon",
+    MySQL: "logos:mysql-icon",
+    React: "logos:react",
+    Inertia: "logos:inertia",
+    SQLite: "logos:sqlite",
     "Express.js": "logos:express",
-    "AWS": "logos:aws",
-    "Java": "logos:java",
-    "MariaDB": "logos:mariadb-icon",
-    "Swing": "logos:java",
-    "Python": "logos:python",
-    "Flask": "logos:flask",
-    "Bootstrap": "logos:bootstrap",
-    "C": "logos:c",
+    AWS: "logos:aws",
+    Java: "logos:java",
+    MariaDB: "logos:mariadb-icon",
+    Swing: "logos:java",
+    Python: "logos:python",
+    Flask: "logos:flask",
+    Bootstrap: "logos:bootstrap",
+    C: "logos:c",
     "Node.js": "logos:nodejs-icon",
-    "TypeScript": "logos:typescript-icon",
-    "HTML5": "logos:html-5",
-    "CSS3": "logos:css-3",
-    "PostgreSQL": "logos:postgresql",
-    "Docker": "logos:docker-icon",
-    "Kubernetes": "logos:kubernetes",
-    "Jenkins": "logos:jenkins",
+    TypeScript: "logos:typescript-icon",
+    HTML5: "logos:html-5",
+    CSS3: "logos:css-3",
+    PostgreSQL: "logos:postgresql",
+    Docker: "logos:docker-icon",
+    Kubernetes: "logos:kubernetes",
+    Jenkins: "logos:jenkins",
     "GitHub Actions": "logos:github-actions",
-    "GraphQL": "logos:graphql",
-    "Elasticsearch": "logos:elasticsearch",
-    "DynamoDB": "logos:aws-dynamodb",
-    "Redux": "logos:redux",
-    "Webpack": "logos:webpack",
-    "Linux": "logos:linux-tux",
-    "Sentry": "logos:sentry-icon",
+    GraphQL: "logos:graphql",
+    Elasticsearch: "logos:elasticsearch",
+    DynamoDB: "logos:aws-dynamodb",
+    Redux: "logos:redux",
+    Webpack: "logos:webpack",
+    Linux: "logos:linux-tux",
+    Sentry: "logos:sentry-icon",
     "New Relic": "logos:new-relic-icon",
-    "Grafana": "logos:grafana",
+    Grafana: "logos:grafana",
   };
-  
+
   return iconMap[tech] || "material-symbols:code";
 };
 
-export const ProjectModal = memo(function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
+export const ProjectModal = memo(function ProjectModal({
+  isOpen,
+  onClose,
+  project,
+}: ProjectModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
     if (project?.images && project.images.length > 0) {
-      setCurrentImageIndex((prev) => 
-        prev === project.images!.length - 1 ? 0 : prev + 1
+      setCurrentImageIndex((prev) =>
+        prev === project.images!.length - 1 ? 0 : prev + 1,
       );
     }
   };
 
   const prevImage = () => {
     if (project?.images && project.images.length > 0) {
-      setCurrentImageIndex((prev) => 
-        prev === 0 ? project.images!.length - 1 : prev - 1
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? project.images!.length - 1 : prev - 1,
       );
     }
   };
@@ -95,202 +99,207 @@ export const ProjectModal = memo(function ProjectModal({ isOpen, onClose, projec
   if (!isOpen || !project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
       <div
         className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-gray-900 rounded-lg shadow-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {project.title}
-            </h2>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            >
-              <X className="w-5 h-5" />
-            </Button>
-          </div>
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {project.title}
+          </h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
 
-          {/* Content */}
-          <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
-            <div className="p-6 space-y-6">
-              {/* Image Carousel */}
-              {(project.images && project.images.length > 0) && (
-                <div className="relative">
-                  <div className="relative w-full h-80 md:h-96 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
-                    <Image
-                      src={project.images[currentImageIndex]}
-                      alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                      fill
-                      className="object-contain"
-                    />
-                    
-                    {/* Navigation arrows */}
-                    {project.images.length > 1 && (
-                      <>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={prevImage}
-                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={nextImage}
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                  
-                  {/* Image indicators */}
+        {/* Content */}
+        <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
+          <div className="p-6 space-y-6">
+            {/* Image Carousel */}
+            {project.images && project.images.length > 0 && (
+              <div className="relative">
+                <div className="relative w-full h-80 md:h-96 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+                  <Image
+                    src={project.images[currentImageIndex]}
+                    alt={`${project.title} - Image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-contain"
+                  />
+
+                  {/* Navigation arrows */}
                   {project.images.length > 1 && (
-                    <div className="flex justify-center mt-4 space-x-2">
-                      {project.images.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`w-2 h-2 rounded-full transition-colors ${
-                            index === currentImageIndex
-                              ? "bg-blue-500"
-                              : "bg-gray-300 dark:bg-gray-600"
-                          }`}
-                        />
-                      ))}
-                    </div>
+                    <>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={prevImage}
+                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={nextImage}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </>
                   )}
                 </div>
-              )}
 
-              {/* Video */}
-              {project.video && (
-                <div className="w-full h-64 md:h-80 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
-                  <video
-                    src={project.video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-
-              {/* Project Details */}
-              <div className="space-y-4">
-                {/* Description */}
-                <div className="prose max-w-none dark:prose-invert">
-                  <Markdown className="text-gray-700 dark:text-white/70">
-                    {project.detailedDescription || project.description}
-                  </Markdown>
-                </div>
-
-                {/* Technologies */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Technologies Used
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, index) => (
-                      <Badge
+                {/* Image indicators */}
+                {project.images.length > 1 && (
+                  <div className="flex justify-center mt-4 space-x-2">
+                    {project.images.map((_, index) => (
+                      <button
                         key={index}
-                        variant="secondary"
-                        className="text-sm flex items-center gap-2 px-3 py-1"
-                      >
-                        <Icon 
-                          icon={getTechnologyIcon(tech)} 
-                          className="w-4 h-4" 
-                        />
-                        {tech}
-                      </Badge>
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`w-2 h-2 rounded-full transition-colors ${
+                          index === currentImageIndex
+                            ? "bg-blue-500"
+                            : "bg-gray-300 dark:bg-gray-600"
+                        }`}
+                      />
                     ))}
-                  </div>
-                </div>
-
-                {/* Links */}
-                {project.links && project.links.length > 0 && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                      Links
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {project.links.map((linkItem, idx) => {
-                        if (
-                          linkItem.type.toLowerCase().includes("demo") ||
-                          linkItem.type.toLowerCase().includes("video")
-                        ) {
-                          return (
-                            <Button
-                              key={idx}
-                              asChild
-                              variant="default"
-                              size="sm"
-                              className="mr-2"
-                            >
-                              <a
-                                href={linkItem.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <AiFillYoutube className="mr-1 w-4 h-4" /> Demo
-                              </a>
-                            </Button>
-                          );
-                        } else if (linkItem.type.toLowerCase().includes("github")) {
-                          return (
-                            <Button
-                              key={idx}
-                              asChild
-                              variant="outline"
-                              size="sm"
-                              className="mr-2"
-                            >
-                              <a
-                                href={linkItem.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <AiFillGithub className="mr-1 w-4 h-4 opacity-70" />{" "}
-                                <span className="opacity-70">GitHub</span>
-                              </a>
-                            </Button>
-                          );
-                        } else {
-                          return (
-                            <Button
-                              key={idx}
-                              asChild
-                              variant="default"
-                              size="sm"
-                              className="mr-2"
-                            >
-                              <a
-                                href={linkItem.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <BiLinkExternal className="mr-1 w-4 h-4" />{" "}
-                                {linkItem.type}
-                              </a>
-                            </Button>
-                          );
-                        }
-                      })}
-                    </div>
                   </div>
                 )}
               </div>
+            )}
+
+            {/* Video */}
+            {project.video && (
+              <div className="w-full h-64 md:h-80 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <video
+                  src={project.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Project Details */}
+            <div className="space-y-4">
+              {/* Description */}
+              <div className="prose max-w-none dark:prose-invert">
+                <Markdown className="text-gray-700 dark:text-white/70">
+                  {project.detailedDescription || project.description}
+                </Markdown>
+              </div>
+
+              {/* Technologies */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Technologies Used
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="text-sm flex items-center gap-2 px-3 py-1"
+                    >
+                      <Icon
+                        icon={getTechnologyIcon(tech)}
+                        className="w-4 h-4"
+                      />
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Links */}
+              {project.links && project.links.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Links
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.links.map((linkItem, idx) => {
+                      if (
+                        linkItem.type.toLowerCase().includes("demo") ||
+                        linkItem.type.toLowerCase().includes("video")
+                      ) {
+                        return (
+                          <Button
+                            key={idx}
+                            asChild
+                            variant="default"
+                            size="sm"
+                            className="mr-2"
+                          >
+                            <a
+                              href={linkItem.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <AiFillYoutube className="mr-1 w-4 h-4" /> Demo
+                            </a>
+                          </Button>
+                        );
+                      } else if (
+                        linkItem.type.toLowerCase().includes("github")
+                      ) {
+                        return (
+                          <Button
+                            key={idx}
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className="mr-2"
+                          >
+                            <a
+                              href={linkItem.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <AiFillGithub className="mr-1 w-4 h-4 opacity-70" />{" "}
+                              <span className="opacity-70">GitHub</span>
+                            </a>
+                          </Button>
+                        );
+                      } else {
+                        return (
+                          <Button
+                            key={idx}
+                            asChild
+                            variant="default"
+                            size="sm"
+                            className="mr-2"
+                          >
+                            <a
+                              href={linkItem.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <BiLinkExternal className="mr-1 w-4 h-4" />{" "}
+                              {linkItem.type}
+                            </a>
+                          </Button>
+                        );
+                      }
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+        </div>
       </div>
     </div>
   );
