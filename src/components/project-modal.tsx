@@ -20,7 +20,7 @@ interface ProjectModalProps {
     detailedDescription?: string;
     keyFeatures?: readonly string[];
     dates: string;
-    technologies: readonly string[];
+    technologies: readonly { name: string; icon?: string }[];
     images?: string[];
     video?: string;
     links?: readonly {
@@ -31,48 +31,6 @@ interface ProjectModalProps {
   };
 }
 
-// Technology to icon mapping
-const getTechnologyIcon = (tech: string): string => {
-  const iconMap: { [key: string]: string } = {
-    PHP: "logos:php",
-    Laravel: "logos:laravel",
-    JavaScript: "logos:javascript",
-    Tailwind: "logos:tailwindcss-icon",
-    MySQL: "logos:mysql-icon",
-    React: "logos:react",
-    Inertia: "logos:inertia",
-    SQLite: "logos:sqlite",
-    "Express.js": "logos:express",
-    AWS: "logos:aws",
-    Java: "logos:java",
-    MariaDB: "logos:mariadb-icon",
-    Swing: "logos:java",
-    Python: "logos:python",
-    Flask: "logos:flask",
-    Bootstrap: "logos:bootstrap",
-    C: "logos:c",
-    "Node.js": "logos:nodejs-icon",
-    TypeScript: "logos:typescript-icon",
-    HTML5: "logos:html-5",
-    CSS3: "logos:css-3",
-    PostgreSQL: "logos:postgresql",
-    Docker: "logos:docker-icon",
-    Kubernetes: "logos:kubernetes",
-    Jenkins: "logos:jenkins",
-    "GitHub Actions": "logos:github-actions",
-    GraphQL: "logos:graphql",
-    Elasticsearch: "logos:elasticsearch",
-    DynamoDB: "logos:aws-dynamodb",
-    Redux: "logos:redux",
-    Webpack: "logos:webpack",
-    Linux: "logos:linux-tux",
-    Sentry: "logos:sentry-icon",
-    "New Relic": "logos:new-relic-icon",
-    Grafana: "logos:grafana",
-  };
-
-  return iconMap[tech] || "material-symbols:code";
-};
 
 export const ProjectModal = memo(function ProjectModal({
   isOpen,
@@ -233,11 +191,13 @@ export const ProjectModal = memo(function ProjectModal({
                       variant="secondary"
                       className="text-sm flex items-center gap-2 px-3 py-1"
                     >
-                      <Icon
-                        icon={getTechnologyIcon(tech)}
-                        className="w-4 h-4"
-                      />
-                      {tech}
+                      {tech.icon && (
+                        <Icon
+                          icon={tech.icon}
+                          className="w-4 h-4"
+                        />
+                      )}
+                      {tech.name}
                     </Badge>
                   ))}
                 </div>

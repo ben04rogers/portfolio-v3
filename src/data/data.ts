@@ -231,7 +231,13 @@ export const projectsData = [
       "User authentication and profile management",
       "Built-in messaging between developers and companies",
     ],
-    technologies: ["PHP", "Laravel", "JavaScript", "Tailwind", "MySQL"],
+    technologies: [
+      { name: "PHP", icon: "logos:php" },
+      { name: "Laravel", icon: "logos:laravel" },
+      { name: "JavaScript", icon: "logos:javascript" },
+      { name: "Tailwind", icon: "logos:tailwindcss-icon" },
+      { name: "MySQL", icon: "logos:mysql-icon" }
+    ],
     links: [
       {
         type: "Github",
@@ -258,7 +264,13 @@ export const projectsData = [
       "Assign users to cards",
       "Share boards with users",
     ],
-    technologies: ["PHP", "Laravel", "React", "Inertia", "SQLite"],
+    technologies: [
+      { name: "PHP", icon: "logos:php" },
+      { name: "Laravel", icon: "logos:laravel" },
+      { name: "React", icon: "logos:react" },
+      { name: "Inertia" },
+      { name: "SQLite", icon: "logos:sqlite" }
+    ],
     links: [
       {
         type: "Github",
@@ -284,7 +296,12 @@ export const projectsData = [
       "Support for multiple cryptocurrencies",
       "Auto-scaling infrastructure for handling traffic spikes",
     ],
-    technologies: ["JavaScript", "React", "Express.js", "AWS"],
+    technologies: [
+      { name: "JavaScript", icon: "logos:javascript" },
+      { name: "React", icon: "logos:react" },
+      { name: "Express.js", icon: "logos:express" },
+      { name: "AWS", icon: "logos:aws" }
+    ],
     links: [
       {
         type: "Github",
@@ -315,7 +332,11 @@ export const projectsData = [
       "Transaction history and reporting",
       "Asset categorisation and search functionality",
     ],
-    technologies: ["Java", "MariaDB", "Swing"],
+    technologies: [
+      { name: "Java", icon: "logos:java" },
+      { name: "MariaDB", icon: "logos:mariadb-icon" },
+      { name: "Swing", icon: "logos:java" }
+    ],
     links: [
       {
         type: "Github",
@@ -344,7 +365,12 @@ export const projectsData = [
       "Watchlist functionality for tracking favorite items",
       "Admin panel for platform management",
     ],
-    technologies: ["Python", "Flask", "Bootstrap", "SQLite"],
+    technologies: [
+      { name: "Python", icon: "logos:python" },
+      { name: "Flask", icon: "logos:flask" },
+      { name: "Bootstrap", icon: "logos:bootstrap" },
+      { name: "SQLite", icon: "logos:sqlite" }
+    ],
     links: [
       {
         type: "Github",
@@ -370,7 +396,9 @@ export const projectsData = [
       "Score tracking and performance metrics",
       "Real-time input validation",
     ],
-    technologies: ["C"],
+    technologies: [
+      { name: "C", icon: "logos:c" }
+    ],
     links: [
       {
         type: "Github",
