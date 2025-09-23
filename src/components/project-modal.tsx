@@ -217,7 +217,7 @@ export const ProjectModal = memo(function ProjectModal({
                             asChild
                             variant="default"
                             size="sm"
-                            className="mr-2"
+                            className="mr-2 text-sm"
                           >
                             <a
                               href={linkItem.href}
@@ -237,7 +237,7 @@ export const ProjectModal = memo(function ProjectModal({
                             asChild
                             variant="outline"
                             size="sm"
-                            className="mr-2"
+                            className="mr-2 text-sm"
                           >
                             <a
                               href={linkItem.href}
@@ -256,7 +256,7 @@ export const ProjectModal = memo(function ProjectModal({
                             asChild
                             variant="default"
                             size="sm"
-                            className="mr-2"
+                            className="mr-2 text-sm"
                           >
                             <a
                               href={linkItem.href}
