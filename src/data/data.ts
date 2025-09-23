@@ -236,7 +236,7 @@ export const projectsData = [
       { name: "Laravel", icon: "logos:laravel" },
       { name: "JavaScript", icon: "logos:javascript" },
       { name: "Tailwind", icon: "logos:tailwindcss-icon" },
-      { name: "MySQL", icon: "logos:mysql-icon" }
+      { name: "MySQL", icon: "logos:mysql-icon" },
     ],
     links: [
       {
@@ -269,7 +269,7 @@ export const projectsData = [
       { name: "Laravel", icon: "logos:laravel" },
       { name: "React", icon: "logos:react" },
       { name: "Inertia" },
-      { name: "SQLite", icon: "logos:sqlite" }
+      { name: "SQLite", icon: "logos:sqlite" },
     ],
     links: [
       {
@@ -300,7 +300,7 @@ export const projectsData = [
       { name: "JavaScript", icon: "logos:javascript" },
       { name: "React", icon: "logos:react" },
       { name: "Express.js", icon: "logos:express" },
-      { name: "AWS", icon: "logos:aws" }
+      { name: "AWS", icon: "logos:aws" },
     ],
     links: [
       {
@@ -335,7 +335,7 @@ export const projectsData = [
     technologies: [
       { name: "Java", icon: "logos:java" },
       { name: "MariaDB", icon: "logos:mariadb-icon" },
-      { name: "Swing", icon: "logos:java" }
+      { name: "Swing", icon: "logos:java" },
     ],
     links: [
       {
@@ -369,7 +369,7 @@ export const projectsData = [
       { name: "Python", icon: "logos:python" },
       { name: "Flask", icon: "logos:flask" },
       { name: "Bootstrap", icon: "logos:bootstrap" },
-      { name: "SQLite", icon: "logos:sqlite" }
+      { name: "SQLite", icon: "logos:sqlite" },
     ],
     links: [
       {
@@ -396,9 +396,7 @@ export const projectsData = [
       "Score tracking and performance metrics",
       "Real-time input validation",
     ],
-    technologies: [
-      { name: "C", icon: "logos:c" }
-    ],
+    technologies: [{ name: "C", icon: "logos:c" }],
     links: [
       {
         type: "Github",

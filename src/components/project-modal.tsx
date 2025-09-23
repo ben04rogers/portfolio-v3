@@ -31,7 +31,6 @@ interface ProjectModalProps {
   };
 }
 
-
 export const ProjectModal = memo(function ProjectModal({
   isOpen,
   onClose,
@@ -192,10 +191,7 @@ export const ProjectModal = memo(function ProjectModal({
                       className="text-sm flex items-center gap-2 px-3 py-1"
                     >
                       {tech.icon && (
-                        <Icon
-                          icon={tech.icon}
-                          className="w-4 h-4"
-                        />
+                        <Icon icon={tech.icon} className="w-4 h-4" />
                       )}
                       {tech.name}
                     </Badge>
