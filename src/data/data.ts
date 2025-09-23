@@ -230,6 +230,7 @@ export const projectsData = [
       "Company subscription model for accessing developer profiles and messaging",
       "User authentication and profile management",
       "Built-in messaging between developers and companies",
+      "Setup automated PHPUnit tests in GitHub Actions pipeline.",
     ],
     technologies: [
       { name: "PHP", icon: "logos:php" },
