@@ -17,7 +17,7 @@ export function Projects({ delay = 0 }: ProjectsProps) {
     detailedDescription?: string;
     keyFeatures?: readonly string[];
     dates: string;
-    technologies: readonly string[];
+    technologies: readonly { name: string; icon?: string }[];
     images?: string[];
     video?: string;
     links?: readonly {
@@ -67,7 +67,6 @@ export function Projects({ delay = 0 }: ProjectsProps) {
                 title={project.title}
                 description={project.description}
                 dates={project.dates}
-                tags={project.technologies}
                 image={project.image}
                 video={project.video}
                 links={project.links}

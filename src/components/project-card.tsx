@@ -5,8 +5,6 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { BiLinkExternal } from "react-icons/bi";
 import { AiFillGithub, AiFillYoutube } from "react-icons/ai";
-import { Icon } from "@iconify/react";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Markdown from "react-markdown";
@@ -16,7 +14,6 @@ interface Props {
   href?: string;
   description: string;
   dates: string;
-  tags: readonly string[];
   link?: string;
   image?: string;
   video?: string;
@@ -34,7 +31,6 @@ export function ProjectCard({
   href,
   description,
   dates,
-  tags,
   link,
   image,
   video,
