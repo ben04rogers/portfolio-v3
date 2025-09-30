@@ -8,7 +8,7 @@ export const personalData = {
   location: "Brisbane, Australia",
   locationLink: "https://www.google.com/maps/place/brisbane",
   description:
-    "Software Engineer at Humanforce. I build full-stack web applications with a focus on performance and scalability.",
+    "Full Stack Software Engineer at Humanforce. I build web applications with a focus on performance and scalability.",
   summary:
     "I'm a Software Engineer with **4 years of experience**, currently working in the Platform Engineering team at Humanforce. I specialise in building scalable systems, improving developer experience, and solving platform-wide productivity and performance challenges across products like intelliHR, Thrive, and Workforce Management - serving **600,000+ users**. I hold a **Bachelor's degree in Computer Science** from Queensland University of Technology. I enjoy exploring new tech in my free time.",
   avatarUrl: "/me.png",
