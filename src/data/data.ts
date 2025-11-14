@@ -19,10 +19,11 @@ export const skillsData = [
     category: "Backend",
     skills: [
       { name: "Node.js", icon: "logos:nodejs-icon" },
-      { name: "Laravel", icon: "logos:laravel" },
       { name: "TypeScript", icon: "logos:typescript-icon" },
-      { name: "PHP", icon: "logos:php" },
+      { name: ".NET", icon: "logos:dotnet" },
       { name: "C#", icon: "logos:c-sharp" },
+      { name: "Laravel", icon: "logos:laravel" },
+      { name: "PHP", icon: "logos:php" },
       { name: "Python", icon: "logos:python" },
       { name: "SQL", icon: "ph:file-sql" },
       { name: "PostgreSQL", icon: "logos:postgresql" },
@@ -30,7 +31,6 @@ export const skillsData = [
       { name: "DynamoDB", icon: "logos:aws-dynamodb" },
       { name: "REST APIs", icon: "lucide:cloud-cog" },
       { name: "GraphQL", icon: "logos:graphql" },
-      { name: "Elasticsearch", icon: "logos:elasticsearch" },
     ],
   },
   {
