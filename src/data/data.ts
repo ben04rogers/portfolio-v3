@@ -154,9 +154,9 @@ export const experiencesData = [
     end: "Jan 2024",
     description: [
       "Worked on various web applications for the university such as CAHP (Casual Academic Hire and Payment), UQ Maps, Programs and Courses, my.UQ.",
-      "Developed a system for staff to validate their timesheets in CAHP.",
+      "Developed features for staff to validate their timesheets in the CAHP website.",
       "Developed an events feed microservice using Node.js, AWS Lambda, Docker, and DynamoDB.",
-      "Worked on an automated pipeline for UQ Donations using AWS, CDK, Code Pipeline and Docker.",
+      "Worked on an automated pipeline for the UQ Donations website using AWS, CDK, Code Pipeline and Docker.",
       "Developed React components for the UQ design system to reuse across different applications.",
       "Used many different technologies including TypeScript, React, Node.js, PHP, Symfony, MySQL, AWS, DynamoDB, Lambda, Jenkins and Oracle.",
       "Developed an automated access control system to ensure students completed the mandatory UQ Respect module before accessing Blackboard, using Node.js, TypeScript, Express.js, MySQL, Jenkins, and the Blackboard API to grant or revoke access based on completion status.",
@@ -173,7 +173,7 @@ export const experiencesData = [
     end: "Nov 2022",
     description: [
       "Developed new features using Laravel, Vue.js, PHP, JavaScript, Tailwind CSS, MySQL and REST APIs.",
-      "Developed an email notification system for merchants to subscribe to weekly/monthly summaries of YouPay carts created, paid and cancelled on their store. The emails would also compare the current week/month with the previous.",
+      "Developed an email notification system for merchants to receive weekly/monthly summaries of YouPay carts created/paid/cancelled on their store.",
       "Worked on signup and login flows using Vue.js and Laravel.",
       "Built a one-click feature to automatically generate a branded 'About YouPay' page on merchants' Shopify stores, streamlining onboarding and boosting merchant adoption.",
       "Maintenance of Laravel Nova merchant dashboard.",
