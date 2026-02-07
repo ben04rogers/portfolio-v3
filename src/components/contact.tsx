@@ -4,6 +4,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { SubmitButton } from "@/components/SubmitButton";
 import { sendEmail } from "@/lib/sendEmail";
 import { toast } from "react-hot-toast";
+import { contactData } from "@/data/data";
 
 interface ContactProps {
   delay?: number;
@@ -20,8 +21,8 @@ export function Contact({ delay = 0 }: ContactProps) {
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Please contact me directly at{" "}
-              <a className="underline" href="mailto:benrogers1299@outlook.com">
-                benrogers1299@outlook.com
+              <a className="underline" href={`mailto:${contactData.email}`}>
+                {contactData.email}
               </a>{" "}
               or through this form.
             </p>

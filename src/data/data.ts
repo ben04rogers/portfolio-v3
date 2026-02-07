@@ -97,7 +97,7 @@ export const navbarData = [
 ] as const;
 
 export const contactData = {
-  email: "hello@example.com",
+  email: "benrogers1299@outlook.com",
   tel: "+123456789",
   social: {
     GitHub: {
