@@ -17,14 +17,14 @@ With these layers each part stays simple, predictable and easy to test.
 ### The Problem with Tangled Components
 
 ```jsx
+// This component runs API calls, sets state, handles loading and errors, and renders UI.
+// That complexity makes it hard to test cleanly.
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // This component runs API calls, sets state, handles loading and errors, and renders UI.
-  // That complexity makes it impossible to test cleanly.
 };
 ```
 
@@ -38,9 +38,6 @@ const useUserDashboardData = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // fetch user, posts, notifications, handle errors
-  // expose refresh and delete functions
 
   return {
     user,
