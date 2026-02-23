@@ -4,7 +4,7 @@ publishedAt: "2025-07-16"
 summary: "Writing Testable Components in React"
 ---
 
-React testing feels broken when your components are doing too much. If you're wrestling with mocked hooks, flaky async tests, and components that refuse to be tested in isolation, the problem isn't your testing skills - it's mixing business logic, state management, and UI rendering all in one place.
+Testing components in React is tricky when your components are doing too much. If you're wrestling with mocked hooks, flaky async tests, and components that refuse to be tested in isolation, the problem isn't your testing skills - it's mixing business logic, state management, and UI rendering all in one place.
 
 The Container/View pattern fixes this by splitting your components into clean layers:
 
@@ -126,8 +126,8 @@ This structure leaves the view completely free of logic, making it trivial to re
 
 Split your components into:
 
-- a custom hook for fetching and state management
-- a container to orchestrate logic and pass data
-- a view to render UI with props to pass in the data
+- Custom hook for fetching and state management
+- Container to orchestrate logic and pass data
+- View to render UI with props to pass in the data
 
 This makes components clean, predictable, and super easy to test.
