@@ -1,0 +1,152 @@
+---
+title: "Notes from A Philosophy of Software Design"
+publishedAt: "2026-02-23"
+summary: "A deep dive into John Ousterhout's philosophy on software design, covering modules, complexity, information hiding, and the mindset needed to build maintainable systems."
+---
+
+I recently read _A Philosophy of Software Design_ by John Ousterhout. Here are the ideas that stood out to me most.
+
+## Chapter 1: It's All About Complexity
+
+The biggest limitation in software isn't your IDE, framework, or language. It's your brain's ability to hold a mental model of your system.
+
+Complexity is anything that makes your system hard to understand or modify. Not because it's big, but because relationships are tangled, logic is hidden, and changing one thing might break something unexpected.
+
+Two weapons: encapsulate complexity (hide nasty stuff behind clean interfaces) and make code obvious (don't make me dig through five files to understand a function).
+
+## Chapter 2: The Nature of Complexity
+
+Three symptoms:
+
+- **Change amplification** - change one thing, modify twelve files
+- **Cognitive load** - need to understand the whole system to fix one bug
+- **Unknown unknowns** - don't know what you don't know until production catches fire
+
+Two causes: dependencies (can't modify one piece without touching others) and obscurity (important stuff isn't visible).
+
+Complexity is incremental. It sneaks in through hundreds of tiny decisions. Fight it constantly.
+
+## Chapter 3: Working Code Isn't Enough
+
+**Tactical programming**: get it working, move on. Fast initially, but shortcuts compound. Soon you spend more time figuring out how to make changes than making them.
+
+**Strategic programming**: step back and ask "is this the right way, or just the fastest?" Refactor as you go.
+
+Ousterhout recommends spending 10-20% of time on "investments," improving design, docs, and abstractions. Counterintuitive, but that 20% buys you velocity later.
+
+## Chapter 4: Modules Should Be Deep
+
+**Deep modules** have simple interfaces but complex, powerful implementations. Think of a garbage collector. Massive complexity under the hood, but you just call `collect()`.
+
+Don't confuse "small classes" with good design. Small classes can be shallow. They have lots of interfaces but not much value behind any of them.
+
+The metric isn't size. It's interface complexity vs. implementation complexity. Deep modules have a high ratio.
+
+## Chapter 5: Information Hiding (and Leakage)
+
+Each module should encapsulate knowledge about some design decision. Something that could change. Hide it. Make it internal.
+
+**Information leakage** happens when users have to know about your internal representation, specific data structures, or weird assumptions. That's a design smell.
+
+## Chapter 6: General-Purpose Modules Are Deeper
+
+Special-purpose code is faster initially, but it tends to have complex interfaces since each one is slightly different.
+
+General-purpose code takes more thought upfront, but it forces you to find the common abstraction, which simplifies the interface.
+
+Invest slightly more time up front to create modules more general than you need right now.
+
+## Chapter 7: Different Layer, Different Abstraction
+
+Each layer should provide a different abstraction.
+
+If two adjacent layers do similar things, like one class just forwarding calls to another, you've got a problem. Pass-through methods add interface complexity without adding value.
+
+## Chapter 8: Pull Complexity Downwards
+
+Handle complexity inside your module. Don't make users configure seventeen parameters or handle edge cases.
+
+Configuration parameters are often a cop-out. Instead of doing the hard work of picking good defaults, you offload that decision to users.
+
+## Chapter 9: Better Together or Better Apart?
+
+Don't split everything into tiny pieces just because "one class, one responsibility." Splitting introduces dependencies.
+
+The question is: does separating reduce overall complexity? If two pieces are always used together, keep them together.
+
+Long methods aren't inherently bad. If a method does one thing conceptually, it can be long.
+
+## Chapter 10: Define Errors Out of Existence
+
+Design your API so error cases can't happen. If `unset()` is called on something already unset, just do nothing. No error possible.
+
+Exceptions are seductive but notoriously buggy. They're code that rarely runs, so it's not well-tested. Eliminate them where you can, mask them where you can't.
+
+## Chapter 11: Design It Twice
+
+Design your solution two or three ways. Sketch radically different approaches. You'll learn more from the comparison than from either individual design.
+
+The best design often emerges from combining elements of different alternatives.
+
+## Chapter 12: Why Write Comments? The Four Excuses
+
+- **"Good code is self-documenting"** - Some things can't be expressed in code, like the high-level purpose or why you chose this approach
+- **"Comments get out of date"** - Update them when you change code. Treat docs as part of the code
+- **"I don't have time"** - That's the tactical programming excuse. Short-term speed, long-term pain
+- **"All comments are worthless"** - Then write better ones
+
+## Chapter 13: Comments Should Describe Things That Aren't Obvious
+
+Good comments add information code can't express: the "why," not the "what." High-level purpose, constraints, design decisions, edge cases.
+
+Don't restate what the code does. If you're just translating code into English, stop.
+
+## Chapter 14: Choosing Names
+
+A good name communicates what something does and sets expectations about behaviour. Struggling to name something clearly is often a design smell.
+
+Avoid generic names like `processData()`. Be specific.
+
+Name variables for their purpose, not their type. Not `intList`, call it what it represents.
+
+## Chapter 15: Write Comments First
+
+Write comments before code. You're forced to clarify your thinking about the module's interface and constraints.
+
+It acts as a design document. You discover problems before you've invested in implementation.
+
+## Chapter 16: Modifying Existing Code
+
+Every modification should leave the code better. Not just working, but better designed.
+
+Before you change code, ask: what should this look like if we were building it fresh? Move toward that ideal with every change.
+
+## Chapter 17: Consistency
+
+Similar things should be done similarly. Different things should be done differently.
+
+Consistency is a force multiplier. Once you learn one part of a system, that knowledge transfers to other parts. It also prevents bugs.
+
+## Chapter 18: Code Should Be Obvious
+
+First choice: make code obvious. Clear names, effective whitespace, keep similar things together.
+
+Comments are a backup plan for when the code itself can't be clear.
+
+## Chapter 19: Software Trends
+
+- **Inheritance** creates dependencies, so prefer composition
+- **Agile** can encourage tactical programming, so balance it with design investment
+- **TDD** can lead to testing implementation details, so test behaviour instead
+
+## Chapter 20: Designing for Performance
+
+Simpler code tends to be faster. Complex optimizations introduce complexity.
+
+Before optimising, measure. Often the simple solution is fast enough.
+
+## Chapter 21: Conclusion
+
+Fight complexity everywhere, all the time. Design is continuous. Every line of code is a design decision.
+
+The core question: "Am I making this easier or harder to understand?"
