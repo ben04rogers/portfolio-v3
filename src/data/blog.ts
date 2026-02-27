@@ -25,10 +25,7 @@ export async function markdownToHTML(markdown: string) {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypePrettyCode, {
-      theme: {
-        light: "github-light",
-        dark: "github-dark",
-      },
+      theme: "github-dark",
       keepBackground: false,
     })
     .use(rehypeStringify)
