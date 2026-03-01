@@ -4,7 +4,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { personalData } from "@/data/data";
-import { ExternalLink, Link as LinkIcon } from "lucide-react";
+import { ArrowRight, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 
 interface HeroProps {
@@ -34,7 +34,7 @@ export function Hero({ delay = 0 }: HeroProps) {
                     className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors underline"
                   >
                     Check out my blog
-                    <ExternalLink className="size-4" />
+                    <ArrowRight className="size-4" />
                   </Link>
                 </>
               }
