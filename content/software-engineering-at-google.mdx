@@ -1,0 +1,360 @@
+---
+title: "Notes from Software Engineering at Google"
+publishedAt: "2026-03-01"
+summary: "Notes from Software Engineering at Google"
+---
+
+I recently read _Software Engineering at Google_ by Titus Winters, Tom Manshreck, and Hyrum Wright. The book covers how Google does software engineering at scale - everything from culture and teamwork to testing, build systems, and CI/CD.
+
+Here are my notes from each chapter that stood out to me.
+
+## Chapter 1: What Is Software Engineering?
+
+The key distinction: **programming** is writing code for now, **software engineering** is code that changes over time.
+
+### Hyrum's Law
+
+> With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviours of your system will be depended upon by somebody.
+
+If users can see it, they'll depend on it. Design APIs assuming everything is public.
+
+### Time and Change
+
+Software engineering is about surviving the test of time. What works for a 100-line project doesn't work for 100 million lines.
+
+### Shifting Left
+
+Fix problems earlier in the development cycle. Find bugs at compile time, not production.
+
+## Chapter 2: How to Work Well on Teams
+
+### The Genius Myth
+
+The idea that great code comes from lone genius programmers is harmful. The best software comes from teams.
+
+### Don't Hide
+
+- Hiding code delays feedback
+- The bus factor matters - if only one person understands it, you're at risk
+- Early detection of problems is better than late detection
+
+### The Three Pillars
+
+- **Humility** - you're not the smartest person in every room
+- **Respect** - genuinely care about your teammates
+- **Trust** - believe others are capable and well-intentioned
+
+### Blameless Post-Mortems
+
+When things go wrong, focus on the process, not the person. People make mistakes; the goal is to fix the system.
+
+## Chapter 3: Knowledge Sharing
+
+### Psychological Safety
+
+The foundation of a learning organisation. People need to feel safe to ask questions and admit they don't know something.
+
+### Scaling Knowledge
+
+- **Ask the community** - group chats, mailing lists, Q&A platforms
+- **Tech talks and classes** - share what you know
+- **Documentation** - code is read more than written, so document it
+
+### Readability
+
+Google has a "readability" process - code must be reviewed by someone certified in that language. It's standardised mentorship through code review.
+
+## Chapter 4: Engineering for Equity
+
+### Bias Is the Default
+
+We all have biases. Acknowledge them and build processes that account for them.
+
+### Diversity Is a Process
+
+Diversity isn't a checkbox - it's about building systems that work for everyone.
+
+## Chapter 5: How to Lead a Team
+
+### Managers vs Tech Leads
+
+- **Engineering Manager** - people focus, career development, performance reviews
+- **Tech Lead** - technical direction, architecture, code reviews
+
+### Servant Leadership
+
+Your job is to remove roadblocks, not write more code. Enable your team to be effective.
+
+### Antipatterns
+
+- Ignoring low performers
+- Being everyone's friend (instead of their manager)
+- Treating your team like children
+- Compromising the hiring bar
+
+### Positive Patterns
+
+- Lose the ego
+- Be a Zen master (stay calm under pressure)
+- Be a catalyst
+- Remove roadblocks
+- Set clear goals
+
+## Chapter 6: Leading at Scale
+
+### Always Be Deciding
+
+Leadership is making trade-offs constantly. Identify your blind spots.
+
+### Always Be Leaving
+
+Build a "self-driving" team - one that doesn't need you to function. Document decisions, onboard others, delegate.
+
+### Always Be Scaling
+
+- Important vs Urgent - focus on important
+- Learn to drop balls - you can't do everything
+- Protect your energy
+
+## Chapter 7: Measuring Engineering Productivity
+
+Measuring engineering productivity is hard. The danger is optimising for the wrong thing.
+
+### Don't Measure Lines of Code
+
+Productivity isn't about output volume. Focus on outcomes, not output.
+
+### Goals, Signals, Metrics
+
+- **Goal** - what you want to achieve (e.g., "reduce downtime")
+- **Signal** - something that indicates progress (e.g., "incident frequency")
+- **Metric** - the quantified signal (e.g., "incidents per month")
+
+## Chapter 8: Style Guides and Rules
+
+### Why Have Rules?
+
+Consistency reduces cognitive load. Rules let reviewers focus on logic, not style.
+
+### Guiding Principles
+
+- Style guides should be minimal but enforceable
+- Automate what you can (formatters, linters)
+- Change the rules through a process, not individual whim
+
+## Chapter 9: Code Review
+
+Code review is one of the most important quality gates in software development.
+
+### Benefits
+
+- Catches bugs early
+- Ensures code consistency
+- Knowledge sharing across the team
+
+### Best Practices
+
+- Be polite and professional
+- Write small changes
+- Write good change descriptions
+- Keep reviewers to a minimum
+- Automate where possible
+
+## Chapter 10: Documentation
+
+- Documentation is core engineering work, not optional.
+
+- Treat docs like code: versioned, reviewed, maintained.
+
+- Write for a specific audience.
+
+- Separate reference, tutorials, and conceptual docs.
+
+- Keep docs accurate, clear, and owned.
+
+- Delete or fix stale docs - trust matters.
+
+## Chapter 11: Testing Overview
+
+### Why Test?
+
+Tests give you confidence to make changes. They document expected behaviour.
+
+### Test Size
+
+- **Small** - unit tests, fast, isolated
+- **Medium** - integration between components
+- **Large** - end-to-end, slow, expensive
+
+### The Beyonce Rule
+
+Tests should verify behaviour, not implementation. If you refactor and tests break, they're too brittle.
+
+## Chapter 12: Unit Testing
+
+### Preventing Brittle Tests
+
+- Test via public APIs, not internals
+- Test state, not interactions (unless necessary)
+- Strive for unchanging tests
+
+### DAMP, Not DRY
+
+**DAMP** (Descriptive And Meaningful Phrases) > **DRY** (Don't Repeat Yourself) in tests. Readability matters more than avoiding duplication in test code.
+
+## Chapter 13: Test Doubles
+
+### Types
+
+- **Fakes** - simplified working implementations (e.g., in-memory database)
+- **Stubs** - canned responses to specific calls
+- **Mocks** - objects that record how they're called
+
+### Prefer Realism Over Isolation
+
+Use real implementations when possible. Fakes should mirror real behaviour.
+
+## Chapter 14: Larger Testing
+
+Unit tests aren't enough. Sometimes you need bigger, slower, more expensive tests.
+
+### Types of Larger Tests
+
+- Functional testing of interacting binaries
+- Browser and device testing
+- Performance and load testing
+- Deployment configuration testing
+- A/B testing
+- User acceptance testing
+- Disaster recovery and chaos engineering
+
+## Chapter 15: Deprecation
+
+Deprecation is the art of removing old things without breaking your users.
+
+### Types
+
+- **Advisory** - "we recommend not using this"
+- **Compulsory** - "you must stop using this by date X"
+
+### Why Deprecate?
+
+Remove old features to reduce maintenance burden. But do it responsibly with clear timelines.
+
+## Chapter 16: Version Control and Branch Management
+
+How you manage your source code shapes how your team works.
+
+### One Version
+
+Google uses monorepo with "one version" - everyone uses the latest. No library version juggling.
+
+### Trunk-Based Development
+
+Short-lived branches merged to main frequently. No long-lived feature branches.
+
+## Chapter 17: Code Search
+
+When your codebase has millions of files, regular grep won't cut it.
+
+### Why a Separate Tool?
+
+At scale, grep doesn't work. Need specialised tools for fast, indexed search across millions of files.
+
+## Chapter 18: Build Systems and Build Philosophy
+
+### Task-Based vs Artifact-Based
+
+- **Task-based** (Make, Gradle) - defines how to build
+- **Artifact-based** (Bazel) - defines what to build
+
+Google uses artefact-based for reproducibility.
+
+### The 1:1:1 Rule
+
+One build target per source file, one test file per source file, one output directory per source file.
+
+## Chapter 19: Critique: Google's Code Review Tool
+
+### Key Principles
+
+- Integrate tightly with workflow
+- Show analysis results (linting, testing) inline
+- Make it easy to understand the state of a change
+
+## Chapter 20: Static Analysis
+
+Static analysis catches bugs without running your code.
+
+### Tricorder
+
+Google's static analysis platform. Runs tools automatically on code reviews.
+
+### Key Lessons
+
+- Focus on developer happiness
+- Make it part of the core workflow
+- Empower users to contribute
+
+## Chapter 21: Dependency Management
+
+Dependencies are a liability. Every one you add is something someone else maintains.
+
+### The Problem
+
+Diamond dependencies, version conflicts, "dependency hell."
+
+### Approaches
+
+- **Semantic Versioning** - promises but can over-constrain
+- **Live at Head** - always use latest, rely on backwards compatibility
+
+### Google's Approach
+
+"Minimal version selection" - use the oldest allowed version that satisfies requirements.
+
+## Chapter 22: Large-Scale Changes (LSCs)
+
+### What Is an LSC?
+
+Changes affecting thousands of files. Google's tooling can "shard" changes across many CLs.
+
+### Challenges
+
+- Merge conflicts
+- Testing
+- Code review at scale
+
+## Chapter 23: Continuous Integration
+
+### Key Concepts
+
+- Fast feedback loops
+- Automated testing
+- Hermetic tests (reproducible, isolated)
+
+## Chapter 24: Continuous Delivery
+
+Getting code to users quickly and safely.
+
+### Idioms
+
+- Flag-guarding features (deploy code behind flags)
+- Release trains (regular cadence)
+- Ship only what gets used (monitor usage)
+
+### Shifting Left
+
+Make data-driven decisions earlier. Don't wait for production to know something is wrong.
+
+## Chapter 25: Compute as a Service
+
+### Key Ideas
+
+- Architect for failure
+- Batch vs serving are different
+- Containers as an abstraction
+
+## Conclusion
+
+Software engineering is a team sport. Focus on processes that scale - code review, testing, knowledge sharing. The goal isn't perfect code; it's code that survives over time.
