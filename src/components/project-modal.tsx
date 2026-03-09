@@ -158,48 +158,6 @@ export const ProjectModal = memo(function ProjectModal({
                 </Markdown>
               </div>
 
-              {project.keyFeatures && project.keyFeatures.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Key Features
-                  </h3>
-                  <ul className="space-y-2 list-none ml-3">
-                    {project.keyFeatures.map((feature, index) => (
-                      <li
-                        key={index}
-                        className="flex items-start text-gray-700 dark:text-white/70"
-                      >
-                        <span className="text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0">
-                          •
-                        </span>
-                        <span className="leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  Technologies
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, index) => (
-                    <Badge
-                      key={index}
-                      variant="secondary"
-                      className="text-sm flex items-center gap-2 px-3 py-1"
-                    >
-                      {tech.icon && (
-                        <Icon icon={tech.icon} className="w-4 h-4" />
-                      )}
-                      {tech.name}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Links */}
               {project.links && project.links.length > 0 && (
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
@@ -273,6 +231,48 @@ export const ProjectModal = memo(function ProjectModal({
                   </div>
                 </div>
               )}
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Technologies
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="text-sm flex items-center gap-2 px-3 py-1"
+                    >
+                      {tech.icon && (
+                        <Icon icon={tech.icon} className="w-4 h-4" />
+                      )}
+                      {tech.name}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {project.keyFeatures && project.keyFeatures.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Key Features
+                  </h3>
+                  <ul className="space-y-2 list-none ml-3">
+                    {project.keyFeatures.map((feature, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start text-gray-700 dark:text-white/70"
+                      >
+                        <span className="text-gray-500 dark:text-gray-400 mr-3 mt-0.5 flex-shrink-0">
+                          •
+                        </span>
+                        <span className="leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
             </div>
           </div>
         </div>
