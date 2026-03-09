@@ -10,7 +10,7 @@ export const personalData = {
   description:
     "Full Stack Software Engineer at Humanforce. I build web applications with a focus on performance and scalability.",
   summary:
-    "I'm a Software Engineer with **4 years of experience**, currently working in the Platform Engineering team at Humanforce. I specialise in building scalable systems, and solving platform-wide productivity and performance challenges across products like Humanforce HR, and Workforce Management - used by **600,000+ users**. I hold a **Bachelor's degree in Computer Science** from Queensland University of Technology. I enjoy exploring new tech in my free time.",
+    "I'm a Software Engineer with **4+ years of experience**, currently working in the Platform Engineering team at Humanforce. I specialise in building scalable systems, and solving platform-wide productivity and performance challenges across products like Humanforce HR, and Workforce Management - used by **over 800,000 users**. I hold a **Bachelor's degree in Computer Science** from Queensland University of Technology. I enjoy exploring new tech in my free time.",
   avatarUrl: "/me.png",
 } as const;
 
@@ -131,7 +131,7 @@ export const experiencesData = [
     start: "Jan 2024",
     end: "Present",
     description: [
-      "Worked on web applications serving 600,000+ users with a modern tech stack including a Laravel backend (PHP) with GraphQL endpoints, a React SPA frontend (TypeScript), event‑driven Node.js (TypeScript) microservices, and also AWS Lambda backends (TypeScript).",
+      "Worked on web applications serving 800,000+ users with a modern tech stack including a Laravel backend (PHP) with GraphQL endpoints, a React SPA frontend (TypeScript), event‑driven Node.js (TypeScript) microservices, and also AWS Lambda backends (TypeScript).",
       "Enhanced the email log in intelliHR by integrating AWS SES and a microservice to track bounce, complaint, and delivery status, allowing users to retry failed messages.",
       "Built user management features for a multi-tenant infrastructure management system, enabling administrators to create users, assign companies, and define permissions (TypeScript, Angular, Lambda, API Gateway, DynamoDB).",
       "Developed backend APIs for the intelliHR‑Thrive mobile app integration, streamlining in‑app form completion and boosting task completion rates.",
@@ -360,11 +360,9 @@ export const projectsData = [
     keyFeatures: [
       "User registration and authentication system",
       "Item listing and management with image uploads",
-      "Real-time bidding system with automatic bid validation",
-      "Advanced search and filtering capabilities",
-      "User review and rating system",
+      "Bidding system",
+      "Reviews and ratings for items",
       "Watchlist functionality for tracking favorite items",
-      "Admin panel for platform management",
     ],
     technologies: [
       { name: "Python", icon: "logos:python" },
@@ -379,8 +377,13 @@ export const projectsData = [
         icon: "github",
       },
     ],
-    image: "/computer-auction.png",
-    images: ["/computer-auction.png"],
+    image: "/computer-auction-1.png",
+    images: [
+      "/computer-auction-1.png",
+      "/computer-auction-2.png",
+      "/computer-auction-3.png",
+      "/computer-auction-4.png",
+    ],
     video: "",
   },
   {
