@@ -14,8 +14,8 @@ export function formatDate(date: string) {
     return "Today";
   }
 
-  return new Date(isoDate).toLocaleString("en-us", {
-    month: "long",
+  return new Date(isoDate).toLocaleDateString("en-us", {
+    month: "short",
     day: "numeric",
     year: "numeric",
     timeZone: "UTC",
