@@ -217,6 +217,44 @@ export const educationData = [
 ] as const;
 
 export const projectsData = [
+    {
+    title: "Project Management",
+    href: "https://github.com/ben04rogers/ozdevs-v2",
+    dates: "2023",
+    active: true,
+    description:
+      "Project management application featuring drag-and-drop kanban boards, user assignments, and team collaboration. Built with Laravel, React and Inertia.",
+    detailedDescription: `Kanban project management application to help teams manage their work.`,
+    keyFeatures: [
+      "Interactive drag-and-drop kanban boards for task management",
+      "Create multiple boards",
+      "Create cards on a board with a rich text editor for card descriptions",
+      "Assign users to cards",
+      "Share boards with users",
+    ],
+    technologies: [
+      { name: "PHP", icon: "logos:php" },
+      { name: "Laravel", icon: "logos:laravel" },
+      { name: "React", icon: "logos:react" },
+      { name: "Inertia" },
+      { name: "SQLite", icon: "logos:sqlite" },
+    ],
+    links: [
+      {
+        type: "Github",
+        href: "https://github.com/ben04rogers/kanban-laravel",
+        icon: "github",
+      },
+      {
+        type: "Demo",
+        href: "https://www.loom.com/share/d2f97ac3bb7543828c542ee0fe4ab10d",
+        icon: "globe",
+      },
+    ],
+    image: "/project-management.png",
+    images: ["/project-management.png"],
+    video: "",
+  },
   {
     title: "Developer Job Portal",
     href: "https://github.com/ben04rogers/ozdevs-v2",
@@ -248,39 +286,6 @@ export const projectsData = [
     ],
     image: "/job-portal.png",
     images: ["/job-portal.png"],
-    video: "",
-  },
-  {
-    title: "Project Management",
-    href: "https://github.com/ben04rogers/ozdevs-v2",
-    dates: "2023",
-    active: true,
-    description:
-      "Project management application featuring drag-and-drop kanban boards, user assignments, and team collaboration. Built with Laravel, React and Inertia.",
-    detailedDescription: `Kanban project management application to help teams manage their work.`,
-    keyFeatures: [
-      "Interactive drag-and-drop kanban boards for task management",
-      "Create multiple boards",
-      "Create cards on a board with a rich text editor for card descriptions",
-      "Assign users to cards",
-      "Share boards with users",
-    ],
-    technologies: [
-      { name: "PHP", icon: "logos:php" },
-      { name: "Laravel", icon: "logos:laravel" },
-      { name: "React", icon: "logos:react" },
-      { name: "Inertia" },
-      { name: "SQLite", icon: "logos:sqlite" },
-    ],
-    links: [
-      {
-        type: "Github",
-        href: "https://github.com/ben04rogers/kanban-laravel",
-        icon: "github",
-      },
-    ],
-    image: "/project-management.png",
-    images: ["/project-management.png"],
     video: "",
   },
   {
