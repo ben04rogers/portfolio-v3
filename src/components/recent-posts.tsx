@@ -41,7 +41,7 @@ export async function RecentPosts({ delay = 0 }: RecentPostsProps) {
           {sortedPosts.map((post, id) => (
             <BlurFade key={post.slug} delay={delay + 0.01 + id * 0.05}>
               <Link href={`/blog/${post.slug}`} className="block h-full">
-                <Card className="h-full border border-border p-4 hover:border-foreground/50 transition-all cursor-pointer flex flex-col">
+                <Card className="h-full border border-border p-4 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-gray-600 transition-all cursor-pointer flex flex-col">
                   <CardHeader className="p-0 mb-3">
                     <CardTitle className="text-xl">
                       {post.metadata.title}

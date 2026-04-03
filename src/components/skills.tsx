@@ -64,7 +64,7 @@ export function Skills({ delay = 0 }: SkillsProps) {
                     delay: skillIndex * 0.05,
                     duration: 0.2,
                   }}
-                  className="flex flex-col items-center justify-center p-3 sm:p-4 bg-gray-100 dark:bg-white/10 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-white/20 transition-colors w-full h-24 sm:h-28"
+                  className="flex flex-col items-center justify-center p-3 sm:p-4 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors w-full h-24 sm:h-28"
                 >
                   <span className="text-xs text-center font-medium text-gray-700 dark:text-gray-300 leading-tight mb-2 sm:mb-3 flex-1 flex items-center justify-center">
                     {skill.name}
