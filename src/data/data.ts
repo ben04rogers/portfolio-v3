@@ -143,6 +143,23 @@ export const experiencesData = [
       "Led smooth PHP and Laravel version upgrades.",
       "Setup ESLint and Prettier in CI/CD pipelines to enforce coding standards and consistent code quality across teams.",
     ],
+    skills: [
+      "TypeScript",
+      "Node.js",
+      "C#",
+      ".NET",
+      "React",
+      "Laravel",
+      "PHP",
+      "GraphQL",
+      "AWS",
+      "Lambda",
+      "Angular",
+      "DynamoDB",
+      "PostgreSQL",
+      "Playwright",
+      "Jest",
+    ],
   },
   {
     company: "The University of Queensland",
@@ -160,6 +177,18 @@ export const experiencesData = [
       "Developed React components for the UQ design system to reuse across different applications.",
       "Used many different technologies including TypeScript, React, Node.js, PHP, Symfony, MySQL, AWS, DynamoDB, Lambda, Jenkins and Oracle.",
       "Developed an automated access control system to ensure students completed the mandatory UQ Respect module before accessing Blackboard, using Node.js, TypeScript, Express.js, MySQL, Jenkins, and the Blackboard API to grant or revoke access based on completion status.",
+    ],
+    skills: [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "PHP",
+      "Symfony",
+      "MySQL",
+      "AWS Lambda",
+      "DynamoDB",
+      "Docker",
+      "Jenkins",
     ],
   },
   {
@@ -180,6 +209,15 @@ export const experiencesData = [
       "Integrated YouPay into dozens of Shopify stores.",
       "Reviewed code for colleagues.",
     ],
+    skills: [
+      "Laravel",
+      "Vue.js",
+      "PHP",
+      "JavaScript",
+      "Tailwind CSS",
+      "MySQL",
+      "REST APIs",
+    ],
   },
   {
     company: "M3 Digital",
@@ -195,6 +233,7 @@ export const experiencesData = [
       "Developed high quality landing pages from scratch with modular CSS and JS practices for maintainability.",
       "Integrated many third party plugins within existing stores, e.g. Calendly for customer bookings and Preezie for product recommendations.",
     ],
+    skills: ["HTML", "CSS", "SCSS", "JavaScript", "Liquid", "Shopify"],
   },
 ] as const;
 
@@ -217,7 +256,7 @@ export const educationData = [
 ] as const;
 
 export const projectsData = [
-    {
+  {
     title: "Project Management",
     href: "https://github.com/ben04rogers/ozdevs-v2",
     dates: "2023",

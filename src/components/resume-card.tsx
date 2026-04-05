@@ -16,6 +16,7 @@ interface ResumeCardProps {
   href?: string;
   period: string;
   description?: readonly string[];
+  skills?: readonly string[];
 }
 export const ResumeCard = ({
   logoUrl,
@@ -25,6 +26,7 @@ export const ResumeCard = ({
   href,
   period,
   description,
+  skills,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -71,7 +73,7 @@ export const ResumeCard = ({
             {subtitle && <div className="font-sans text-xs">{subtitle}</div>}
           </CardHeader>
           {description && (
-            <motion.ul
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{
                 opacity: isExpanded ? 1 : 0,
@@ -81,12 +83,30 @@ export const ResumeCard = ({
                 duration: 0.7,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="mt-2 text-xs sm:text-sm list-disc list-outside ml-4 space-y-1"
             >
-              {description.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </motion.ul>
+              <ul className="mt-2 text-xs sm:text-sm list-disc list-outside ml-4 space-y-1">
+                {description.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+              {skills && skills.length > 0 && (
+                <div className="mt-6 ml-4">
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs sm:text-sm font-medium">
+                      Technologies:
+                    </span>
+                    {skills.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-800/50"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
           )}
         </div>
       </Card>

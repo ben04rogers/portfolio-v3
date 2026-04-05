@@ -1,6 +1,5 @@
 import { Contact } from "@/components/contact";
 import { Projects } from "@/components/projects";
-import { Skills } from "@/components/skills";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Education } from "@/components/education";
@@ -24,9 +23,7 @@ export default function Page() {
 
       <Projects delay={BLUR_FADE_DELAY * 11} />
 
-      <Skills delay={BLUR_FADE_DELAY * 13} />
-
-      <Contact delay={BLUR_FADE_DELAY * 15} />
+      <Contact delay={BLUR_FADE_DELAY * 13} />
     </main>
   );
 }

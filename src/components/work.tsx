@@ -26,6 +26,7 @@ export function Work({ delay = 0 }: WorkProps) {
               href={work.href}
               period={`${work.start} - ${work.end ?? "Present"}`}
               description={work.description}
+              skills={work.skills}
             />
           </BlurFade>
         ))}
