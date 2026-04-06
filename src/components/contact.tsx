@@ -41,10 +41,10 @@ export function Contact({ delay = 0 }: ContactProps) {
 
               toast.success("Email sent successfully!");
             }}
-            className="mt-6 flex flex-col w-[min(100%,38rem)] mx-auto dark:text-black"
+            className="mt-6 flex flex-col w-[min(100%,38rem)] mx-auto"
           >
             <input
-              className="h-14 px-4 rounded-lg border border-input dark:bg-white dark:bg-opacity-80 dark:focus:bg-opacity-100 transition-all dark:outline-none"
+              className="h-14 px-4 rounded-lg border border-input bg-gray-50 dark:bg-white/5 transition-all"
               name="senderEmail"
               type="email"
               required
@@ -52,7 +52,7 @@ export function Contact({ delay = 0 }: ContactProps) {
               placeholder="Your email"
             />
             <textarea
-              className="h-52 my-3 rounded-lg border border-input p-4 dark:bg-white dark:bg-opacity-80 dark:focus:bg-opacity-100 transition-all dark:outline-none"
+              className="h-52 my-3 rounded-lg border border-input bg-gray-50 dark:bg-white/5 p-4 transition-all"
               name="message"
               placeholder="Your message"
               required
