@@ -98,18 +98,18 @@ export const ProjectModal = memo(function ProjectModal({
                   {project.images.length > 1 && (
                     <>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={prevImage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-900 rounded-full w-10 h-10 p-0"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 p-0"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </Button>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={nextImage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-900 rounded-full w-10 h-10 p-0"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 p-0"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </Button>
@@ -126,7 +126,7 @@ export const ProjectModal = memo(function ProjectModal({
                         onClick={() => setCurrentImageIndex(index)}
                         className={`w-2 h-2 rounded-full transition-colors ${
                           index === currentImageIndex
-                            ? "bg-blue-500"
+                            ? "bg-black dark:bg-white"
                             : "bg-gray-300 dark:bg-gray-600"
                         }`}
                       />
