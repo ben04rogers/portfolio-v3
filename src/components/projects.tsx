@@ -37,7 +37,7 @@ export function Projects({ delay = 0 }: ProjectsProps) {
       keyFeatures: project.keyFeatures,
       dates: project.dates,
       technologies: project.technologies,
-      images: project.image ? [project.image] : undefined,
+      images: project.images,
       video: project.video,
       links: project.links,
     };
@@ -67,7 +67,7 @@ export function Projects({ delay = 0 }: ProjectsProps) {
                 title={project.title}
                 description={project.description}
                 dates={project.dates}
-                image={project.image}
+                image={project.images?.[0]}
                 video={project.video}
                 links={project.links}
                 onClick={() => handleProjectClick(project)}

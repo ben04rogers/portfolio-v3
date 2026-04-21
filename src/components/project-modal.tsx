@@ -101,17 +101,17 @@ export const ProjectModal = memo(function ProjectModal({
                         variant="ghost"
                         size="sm"
                         onClick={prevImage}
-                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-900 rounded-full w-10 h-10 p-0"
                       >
-                        <ChevronLeft className="w-4 h-4" />
+                        <ChevronLeft className="w-5 h-5" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={nextImage}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-900 rounded-full w-10 h-10 p-0"
                       >
-                        <ChevronRight className="w-4 h-4" />
+                        <ChevronRight className="w-5 h-5" />
                       </Button>
                     </>
                   )}
@@ -272,7 +272,6 @@ export const ProjectModal = memo(function ProjectModal({
                   </ul>
                 </div>
               )}
-
             </div>
           </div>
         </div>
