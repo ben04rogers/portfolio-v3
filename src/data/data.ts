@@ -327,7 +327,16 @@ export const projectsData = [
         icon: "github",
       },
     ],
-    images: ["/job-portal.png"],
+    images: [
+      "/job-portal-1.png",
+      "/job-portal-2.png",
+      "/job-portal-3.png",
+      "/job-portal-4.png",
+      "/job-portal-5.png",
+      "/job-portal-6.png",
+      "/job-portal-7.png",
+      "/job-portal-8.png"
+    ],
     video: "",
   },
   {
