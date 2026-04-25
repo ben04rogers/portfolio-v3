@@ -31,6 +31,17 @@ export function GitHubContributions({ delay = 0 }: GitHubContributionsProps) {
               <h2 className="text-3xl font-bold tracking-tighter">
                 GitHub Activity
               </h2>
+              <p className="text-muted-foreground">
+                Check out my latest code on{" "}
+                <a
+                  href={`https://github.com/${GITHUB_USERNAME}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-foreground transition-colors"
+                >
+                  GitHub
+                </a>
+              </p>
             </div>
           </BlurFade>
         </div>
@@ -46,6 +57,17 @@ export function GitHubContributions({ delay = 0 }: GitHubContributionsProps) {
             <h2 className="text-3xl font-bold tracking-tighter">
               GitHub Activity
             </h2>
+            <p className="text-muted-foreground">
+              Check out my latest code on{" "}
+              <a
+                href={`https://github.com/${GITHUB_USERNAME}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground transition-colors"
+              >
+                GitHub
+              </a>
+            </p>
           </div>
         </BlurFade>
         <BlurFade delay={delay + 0.05}>
