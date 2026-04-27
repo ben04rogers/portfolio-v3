@@ -46,9 +46,16 @@ export async function RecentPosts({ delay = 0 }: RecentPostsProps) {
                     <CardTitle className="text-xl">
                       {post.metadata.title}
                     </CardTitle>
-                    <CardDescription className="mt-2">
-                      {formatDate(post.metadata.publishedAt)}
-                    </CardDescription>
+                    <div className="flex items-center gap-2 mt-2">
+                      <CardDescription>
+                        {formatDate(post.metadata.publishedAt)}
+                      </CardDescription>
+                      {post.metadata.tags?.[0] && (
+                        <span className="text-xs px-2 py-0.5 rounded-full border">
+                          {post.metadata.tags[0]}
+                        </span>
+                      )}
+                    </div>
                   </CardHeader>
                   <CardContent className="p-0 flex-grow">
                     <p className="text-sm line-clamp-4">

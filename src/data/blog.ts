@@ -8,11 +8,12 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-type Metadata = {
+export type Metadata = {
   title: string;
   publishedAt: string;
   summary: string;
   image?: string;
+  tags?: string[];
 };
 
 function getMDXFiles(dir: string) {
@@ -37,7 +38,8 @@ export async function markdownToHTML(markdown: string) {
 export async function getPost(slug: string) {
   const filePath = path.join("content", `${slug}.mdx`);
   let source = fs.readFileSync(filePath, "utf-8");
-  const { content: rawContent, data: metadata } = matter(source);
+  const { content: rawContent, data } = matter(source);
+  const metadata: Metadata = data as Metadata;
   const content = await markdownToHTML(rawContent);
   return {
     source: content,
@@ -48,7 +50,7 @@ export async function getPost(slug: string) {
 
 async function getAllPosts(dir: string) {
   let mdxFiles = getMDXFiles(dir);
-  return Promise.all(
+  const posts = await Promise.all(
     mdxFiles.map(async (file) => {
       let slug = path.basename(file, path.extname(file));
       let { metadata, source } = await getPost(slug);
@@ -59,6 +61,7 @@ async function getAllPosts(dir: string) {
       };
     }),
   );
+  return posts;
 }
 
 export async function getBlogPosts() {
