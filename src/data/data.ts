@@ -257,12 +257,53 @@ export const educationData = [
 
 export const projectsData = [
   {
+    title: "Developer Job Portal",
+    href: "https://github.com/ben04rogers/ozdevs-v2",
+    dates: "2023",
+    active: true,
+    description:
+      "Australian job portal for hiring developers with filters for experience and location, featuring company subscription and messaging.",
+    detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations.`,
+    keyFeatures: [
+      "Filter by experience level, location, and keywords",
+      "Company subscription model for accessing developer profiles and messaging",
+      "User authentication and profile management",
+      "Built-in messaging between developers and companies",
+      "Setup automated PHPUnit tests in GitHub Actions pipeline.",
+    ],
+    technologies: [
+      { name: "PHP", icon: "logos:php" },
+      { name: "Laravel", icon: "logos:laravel" },
+      { name: "JavaScript", icon: "logos:javascript" },
+      { name: "Tailwind", icon: "logos:tailwindcss-icon" },
+      { name: "MySQL", icon: "logos:mysql-icon" },
+    ],
+    links: [
+      {
+        type: "Github",
+        href: "https://github.com/ben04rogers/ozdevs-v2",
+        icon: "github",
+      },
+    ],
+    images: [
+      "/job-portal-1.png",
+      "/job-portal-2.png",
+      "/job-portal-3.png",
+      "/job-portal-4.png",
+      "/job-portal-5.png",
+      "/job-portal-6.png",
+      "/job-portal-7.png",
+      "/job-portal-8.png",
+    ],
+    video: "",
+  },
+  {
     title: "Project Management",
     href: "https://github.com/ben04rogers/ozdevs-v2",
     dates: "2023",
     active: true,
     description:
-      "Project management application featuring drag-and-drop kanban boards, user assignments, and team collaboration. Built with Laravel, React and Inertia.",
+      "Project management app featuring drag-and-drop kanban boards, user assignments, and team collaboration.",
     detailedDescription: `Kanban project management application to help teams manage their work.`,
     keyFeatures: [
       "Interactive drag-and-drop kanban boards for task management",
@@ -294,48 +335,7 @@ export const projectsData = [
       "/kanban-board-1.png",
       "/kanban-board-3.png",
       "/kanban-board-4.png",
-      "/kanban-board-5.png"
-    ],
-    video: "",
-  },
-  {
-    title: "Developer Job Portal",
-    href: "https://github.com/ben04rogers/ozdevs-v2",
-    dates: "2023",
-    active: true,
-    description:
-      "Job portal for companies looking to hire developers in Australia. Filter by experience, location and keyboards. Companies can pay a monthly fee to be able to message developers on the site and view their information. Built with Laravel.",
-    detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations.`,
-    keyFeatures: [
-      "Filter by experience level, location, and keywords",
-      "Company subscription model for accessing developer profiles and messaging",
-      "User authentication and profile management",
-      "Built-in messaging between developers and companies",
-      "Setup automated PHPUnit tests in GitHub Actions pipeline.",
-    ],
-    technologies: [
-      { name: "PHP", icon: "logos:php" },
-      { name: "Laravel", icon: "logos:laravel" },
-      { name: "JavaScript", icon: "logos:javascript" },
-      { name: "Tailwind", icon: "logos:tailwindcss-icon" },
-      { name: "MySQL", icon: "logos:mysql-icon" },
-    ],
-    links: [
-      {
-        type: "Github",
-        href: "https://github.com/ben04rogers/ozdevs-v2",
-        icon: "github",
-      },
-    ],
-    images: [
-      "/job-portal-1.png",
-      "/job-portal-2.png",
-      "/job-portal-3.png",
-      "/job-portal-4.png",
-      "/job-portal-5.png",
-      "/job-portal-6.png",
-      "/job-portal-7.png",
-      "/job-portal-8.png"
+      "/kanban-board-5.png",
     ],
     video: "",
   },
@@ -345,7 +345,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Cryptocurrency sentiment analysis website that analyses Twitter posts to determine sentiment for different cryptocurrencies, built with React, Express.js, and AWS services including EC2, S3, and Elasticache with auto-scaling.",
+      "Crypto sentiment analysis tool that processes Twitter posts to determine market sentiment for various cryptocurrencies.",
     detailedDescription: `An advanced sentiment analysis platform that processes social media data to provide real-time insights into cryptocurrency market sentiment. This cloud-native application demonstrates modern full-stack development practices with scalable AWS infrastructure.`,
     keyFeatures: [
       "Real-time Twitter data collection and processing",
@@ -380,7 +380,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Java-based desktop application for trading virtual assets within company departments using a marketplace model. Built with MariaDB and Swing GUI.",
+      "Desktop application for trading virtual assets within company departments using a marketplace model.",
     detailedDescription: `A comprehensive desktop application that simulates an internal marketplace for trading virtual assets within company departments. This project demonstrates object-oriented programming principles and database integration in a real-world business context.`,
     keyFeatures: [
       "Department-based user management and authentication",
@@ -409,7 +409,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Computer auction application built with Flask. The site allows users to register, bid on items, leave reviews, post new listings, manage listings, search by keyword, and keep a watch list.",
+      "Auction platform for computers where users can register, bid, leave reviews, and manage watch lists.",
     detailedDescription: `A full-featured auction platform specifically designed for computer hardware and electronics. This web application provides a complete marketplace experience with user management, bidding functionality, and comprehensive item management.`,
     keyFeatures: [
       "User registration and authentication system",
@@ -445,7 +445,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Binary game written in C that runs on an Arduino Uno using Tinkercad. The game aims to help users learn binary by challenging them to input different integers in their binary form within a time limit.",
+      "Educational binary game on Arduino that challenges users to input integers in binary form within a time limit.",
     detailedDescription: `An educational game designed to teach binary number concepts through interactive gameplay on Arduino hardware. This embedded systems project combines programming fundamentals with hardware interaction to create an engaging learning experience.`,
     keyFeatures: [
       "Interactive LED display for visual feedback",
@@ -453,7 +453,10 @@ export const projectsData = [
       "Score tracking and performance metrics",
       "Real-time input validation",
     ],
-    technologies: [{ name: "C", icon: "logos:c" }],
+    technologies: [
+      { name: "C", icon: "logos:c" },
+      { name: "Arduino Uno", icon: "skill-icons:arduino" },
+    ],
     links: [
       {
         type: "Github",

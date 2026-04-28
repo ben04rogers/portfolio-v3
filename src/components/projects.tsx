@@ -70,6 +70,7 @@ export function Projects({ delay = 0 }: ProjectsProps) {
                 image={project.images?.[0]}
                 video={project.video}
                 links={project.links}
+                technologies={project.technologies}
                 onClick={() => handleProjectClick(project)}
               />
             </BlurFade>

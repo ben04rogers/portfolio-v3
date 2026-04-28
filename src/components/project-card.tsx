@@ -22,6 +22,7 @@ interface Props {
     type: string;
     href: string;
   }[];
+  technologies?: readonly { name: string; icon?: string }[];
   className?: string;
   onClick?: () => void;
 }
@@ -35,6 +36,7 @@ export function ProjectCard({
   image,
   video,
   links,
+  technologies,
   className,
   onClick,
 }: Props) {
@@ -58,9 +60,22 @@ export function ProjectCard({
           <div className="p-6 lg:w-1/2 flex flex-col h-full">
             <h3 className="text-xl font-semibold mb-2">{title}</h3>
 
-            <Markdown className="leading-relaxed text-gray-700 dark:text-white/70 mb-3 prose max-w-full text-pretty font-sans text-sm dark:prose-invert">
+            <Markdown className="leading-relaxed text-gray-700 dark:text-white/70 prose max-w-full text-pretty font-sans text-sm dark:prose-invert">
               {description}
             </Markdown>
+
+            {technologies && technologies.length > 0 && (
+              <div className="flex flex-wrap gap-2 my-5">
+                {technologies.map((tech) => (
+                  <span
+                    key={tech.name}
+                    className="px-2 py-1.5 text-xs font-medium text-gray-600 bg-gray-200 rounded-md dark:text-gray-300 dark:bg-white/10"
+                  >
+                    {tech.name}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <div className="flex">
               {link && (
@@ -147,7 +162,7 @@ export function ProjectCard({
             </div>
           </div>
 
-          <div className="hidden lg:flex lg:w-1/2 lg:items-end lg:justify-end">
+          <div className="hidden lg:flex lg:w-1/2 lg:items-end lg:justify-end pr-4 pb-4">
             {image && (
               <Image
                 src={image}
