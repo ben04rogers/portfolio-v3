@@ -91,6 +91,7 @@ export const ProjectModal = memo(function ProjectModal({
                     src={project.images[currentImageIndex]}
                     alt={`${project.title} - Image ${currentImageIndex + 1}`}
                     fill
+                    priority
                     className="object-contain"
                   />
 
