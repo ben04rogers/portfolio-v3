@@ -86,7 +86,11 @@ php artisan model:prune --model=AuditLog
 
 ## Tips
 
-1. **Test your pruning queries first** - Run static::where(...)->count() to see how many records will be deleted.
+1. **Test your pruning queries first** - Run this to see how many records will be deleted:
+
+   ```php
+   AuditLog::where('created_at', '<=', now()->subDays(90))->count();
+   ```
 
 2. **Consider soft deletes** - If you're using soft deletes, soft deleted records matching the prunable query will also be permanently deleted.
 
