@@ -1,0 +1,95 @@
+---
+title: "Pruning Database Tables in Laravel"
+publishedAt: "2026-04-28"
+summary: "Learn how to prune old data from your Laravel database tables using the Prunable and MassPrunable traits"
+tags: ["Laravel"]
+---
+
+Over time your database tables can grow significantly, impacting performance and increasing storage costs. Laravel provides two pruning traits to help you clean up old records: Prunable and MassPrunable.
+
+## Prunable Trait
+
+The Prunable trait loads each model before deleting it, which means model events (deleting, deleted) are fired and the pruning() method is called. This is useful when you need to clean up related resources before deletion.
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
+
+class AuditLog extends Model
+{
+    use Prunable;
+
+    /**
+     * Get the prunable model query.
+     */
+    public function prunable(): Builder
+    {
+        return static::where('created_at', '<=', now()->subDays(90));
+    }
+
+    /**
+     * Prepare the model for pruning.
+     */
+    protected function pruning(): void
+    {
+        // Clean up related resources before deletion
+        logger("Pruning audit log ID: {$this->id}");
+    }
+}
+```
+
+## MassPrunable Trait
+
+The MassPrunable trait uses a simple where clause to identify old records and deletes them in batches. Since it uses mass deletion, model events are not fired, making it much faster for large tables.
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\MassPrunable;
+
+class FailedJob extends Model
+{
+    use MassPrunable;
+
+    /**
+     * Get the prunable model query.
+     */
+    public function prunable(): Builder
+    {
+        return static::where('failed_at', '<=', now()->subDays(30));
+    }
+}
+```
+
+## Running Pruning
+
+Add the pruning command to your scheduler:
+
+```php
+$schedule->command('model:prune')->daily();
+```
+
+Or call it manually:
+
+```bash
+php artisan model:prune --model=AuditLog
+```
+
+## Tips
+
+1. **Test your pruning queries first** - Run static::where(...)->count() to see how many records will be deleted.
+
+2. **Consider soft deletes** - If you're using soft deletes, soft deleted records matching the prunable query will also be permanently deleted.
+
+3. **Choose the right trait** - Use Prunable when you need to run cleanup logic via events. Use MassPrunable for better performance on large tables.
+
+Pruning is essential for maintaining database performance, especially for tables that accumulate logs, analytics, or historical data.
