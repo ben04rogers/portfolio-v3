@@ -9,7 +9,9 @@ Over time your database tables can grow significantly, impacting performance and
 
 ## Prunable Trait
 
-The Prunable trait loads each model before deleting it, which means model events (deleting, deleted) are fired and the pruning() method is called. This is useful when you need to clean up related resources before deletion.
+The Prunable trait loads each model before deleting it. This fires the deleting/deleted model events and calls the pruning() method, which is useful when you need to clean up related resources before deletion.
+
+The prunable() method must return an Eloquent Builder query that selects which records should be deleted:
 
 ```php
 <?php
@@ -45,7 +47,7 @@ class AuditLog extends Model
 
 ## MassPrunable Trait
 
-The MassPrunable trait uses a simple where clause to identify old records and deletes them in batches. Since it uses mass deletion, model events are not fired, making it much faster for large tables.
+The MassPrunable trait is identical to Prunable, except it deletes records using a bulk DELETE query. This is much faster for large tables but skips the pruning() method and doesn't fire model events.
 
 ```php
 <?php
