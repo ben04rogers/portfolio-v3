@@ -86,7 +86,7 @@ export const ProjectModal = memo(function ProjectModal({
             {/* Image Carousel */}
             {project.images && project.images.length > 0 && (
               <div className="relative">
-                <div className="relative w-full h-80 md:h-96 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <div className="relative w-full h-80 md:h-96 bg-gray-100 dark:bg-gray-800 rounded border border-gray-300 overflow-hidden">
                   <Image
                     src={project.images[currentImageIndex]}
                     alt={`${project.title} - Image ${currentImageIndex + 1}`}

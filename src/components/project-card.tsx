@@ -170,7 +170,7 @@ export function ProjectCard({
                 width={500}
                 height={300}
                 quality={95}
-                className="w-full h-64 lg:h-auto lg:max-w-md shadow-lg object-cover"
+                className="w-full h-64 lg:h-auto lg:max-w-md shadow-sm object-cover rounded border border-gray-300"
               />
             )}
 
