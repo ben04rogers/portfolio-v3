@@ -5,7 +5,6 @@ import { About } from "@/components/about";
 import { Education } from "@/components/education";
 import { Work } from "@/components/work";
 import { RecentPosts } from "@/components/recent-posts";
-import { GitHubContributions } from "@/components/github-contributions";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -24,9 +23,7 @@ export default function Page() {
 
       <Projects delay={BLUR_FADE_DELAY * 11} />
 
-      <GitHubContributions delay={BLUR_FADE_DELAY * 12} />
-
-      <Contact delay={BLUR_FADE_DELAY * 13} />
+      <Contact delay={BLUR_FADE_DELAY * 12} />
     </main>
   );
 }
