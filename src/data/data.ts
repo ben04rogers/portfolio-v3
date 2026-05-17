@@ -261,8 +261,8 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Australian job portal for hiring developers with filters for experience and location, featuring company subscription and messaging.",
-    detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations.`,
+      "Australian job portal for hiring developers with filters for experience and location, featuring company subscription and messaging. Deployed to AWS with Terraform.",
+    detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations. The infrastructure is deployed to AWS using Terraform as Infrastructure as Code (EC2, RDS, S3, VPC).`,
     keyFeatures: [
       "Filter by experience level, location, and keywords",
       "Company subscription model for accessing developer profiles and messaging",
@@ -276,6 +276,8 @@ export const projectsData = [
       { name: "JavaScript", icon: "logos:javascript" },
       { name: "Tailwind", icon: "logos:tailwindcss-icon" },
       { name: "MySQL", icon: "logos:mysql-icon" },
+      { name: "Terraform", icon: "logos:terraform-icon" },
+      { name: "AWS", icon: "logos:aws" },
     ],
     links: [
       {
