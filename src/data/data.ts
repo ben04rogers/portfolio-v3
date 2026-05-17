@@ -261,7 +261,7 @@ export const projectsData = [
     dates: "2023",
     active: true,
     description:
-      "Australian job portal for hiring developers with filters for experience and location, featuring company subscription and messaging. Deployed to AWS with Terraform.",
+      "Australian job portal for hiring developers with filters for experience and location, featuring company subscription and messaging.",
     detailedDescription: `A comprehensive job portal specifically designed for the Australian developer market. This platform connects talented developers with companies seeking technical talent across various experience levels and specialisations. The infrastructure is deployed to AWS using Terraform as Infrastructure as Code (EC2, RDS, S3, VPC).`,
     keyFeatures: [
       "Filter by experience level, location, and keywords",
