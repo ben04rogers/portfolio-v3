@@ -318,7 +318,7 @@ export const projectsData = [
       { name: "Laravel", icon: "logos:laravel" },
       { name: "React", icon: "logos:react" },
       { name: "Inertia" },
-      { name: "SQLite", icon: "logos:sqlite" },
+      { name: "PostgreSQL", icon: "logos:postgresql" },
     ],
     links: [
       {
