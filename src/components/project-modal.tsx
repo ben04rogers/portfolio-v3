@@ -62,7 +62,7 @@ export const ProjectModal = memo(function ProjectModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-gray-900 rounded-lg shadow-xl overflow-hidden"
+        className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-neutral-800 rounded-lg shadow-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -242,7 +242,7 @@ export const ProjectModal = memo(function ProjectModal({
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="text-sm flex items-center gap-2 px-3 py-1"
+                      className="text-sm flex items-center gap-2 px-3 py-1 dark:bg-neutral-700"
                     >
                       {tech.icon && (
                         <Icon icon={tech.icon} className="w-4 h-4" />
