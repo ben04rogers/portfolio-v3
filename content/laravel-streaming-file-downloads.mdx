@@ -1,0 +1,58 @@
+---
+title: "Handling Memory Bottlenecks on Large Laravel File Downloads"
+publishedAt: "2026-06-09"
+summary: "Learn how to use streamDownload and lazy() to handle large file exports without hitting PHP memory limits"
+tags: ["Laravel", "PHP", "Performance"]
+---
+
+When working with large datasets in Laravel, loading thousands of records into memory at once will quickly hit the PHP `memory_limit` and crash your application. Whether you're generating file exports, building API responses, or processing bulk data, the same memory bottleneck applies.
+
+Instead of bumping server memory limits to keep up with data growth, a more reliable fix is to switch to a buffered streaming approach using `streamDownload`. Here's how it works using a CSV file export as an example.
+
+## The Implementation
+
+`response()->streamDownload()` takes a callable that writes to the response incrementally, rather than building the entire response in memory first. Combined with Eloquent's `lazy()` method, which streams database records one at a time using a cursor, PHP only holds a single record in memory at any given time. The rows are written directly to the output buffer and sent to the client as they're generated.
+
+Here is a clean pattern for a large CSV export:
+
+```php
+use App\Models\Order;
+use Illuminate\Support\Facades\Storage;
+
+public function exportLargeCsv()
+{
+    $fileName = 'order-export-' . now()->format('Y-m-d') . '.csv';
+
+    return response()->streamDownload(function () {
+        // Open PHP output stream
+        $file = fopen('php://output', 'w');
+
+        // Add headers
+        fputcsv($file, ['Order ID', 'Customer Email', 'Total', 'Created At']);
+
+        // Stream records using a database cursor via lazy()
+        foreach (Order::lazy() as $order) {
+            fputcsv($file, [
+                $order->id,
+                $order->customer_email,
+                $order->total_amount,
+                $order->created_at->toDateTimeString(),
+            ]);
+        }
+
+        fclose($file);
+    }, $fileName, [
+        'Content-Type' => 'text/csv',
+    ]);
+}
+```
+
+## Why this fixes the issue
+
+**Flat memory footprint**: `Order::lazy()` handles the database side by fetching rows sequentially using a cursor, preventing PHP from loading thousands of models at once.
+
+**Direct buffering**: `fopen('php://output', 'w')` bypasses local storage entirely. The server streams the data directly to the client as it loops.
+
+**No cleanup**: Because the file is never actually written to your local disk or an S3 bucket, there's no need to manage temporary files or schedule cleanup tasks.
+
+It's a simple change that keeps memory flat regardless of dataset size, preventing crashes as your data grows.
