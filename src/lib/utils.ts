@@ -6,12 +6,6 @@ export function cn(...inputs: (string | undefined)[]) {
 
 export function formatDate(date: string) {
   const isoDate = date.includes("T") ? date : `${date}T00:00:00Z`;
-  const today = new Date().toISOString().split("T")[0];
-  const targetDate = isoDate.split("T")[0];
-
-  if (targetDate === today) {
-    return "Today";
-  }
 
   return new Date(isoDate).toLocaleDateString("en-us", {
     month: "short",
