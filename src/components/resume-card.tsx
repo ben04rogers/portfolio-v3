@@ -83,6 +83,7 @@ export const ResumeCard = ({
                 duration: 0.7,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              className="overflow-hidden"
             >
               <ul className="mt-2 text-xs sm:text-sm list-disc list-outside ml-4 space-y-1">
                 {description.map((item, idx) => (
