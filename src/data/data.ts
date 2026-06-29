@@ -11,7 +11,7 @@ export const personalData = {
     "Full Stack Software Engineer at Humanforce. I build web applications with a focus on performance and scalability.",
   summary:
     "I'm a Software Engineer with **5 years of experience**, currently working in the Platform Engineering team at Humanforce. I specialise in building scalable systems, and solving platform-wide productivity and performance challenges across products like Humanforce HR, and Workforce Management - used by **over 800,000 users**. I hold a **Bachelor's degree in Computer Science** from Queensland University of Technology. I enjoy exploring new tech in my free time.",
-  avatarUrl: "/me.png",
+  avatarUrl: "/me-2.png",
 } as const;
 
 export const skillsData = [

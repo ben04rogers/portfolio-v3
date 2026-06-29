@@ -41,7 +41,7 @@ export function Hero({ delay = 0 }: HeroProps) {
             />
           </div>
           <BlurFade delay={delay}>
-            <Avatar className="size-28 border">
+            <Avatar className="size-28 md:size-32 border">
               <AvatarImage
                 alt={personalData.name}
                 src={personalData.avatarUrl}
