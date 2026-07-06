@@ -251,6 +251,7 @@ export const educationData = [
       "Minor in Mobile Applications",
       "Science Deans List - 2019 and 2021",
     ],
+    degreePdfUrl: "/degree.pdf",
   },
 ] as const;
 

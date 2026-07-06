@@ -1,11 +1,11 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ChevronRightIcon } from "lucide-react";
-import Link from "next/link";
+import { Award, ChevronRightIcon } from "lucide-react";
 import React from "react";
 
 interface ResumeCardProps {
@@ -17,6 +17,7 @@ interface ResumeCardProps {
   period: string;
   description?: readonly string[];
   skills?: readonly string[];
+  degreePdfUrl?: string;
 }
 export const ResumeCard = ({
   logoUrl,
@@ -27,10 +28,11 @@ export const ResumeCard = ({
   period,
   description,
   skills,
+  degreePdfUrl,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (description) {
       e.preventDefault();
       setIsExpanded(!isExpanded);
@@ -38,10 +40,17 @@ export const ResumeCard = ({
   };
 
   return (
-    <Link
-      href={href || "#"}
+    <div
+      role="button"
+      tabIndex={0}
       className="block cursor-pointer"
       onClick={handleClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick(e as unknown as React.MouseEvent<HTMLDivElement, MouseEvent>);
+        }
+      }}
     >
       <Card className="flex">
         <div className="flex-none">
@@ -107,10 +116,26 @@ export const ResumeCard = ({
                   </div>
                 </div>
               )}
+              {degreePdfUrl && (
+                <div className="mt-4 ml-4">
+                  <Button
+                    variant="outline"
+                    size="default"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(degreePdfUrl, "_blank", "noopener,noreferrer");
+                    }}
+                    className="relative overflow-hidden bg-white dark:bg-white/5"
+                  >
+                    <Award className="mr-1.5 w-3.5 h-3.5" />
+                    View Certificate
+                  </Button>
+                </div>
+              )}
             </motion.div>
           )}
         </div>
       </Card>
-    </Link>
+    </div>
   );
 };
