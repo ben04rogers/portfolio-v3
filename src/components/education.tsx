@@ -26,7 +26,6 @@ export function Education({ delay = 0 }: EducationProps) {
               subtitle={education.degree}
               period={`${education.start} - ${education.end}`}
               description={education.description}
-              degreePdfUrl={education.degreePdfUrl}
             />
           </BlurFade>
         ))}
