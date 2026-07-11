@@ -4,6 +4,7 @@ import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Badge } from "@/components/ui/badge";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -92,18 +93,35 @@ export default async function Blog({
           }),
         }}
       />
-      <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px]">
-        {post.metadata.title}
-      </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
+      <div className="mb-8 text-center">
         <Suspense fallback={<p className="h-5" />}>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            {formatDate(post.metadata.publishedAt)}
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+            Published on {formatDate(post.metadata.publishedAt)}
           </p>
         </Suspense>
+        <h1 className="title font-medium text-3xl tracking-tighter mt-2">
+          {post.metadata.title}
+        </h1>
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <span className="text-sm text-neutral-500 dark:text-neutral-400">
+            {post.readingTime}
+          </span>
+          {post.metadata.tags && post.metadata.tags.length > 0 && (
+            <>
+              <span className="text-neutral-300 dark:text-neutral-600">·</span>
+              <div className="flex flex-wrap justify-center gap-1.5">
+                {post.metadata.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
       <article
-        className="prose dark:prose-invert"
+        className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.source }}
       ></article>
     </section>

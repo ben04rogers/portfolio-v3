@@ -20,6 +20,13 @@ function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
 
+function getReadingTime(content: string): string {
+  const wordsPerMinute = 200;
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min read`;
+}
+
 export async function markdownToHTML(markdown: string) {
   const p = await unified()
     .use(remarkParse)
@@ -45,6 +52,7 @@ export async function getPost(slug: string) {
     source: content,
     metadata,
     slug,
+    readingTime: getReadingTime(rawContent),
   };
 }
 
