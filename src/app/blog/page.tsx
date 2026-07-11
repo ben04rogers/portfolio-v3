@@ -1,5 +1,6 @@
 import BlogList from "@/components/blog-list";
 import { getBlogPosts } from "@/data/blog";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Blog",
@@ -19,7 +20,9 @@ export default async function BlogPage() {
   return (
     <section>
       <h1 className="font-medium text-2xl mb-8 tracking-tighter">My Posts</h1>
-      <BlogList posts={posts} allTags={allTags} />
+      <Suspense>
+        <BlogList posts={posts} allTags={allTags} />
+      </Suspense>
     </section>
   );
 }

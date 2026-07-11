@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -111,9 +111,13 @@ export default async function Blog({
               <span className="text-neutral-300 dark:text-neutral-600">·</span>
               <div className="flex flex-wrap justify-center gap-1.5">
                 {post.metadata.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
+                  <Link
+                    key={tag}
+                    href={`/blog?tag=${encodeURIComponent(tag)}`}
+                    className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs transition-colors hover:bg-secondary text-secondary-foreground"
+                  >
                     {tag}
-                  </Badge>
+                  </Link>
                 ))}
               </div>
             </>

@@ -2,7 +2,7 @@
 
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -29,7 +29,19 @@ interface BlogListProps {
 }
 
 export default function BlogList({ posts, allTags }: BlogListProps) {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const selectedTag = searchParams.get("tag");
+
+  const setTag = (tag: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (tag) {
+      params.set("tag", tag);
+    } else {
+      params.delete("tag");
+    }
+    router.push(`/blog?${params.toString()}`);
+  };
 
   const filteredPosts = selectedTag
     ? posts.filter((post) => post.metadata.tags?.includes(selectedTag))
@@ -47,7 +59,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
       {allTags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           <button
-            onClick={() => setSelectedTag(null)}
+            onClick={() => setTag(null)}
             className={`px-4 py-1.5 text-sm rounded-full border transition-colors ${
               selectedTag === null
                 ? "bg-foreground text-background"
@@ -59,7 +71,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
           {allTags.map((tag) => (
             <button
               key={tag}
-              onClick={() => setSelectedTag(tag)}
+              onClick={() => setTag(tag)}
               className={`px-4 py-1.5 text-sm rounded-full border transition-colors ${
                 selectedTag === tag
                   ? "bg-foreground text-background"
