@@ -19,16 +19,19 @@ const fontSans = Ubuntu({
 export const metadata: Metadata = {
   metadataBase: new URL(personalData.url),
   title: {
-    default: "Ben Rogers | Software Engineer",
+    default:
+      "Ben Rogers | .NET, Node.js, TypeScript & PHP Developer in Brisbane, Australia",
     template: `%s | ${personalData.name}`,
   },
-  description: personalData.description,
+  description:
+    "Brisbane-based full stack software engineer specialising in .NET, Node.js, TypeScript, PHP/Laravel, React, and AWS. Building scalable web applications for enterprise.",
   openGraph: {
-    title: `${personalData.name}`,
-    description: personalData.description,
+    title: `${personalData.name} | Software Developer in Brisbane`,
+    description:
+      "Brisbane-based full stack software engineer specialising in .NET, Node.js, TypeScript, PHP/Laravel, React, and AWS.",
     url: personalData.url,
     siteName: `${personalData.name}`,
-    locale: "en_US",
+    locale: "en_AU",
     type: "website",
   },
   robots: {
@@ -43,12 +46,17 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: `${personalData.name}`,
+    title: `${personalData.name} | Software Developer in Brisbane`,
+    description:
+      "Brisbane-based full stack software engineer specialising in .NET, Node.js, TypeScript, PHP/Laravel, React, and AWS.",
     card: "summary_large_image",
+    site: "@benrogersdev",
   },
   verification: {
-    google: "",
-    yandex: "",
+    google: "rOZgIfCyJ8sZIvKt2JiCVNLYH5d8WfaTqedhQqWNwps",
+  },
+  alternates: {
+    canonical: personalData.url,
   },
 };
 
