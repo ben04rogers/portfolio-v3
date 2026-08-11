@@ -5,7 +5,7 @@ summary: "My main takeaways from reading The Art of PostgreSQL by Dimitri Fontai
 tags: ["Books", "PostgreSQL", "SQL"]
 ---
 
-Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool. It is organised into 8 parts and 53 chapters, building from simple queries all the way through extensions like `pgvector` and `pg_trgm`. Here are my notes from each part that stood out.
+Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool. It is organised into 8 parts and 53 chapters, building from simple queries all the way through extensions like `pgvector` and `pg_trgm`.
 
 ## Preface
 
@@ -19,15 +19,15 @@ Fontaine sets the tone with two quotes that frame the rest of the book.
 >
 > - Edsger W. Dijkstra, _The Humble Programmer_ (1972)
 
-SQL is one of the tools you have as a developer, and most developers use only a small fraction of what's possible. That's what the book is trying to fix.
+SQL is one of the tools you have as a developer, and most developers use only a small fraction of what's possible - that's what the book is trying to fix.
 
 ## Part 2: Introduction
 
-Three chapters that build a simple dataset (the CIA Factbook retail sales data) and a comparison: twenty lines of Python versus one SQL query that computes the same thing.
+Builds a simple dataset (the CIA Factbook retail sales data) and makes a comparison: twenty lines of Python versus one SQL query that computes the same thing.
 
 ### Why PostgreSQL?
 
-PostgreSQL is described as the "world's most advanced Open Source database." Fontaine is a Major Contributor, so this isn't an unbiased endorsement. The case is still strong: rich data types, extensibility, advanced indexing, real concurrency control, and a query planner that gets smarter every release.
+PostgreSQL is described as the "world's most advanced Open Source database." Fontaine is a Major Contributor, so this isn't an unbiased endorsement - but the case is still strong: rich data types, extensibility, advanced indexing, real concurrency control, and a query planner that gets smarter every release.
 
 ### SQL Injection and Server-Side Prepared Statements
 
@@ -35,7 +35,7 @@ PostgreSQL is described as the "world's most advanced Open Source database." Fon
 
 ## Part 3: Writing SQL Queries
 
-This is where the "SQL is code" thesis becomes practical. Six chapters on how to actually write SQL in an application context.
+This is where the "SQL is code" thesis becomes practical.
 
 ### Business Logic in SQL
 
@@ -66,11 +66,11 @@ Index types PostgreSQL supports:
 - **Hash** - equality only
 - **Bloom** - many-column equality lookups
 
-Variants: partial, covering, functional indexes, plus `fillfactor` and HOT updates for write-heavy tables. Index for both constraints and query patterns, but every index has a write cost.
+Variants include partial, covering, and functional indexes, plus `fillfactor` and HOT updates for write-heavy tables. Index for both constraints and query patterns, but every index has a write cost.
 
 ## Part 4: SQL Toolbox
 
-Ten chapters on the SQL features most ORMs hide from you.
+The SQL features most ORMs hide from you.
 
 ### GROUP BY, HAVING, WITH, UNION ALL
 
@@ -83,7 +83,7 @@ Ten chapters on the SQL features most ORMs hide from you.
 - **`DISTINCT ON`** - give me one row per group, picked by this ordering
 - **`FETCH FIRST WITH TIES`** - include ties on the boundary
 
-F1 world champions example query: one query, all champions since 1950, drivers and constructors, using `GROUPING SETS` and chained CTEs.
+The F1 world champions example query: one query, all champions since 1950, drivers and constructors, using `GROUPING SETS` and chained CTEs.
 
 ### Understanding Nulls
 
@@ -109,7 +109,7 @@ Watch for silent row loss: joins can drop rows you expected to keep.
 
 ## Part 5: Data Types
 
-Six chapters on the rich type system PostgreSQL actually offers.
+The rich type system PostgreSQL actually offers.
 
 ### PostgreSQL Data Types
 
@@ -132,7 +132,7 @@ A `daterange` column with an `EXCLUDE` constraint makes overlapping validity per
 
 ## Part 6: Data Modeling
 
-Eight chapters. Fontaine deliberately puts this late: you need to know SQL's capabilities before you can design a model that takes advantage of them.
+Fontaine deliberately puts this late: you need to know SQL's capabilities before you can design a model that takes advantage of them.
 
 ### Normalisation
 
@@ -162,11 +162,11 @@ JSONB makes "schemaless" design possible, but durability and consistency trade-o
 
 ## Part 7: Data Manipulation and Concurrency Control
 
-Eight chapters on DML and what actually happens when two writers show up.
+DML and what actually happens when two writers show up.
 
 ### Insert, Update, Delete
 
-`INSERT INTO ... SELECT` is a workhorse for batch loads. `MERGE` (PG 15+) finally gives you upsert-with-delete in one statement. `RETURNING` gives you back the rows you wrote, useful for triggers and ETL.
+`INSERT INTO ... SELECT` for batch loads. `MERGE` (PG 15+) gives you upsert-with-delete in one statement. `RETURNING` gives back the rows you wrote, useful for triggers and ETL.
 
 ### Isolation and Locking
 
@@ -186,27 +186,27 @@ PostgreSQL's built-in pub/sub. Useful for cache invalidation across processes an
 
 ## Part 8: PostgreSQL Extensions
 
-Eleven chapters.
+This is where Postgres becomes a platform rather than just a SQL database. `CREATE EXTENSION` installs packages of SQL objects, and Fontaine works through the notable ones across this part.
 
 ### What's a PostgreSQL Extension?
 
-A package of SQL objects (functions, types, operators, indexes) installed with `CREATE EXTENSION`. Fontaine lists the notable ones: `bloom`, `earthdistance`, `hstore`, `ltree`, `pg_trgm`, `PostGIS`, `ip4r`, `citus`, `pg_partman`, `postgres-hll`, `prefix`, `madlib`, `RUM`.
+A package of SQL objects (functions, types, operators, indexes) installed with `CREATE EXTENSION`. Fontaine lists the notable ones: `bloom`, `earthdistance`, `hstore`, `ltree`, `pg_trgm`, `PostGIS`, `ip4r`, `citus`, `pg_partman`, `postgres-hll`, `RUM`.
 
 ### Auditing with hstore
 
-A trigger that records every change to a row as an `hstore` key/value diff. Useful for audit trails without a separate schema or service.
+A trigger records every change to a row as an `hstore` key/value diff, useful for audit trails without a separate schema or service.
 
 ### Trigrams and Typos with pg_trgm
 
-Fuzzy text matching. `similarity()`, the `%` operator, GIN-indexed.
+Fuzzy text matching built on `similarity()` and the `%` operator, both GIN-indexable - this is how you do "did you mean...?" search in PostgreSQL without bolting on Elasticsearch.
 
 ### Geolocation with ip4r
 
-IP address ranges as a first-class type. IP-to-location lookups with proper indexing.
+IP address ranges as a first-class type with IP-to-location lookups via proper indexing.
 
 ### Counting Distinct Users with HyperLogLog
 
-Probabilistic distinct counts. Fast, cheap, lossy.
+Probabilistic distinct counts - fast, cheap, lossy when approximate is good enough.
 
 ### Vector Search with pgvector
 
@@ -214,6 +214,6 @@ New in 2026. The `vector` type, distance operators (`<=>`, `<->`, `<#>`), IVFFla
 
 ---
 
-SQL is application code. The database is part of your application. Version it, test it, review it. Most of the performance and complexity problems I've seen in production were SQL problems dressed up as application problems.
+SQL is application code. The database is part of your application, so version it, test it, review it. Most of the performance and complexity problems I've seen in production were SQL problems dressed up as application problems.
 
-The four chapters that changed my query writing most: window functions, `GROUPING SETS`, range types with exclusion constraints, `pg_trgm`.
+The four things that changed my query writing most: window functions, `GROUPING SETS`, range types with exclusion constraints, `pg_trgm`.
