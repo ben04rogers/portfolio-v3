@@ -101,6 +101,16 @@ code {
   @apply text-sm md:text-base !leading-loose;
 }
 
+.prose code:not(pre code) {
+  @apply bg-secondary px-1.5 py-0.5 rounded font-mono;
+  font-weight: 600;
+}
+
+.prose code:not(pre code)::before,
+.prose code:not(pre code)::after {
+  content: none;
+}
+
 pre > code {
   counter-reset: line;
 }
