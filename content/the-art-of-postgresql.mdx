@@ -5,215 +5,338 @@ summary: "My main takeaways from reading The Art of PostgreSQL by Dimitri Fontai
 tags: ["Books", "PostgreSQL", "SQL"]
 ---
 
-Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool. It is organised into 8 parts and 53 chapters, building from simple queries all the way through extensions like `pgvector` and `pg_trgm`.
+Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool.
 
-## Preface
+## Part I - Preface
 
-Fontaine sets the tone with two quotes that frame the rest of the book.
+Thesis: a developer's job is more than writing code - SQL is a first-class tool for producing results, not an afterthought.
 
-> Data dominates. If you've chosen the right data structures and organized things well, the algorithms will almost always be self-evident. Data structures, not algorithms, are central to programming.
->
-> - Rob Pike
+Frames the book as a corrective: most developers only use a fraction of what SQL/PostgreSQL can do, and don't know how to integrate raw SQL into a modern workflow (versioning, testing, review, deployment).
 
-> If you wish to count lines of code, you should not regard them as "lines produced" but as "lines spent."
->
-> - Edsger W. Dijkstra
+Central argument (via Dijkstra): count "lines of code" as lines spent, not produced - writing more in SQL means writing (and maintaining) less overall.
 
-SQL is one of the tools you have as a developer, and most developers use only a small fraction of what's possible - that's what the book is trying to fix.
+Each of the 8 main parts ends with an interview with a notable PostgreSQL/SQL community figure, and the book is designed to be readable either end-to-end or per-part out of order.
 
-## Part 2: Introduction
+## Part II - Introduction
 
-Builds a simple dataset (the CIA Factbook retail sales data) and makes a comparison: twenty lines of Python versus one SQL query that computes the same thing.
+### Ch 1 - Structured Query Language
 
-### Why PostgreSQL?
+SQL is declarative: you describe the desired result set, not the steps to get there; the model must be statically typed before the query runs.
 
-PostgreSQL is described as the "world's most advanced Open Source database." Fontaine is a Major Contributor, so this isn't an unbiased endorsement - but the case is still strong: rich data types, extensibility, advanced indexing, real concurrency control, and a query planner that gets smarter every release.
+Worked example: NYSE daily volume dataset loaded via `\copy` into staging text columns, then cleaned with `alter table ... alter column type ... using replace(...)::bigint`.
 
-### SQL Injection and Server-Side Prepared Statements
+SQL injection is properly fixed at the protocol level (Parse/Bind/Execute separating query text from parameters), not by client-side string escaping - demonstrated with `PREPARE`/`EXECUTE` and asyncpg's `$1`-style parameters.
 
-`PREPARE`/`EXECUTE` gives you both safety and a planning win: the query is parsed and planned once and reused.
+Rewrites a ~60-line Python "fill missing calendar days" script as one SQL query using `generate_series()` + `LEFT JOIN` + `coalesce()`.
 
-## Part 3: Writing SQL Queries
+Extends this to week-over-week % change using a CTE + `lag()` window function - showing SQL can replace "marketing analytics" code developers reflexively write in the app layer.
 
-This is where the "SQL is code" thesis becomes practical.
+### Ch 2 - Software Architecture
 
-### Business Logic in SQL
+PostgreSQL is a concurrent data-access service, not just storage; SQL is its API.
 
-Most business logic that lives in application code could be a single SQL query. Round-trips, hydration, and re-implementing aggregations in code cost time and introduce bugs.
+ACID recap: atomicity/isolation enable safe concurrency; consistency comes from modeling/constraints; durability survives crashes.
 
-### The SQL REPL
+"Why PostgreSQL": open governance, public mailing-list development, documentation required for every patch, "release when ready" cadence, deep extensibility (native JSON/XML/array/range types via a catalog-driven operator/function dispatch system from its Berkeley/Stonebraker roots).
 
-`psql` is your REPL. Set up a `.psqlrc` so every connection gives you useful defaults (timing, null display, history). The book shows how to discover a schema interactively, build a reporting tool, and use `psql` as a query editor.
+### Ch 3 - Getting Ready
 
-### SQL Is Code
+Check `show server_version;` and match docs to it; `psql` is the primary tool used throughout the book (GUI tools fine if they support explain plans).
 
-This chapter changed how I think about SQL files in a codebase.
+## Part III - Writing SQL Queries
 
-- **Style guides** - consistent naming, formatting, casing
-- **Comments** - why a query exists, not what it does
-- **Unit tests** - `pg_regress`, or simpler harnesses against a known dataset
-- **Regression tests** - golden output comparisons
+### Ch 4 - Business Logic
 
-### Indexing Strategy
+Every query already embeds business logic - the real question is how much logic belongs in SQL vs. app code.
 
-Index types PostgreSQL supports:
+Multi-query app-side logic risks reading across different snapshots (read-committed default) - concurrent writes between queries can silently corrupt results; a single SQL query is immune (one snapshot).
 
-- **B-tree** - default, equality and range
-- **GiST** - geometric, full-text, range overlaps
-- **SP-GiST** - space-partitioned, quadtrees, and the like
-- **GIN** - inverted index, arrays, JSONB, trigrams
-- **BRIN** - block range, huge tables with natural ordering
-- **Hash** - equality only
-- **Bloom** - many-column equality lookups
+Network round-trips dominate cost as queries get cheap - 5 round trips vs. 1 well-written query matters more than server CPU time.
 
-Variants include partial, covering, and functional indexes, plus `fillfactor` and HOT updates for write-heavy tables. Index for both constraints and query patterns, but every index has a write cost.
+Prefer plain-SQL stored procedures (`language sql`) over PL/pgSQL; only reach for procedural code when set-based SQL genuinely can't express the logic.
 
-## Part 4: SQL Toolbox
+### Ch 5 - A Small Application
 
-The SQL features most ORMs hide from you.
+Sample "cdstore" app on the Chinook dataset (loaded via pgloader), queries kept in `.sql` files (via anosql) instead of embedded strings - version-controllable, directly runnable in `psql`.
 
-### GROUP BY, HAVING, WITH, UNION ALL
+Top-N-per-genre implemented via `left join lateral` rather than looping in app code.
 
-- **GROUPING SETS** - multiple groupings in one query
-- **`GROUPING()`** - tells you which grouping produced a row
-- **Ordered-set aggregates** - percentiles and the like
-- **CTEs** - `WITH` clauses as named subqueries
-- **Recursive CTEs** - `WITH RECURSIVE` for tree and graph traversal
-- **`SEARCH` and `CYCLE`** - ordering and cycle detection in recursive walks
-- **`DISTINCT ON`** - give me one row per group, picked by this ordering
-- **`FETCH FIRST WITH TIES`** - include ties on the boundary
+### Ch 6 - The SQL REPL (psql)
 
-The F1 world champions example query: one query, all champions since 1950, drivers and constructors, using `GROUPING SETS` and chained CTEs.
+Recommends a tuned `~/.psqlrc` (`\x auto`, `ON_ERROR_ROLLBACK interactive`, unicode borders, prompt showing transaction state) - but disable it for scripts/reports (`--no-psqlrc`).
 
-### Understanding Nulls
+`psql` doubles as a reporting tool (`--tuples-only`, `-P format=html`, `-f script.sql`); `\set ECHO_HIDDEN true` reveals the SQL behind backslash commands.
 
-Three-valued logic: true, false, unknown. `NULL = NULL` is not true. `NOT NULL` constraints are the cheapest correctness you can buy. Outer joins introduce nulls.
+### Ch 7 - SQL is Code
 
-### Window Functions
+SQL deserves the same discipline as any code: consistent style, meaningful aliases, comments explaining why, version control, tests.
 
-Frames, partitioning, ordering, and the difference between `ROWS`, `RANGE`, and `GROUPS`.
+Avoid `order by <column number>`, pre-ANSI comma-joins, and `natural join` (silently changes semantics on schema drift).
 
-- **Running totals and moving averages** - the classic case
-- **Gaps and islands** - finding missing or contiguous ranges in data
-- **Sessionisation** - turning an event stream into sessions
-- **Cohort analysis** - grouping users by signup period
+Recommends pgTAP (pg_prove) for unit tests and RegreSQL for regression testing of `.sql` files.
 
-### Understanding Relations and Joins
+Set `application_name` per module to trace production queries back to source.
 
-Relations are sets, not lists. Join types have specific output cardinality, and getting this wrong is where most query bugs come from.
+### Ch 8 - Indexing Strategy
 
-- **LATERAL joins** - correlated subqueries that can reference earlier `FROM` items and return multiple rows
-- **Semi-joins and anti-joins** - `EXISTS` and `NOT EXISTS`, often faster than `IN`/`NOT IN`
+Two reasons to index: (1) required to back UNIQUE/PRIMARY KEY/EXCLUDE constraints, (2) query performance - everything else is a deliberate trade-off (indexes cost write-side maintenance).
 
-Watch for silent row loss: joins can drop rows you expected to keep.
+Access method cheat sheet: B-tree (general/ordered), GiST (non-ordered/geometric/ranges), SP-GiST (uneven-density tries/quadtrees), GIN (arrays/full-text/composite containment), BRIN (huge naturally-ordered tables), Hash (equality only), Bloom (multi-column equality).
 
-## Part 5: Data Types
+Workflow: `pg_stat_statements` to find costly queries -> `EXPLAIN (analyze, verbose, buffers)` to spot seq scans and estimate/actual mismatches.
 
-The rich type system PostgreSQL actually offers.
+### Ch 9 - Interview: Yohann Gabory
 
-### PostgreSQL Data Types
+The database, not the framework, should enforce consistency; use the ORM for simple queries but always be able to inspect/override its generated SQL.
 
-- **`UUID`** - watch for write amplification as primary keys
-- **Date/time with time zones** - `timestamptz` is almost always what you want
-- **Intervals** - first-class, not magic strings
-- **Network address types** - `inet`, `cidr`, `macaddr`
-- **Ranges** - `daterange`, `numrange`, `int4range`, `int8range`, and multi-ranges (PG 14+)
+Rejects database-agnosticism as impractical - developing on SQLite and deploying on PostgreSQL means you never get to use PostgreSQL's real capabilities.
 
-### Denormalised Data Types
+## Part IV - SQL Toolbox
 
-- **Arrays** - first-class, with operators and indexing
-- **JSONB** - binary JSON, indexable, the default for any "schema-less" payload
-- **Composite types** - structured values in a column
-- **SQL/JSON** - the path language, `JSON_TABLE`, the `IS JSON` predicate
+### Ch 10-12 - Data, SQL, Statement Categories
 
-### Range Types and Exclusion Constraints
+Dataset: Formula One history (f1db) via pgloader.
 
-A `daterange` column with an `EXCLUDE` constraint makes overlapping validity periods impossible at the schema level, not the application level.
+DML (INSERT/UPDATE/DELETE), DDL (CREATE/ALTER/DROP), TCL (BEGIN/COMMIT/ROLLBACK, 2PC), DCL (GRANT/REVOKE).
 
-## Part 6: Data Modeling
+### Ch 13 - Select, From, Where
 
-Fontaine deliberately puts this late: you need to know SQL's capabilities before you can design a model that takes advantage of them.
+`SELECT *` is discouraged - hides intent, breaks silently on schema changes, wastes I/O (incl. TOAST decompression).
 
-### Normalisation
+Join-condition placement matters: a filter in `ON` vs `WHERE` changes whether a `LEFT JOIN` stays outer or collapses to inner.
 
-Standard coverage of normal forms, but Fontaine keeps asking the practical question: does this model make my queries easy? The three database anomalies (update, insertion, deletion) frame the discussion.
+`NOT IN` + a `NULL` in the list means the predicate can never be true - use `NOT EXISTS` for anti-joins instead.
 
-### Practical Use Case: Geonames
+### Ch 14 - Order By, Limit, No Offset
 
-Takes a real dataset and builds a sensible schema around it: GiST indexing on geometry, timezone handling, feature classification.
+kNN search: `ORDER BY point <-> point LIMIT k` with a GiST index lets the whole search happen inside the index scan.
 
-### Modelling Anti-Patterns
+`OFFSET` is actively discouraged (must scan+discard all prior rows); proper pagination uses keyset/seek pagination: `WHERE row(col1,col2) > (last1,last2) ORDER BY ... FETCH FIRST n ROWS ONLY`.
 
-- **Entity-Attribute-Value (EAV)** - the trap. Almost always a bad idea in PostgreSQL.
-- **Multiple values per column** - if you find yourself CSV-encoding things, stop
-- **UUID pitfalls** - not sortable, harder to debug, and the write-amplification problem
+### Ch 15 - Group By, Having, With, Union All
 
-### Denormalisation
+`FILTER (WHERE ...)` restricts what an aggregate counts without a subquery.
 
-- **Materialised views** - cached query results, refreshable
-- **History tables and audit trails** - write-once, read-forever
-- **Validity as a range** - temporal modelling done right
-- **Enumerated types** - Postgres enums or lookup tables
-- **Partitioning** - declarative partitioning (PG 12+) with ongoing improvements through PG 17
+`GROUPING SETS`/`ROLLUP`/`CUBE` compute multiple aggregation levels in one pass.
 
-### Not Only SQL
+Aggregates can't nest directly - chain CTEs for "max of sums" style logic.
 
-JSONB makes "schemaless" design possible, but durability and consistency trade-offs still apply. Structured schema for the things you know, JSONB for the things you don't.
+`DISTINCT ON (expr)` (PostgreSQL-only) picks first row per group per `ORDER BY`.
 
-## Part 7: Data Manipulation and Concurrency Control
+Prefer `UNION ALL` over `UNION` when duplicates are impossible; `EXCEPT` is a handy tool for regression-testing query equivalence.
 
-DML and what actually happens when two writers show up.
+### Ch 16 - Understanding Nulls
 
-### Insert, Update, Delete
+SQL is three-valued logic (true/false/unknown) - `NULL = NULL` is `NULL`, not true.
 
-`INSERT INTO ... SELECT` for batch loads. `MERGE` (PG 15+) gives you upsert-with-delete in one statement. `RETURNING` gives back the rows you wrote, useful for triggers and ETL.
+Use `IS DISTINCT FROM` when `NULL` should compare like a normal value.
 
-### Isolation and Locking
+### Ch 17 - Window Functions
 
-PostgreSQL uses **SSI** (Serializable Snapshot Isolation), which gives you serialisable without the locking overhead of traditional approaches. Most of the time you want `READ COMMITTED`. When you don't, know what you're getting.
+Frames (default `UNBOUNDED PRECEDING .. CURRENT ROW`), `PARTITION BY` for subgroup scope, named `WINDOW` clauses for reuse.
 
-### Computing and Caching in SQL
+Evaluated after `WHERE` filtering - can't see rows already excluded.
 
-Views, materialised views, and the cache invalidation problem. The book argues you should think of caching as a database concern, not an application concern - the database already has the data and knows when it changes.
+### Ch 18 - Relations and Joins
 
-### Triggers
+A relation is a bag (duplicates allowed) of same-typed rows; join types: cross/inner/outer(left/right)/full outer/lateral; join conditions aren't limited to equality (non-equi joins are valid).
 
-Transactional event-driven processing. Anti-pattern: using triggers to maintain a counter on a parent row. It serialises writes against the parent.
+### Ch 19 - Interview: Markus Winand
 
-### Listen and Notify
+SQL feels hard because it's declarative - stop thinking "how would I loop this," describe the result instead.
 
-PostgreSQL's built-in pub/sub. Useful for cache invalidation across processes and for decoupled event systems. Limitations: notifications are not durable, and you have to use a connection to listen.
+Prefer standard SQL first (portability is as much about people/readability as about engines); DDL is the exception - don't try to make schema definitions portable.
 
-## Part 8: PostgreSQL Extensions
+## Part V - Data Types
 
-This is where Postgres becomes a platform rather than just a SQL database. `CREATE EXTENSION` installs packages of SQL objects, and Fontaine works through the notable ones across this part.
+### Ch 20-21 - Serialization & Relational Theory
 
-### What's a PostgreSQL Extension?
+A database's value is transactional consistency, not marshaling - storage alone isn't a hard problem.
 
-A package of SQL objects (functions, types, operators, indexes) installed with `CREATE EXTENSION`. Fontaine lists the notable ones: `bloom`, `earthdistance`, `hstore`, `ltree`, `pg_trgm`, `PostGIS`, `ip4r`, `citus`, `pg_partman`, `postgres-hll`, `RUM`.
+PostgreSQL enforces real-world data-domain rules (`date '2010-02-29'` errors - 2010 isn't a leap year; no year zero exists).
 
-### Auditing with hstore
+Operators/functions dispatch polymorphically by argument type via catalogs (`pg_operator`, `pg_opclass`, `pg_am`).
 
-A trigger records every change to a row as an `hstore` key/value diff, useful for audit trails without a separate schema or service.
+### Ch 22 - PostgreSQL Data Types
 
-### Trigrams and Typos with pg_trgm
+Boolean: three-valued; use `IS TRUE`/`FALSE`/`NULL`, not `=`.
 
-Fuzzy text matching built on `similarity()` and the `%` operator, both GIN-indexable - this is how you do "did you mean...?" search in PostgreSQL without bolting on Elasticsearch.
+Text: `text` and `varchar(n)` are internally identical (`varchar` is just `text` + a length check); never use `SQL_ASCII` encoding - use validated UTF8.
 
-### Geolocation with ip4r
+Numbers: no unsigned integer types by design (avoids operator-combination explosion); `real`/`double precision` can't exactly represent decimals like 0.1 - never use for money, use `numeric` or integer cents.
 
-IP address ranges as a first-class type with IP-to-location lookups via proper indexing.
+Sequences/serial: `serial` is a pseudo-type (int column + owned sequence); sequences are the one non-transactional object; use `bigserial` on high-volume tables to avoid the underlying int4 column overflowing before the sequence does.
 
-### Counting Distinct Users with HyperLogLog
+UUID: always use the native `uuid` type (16 bytes) not text (37 bytes).
 
-Probabilistic distinct counts - fast, cheap, lossy when approximate is good enough.
+Date/Time: always use `timestamptz`, never bare `timestamp` - both are 8 bytes on disk, so there's no storage cost to the "safe" choice; `timestamptz` is stored as UTC and only converts on input/output based on session `TimeZone`. `now()` is frozen per-transaction; use `clock_timestamp()` to see real time advance.
 
-### Vector Search with pgvector
+Intervals: calendar-aware arithmetic against a real date (correctly handles month-length differences).
 
-The `vector` type, distance operators (`<=>`, `<->`, `<#>`), IVFFlat and HNSW indexes, recall measurement. Plus a hybrid search example combining vector similarity with trigram fuzzy match using Reciprocal Rank Fusion.
+Ranges: e.g. `daterange` + GiST exclusion constraints (`EXCLUDE USING gist (currency WITH =, validity WITH &&)`) prevent overlapping validity periods - demonstrated with an exchange-rate table.
 
----
+### Ch 23 - Denormalized Data Types
 
-SQL is application code. The database is part of your application, so version it, test it, review it. Most of the performance and complexity problems I've seen in production were SQL problems dressed up as application problems.
+Arrays: good for "whole unit" data like tags; if you're constantly querying into the array, that's a sign you need a real table; `unnest()` + GIN `@>` for efficient contains-search.
 
-The four things that changed my query writing most: window functions, `GROUPING SETS`, range types with exclusion constraints, `pg_trgm`.
+JSON vs JSONB: `json` is just validated text (preserves whitespace/duplicate keys, near zero operator support); `jsonb` is binary, normalized, and fully indexable - almost always the right choice. Best practice: typed columns for known fields + one `jsonb` column for the unpredictable rest.
+
+Enum: mainly useful for MySQL migrations; PostgreSQL enums are named/shared types (unlike MySQL's anonymous per-column ones); a lookup table is often just as good.
+
+### Ch 24-25 - Extensions & Interview: Grégoire Hubert
+
+Deploy `postgresql-contrib` from day one in dev and prod.
+
+POMM's design keeps model entities "database-ignorant" and shaped by the SQL projection, deliberately avoiding Active Record; JSON/XML in the DB is valuable for genuinely extensible fields that don't need relational consistency enforcement.
+
+## Part VI - Data Modeling
+
+### Ch 26 - ORM
+
+Application object models (user workflows) and the database model (consistent view of the whole world) serve different purposes - sharing one model between them tends to produce monoliths and technical debt.
+
+### Ch 27 - Modeling Tooling
+
+Use `begin;`/`rollback;` in `psql` to iterate schema drafts without committing half-finished changes; random-data generators and Lorem Ipsum tables validate designs at realistic volume.
+
+Worked "articles/comments" Top-N-per-category example: nested lateral joins, then indexing drops runtime from ~500ms to ~150ms.
+
+### Ch 28 - Normalization
+
+Normal forms: 1NF (atomic values, no dupes), 2NF (no partial key dependency), 3NF (no transitive dependency), BCNF/4NF/5NF/DKNF for stricter guarantees - aim for BCNF/4NF in practice.
+
+Three classic anomalies from under-normalizing: update (duplicated facts go out of sync), insertion (can't record one fact without an unrelated one), deletion (deleting one fact forces deleting another).
+
+Worked "address field" example: normalization needs depend on the use case (a text field is fine for invoicing; a logistics business needs a full geographic hierarchy).
+
+Surrogate keys (e.g. `bigserial`) don't prevent business-level duplicates on their own - pair with a `unique()` constraint on the natural key too.
+
+### Ch 29 - Geonames Case Study
+
+Real 11.5M-row worked normalization example (compound codes split into reference tables, comma-separated fields split into association tables via `regexp_split_to_table`); GiST point index gives ~13ms nearest-neighbor lookups across 11M+ rows.
+
+### Ch 30 - Modelization Anti-Patterns
+
+EAV (entity-attribute-value) is called out as one of the worst patterns possible: loses type safety, allows silent typo'd "phantom" parameters, forces app-side pivoting.
+
+Multiple values per column (delimited text) breaks 1NF, kills indexed search and per-value stats.
+
+UUID as a silver bullet: still just a surrogate key - doesn't solve the "what's the natural business key" problem any better than a sequence does.
+
+### Ch 31 - Denormalization
+
+Normalize first, measure real query timings (avg/median/p95/p99), and only denormalize with hard evidence - otherwise it's premature optimization.
+
+Materialized views as caches (build a normal view first, then materialize on top; `refresh ... concurrently` avoids blocking readers).
+
+History/audit tables, or a generic JSONB-snapshot archive table via `row_to_json`.
+
+Native table partitioning (PG10+) has real costs: no cross-partition PK/unique/exclusion constraints, no FKs referencing partitioned tables, no `ON CONFLICT` - effectively loses 1NF guarantees at the whole-table level.
+
+### Ch 32 - Not Only SQL
+
+PostgreSQL's "schemaless" JSONB isn't truly schemaless - the shape just moves from the catalog into application code.
+
+`synchronous_commit` can be tuned per-transaction to trade write latency against durability guarantees.
+
+No native scale-out in core PostgreSQL - requires extensions (Citus, BDR) or PG10 logical replication.
+
+### Ch 33 - Interview: Álvaro Hernández Tortosa (ToroDB)
+
+Rejects "schemaless" - prefers "dynamic schema"; even MongoDB data ends up having real relations.
+
+Benchmarks showed relational storage beating NoSQL on analytics by 1-2 orders of magnitude, since unstructured stores must infer structure at query time.
+
+Recommended sweet spot: normalized core schema + JSONB for evolving fields, promoting fields to real columns once their shape stabilizes.
+
+## Part VII - Data Manipulation and Concurrency Control
+
+### Ch 34 - Another Small Application
+
+Normalizes a flat, denormalized tweets table (violates 1NF/2NF/3NF) into proper users/message/follower/list/membership tables - argues normalization also reduces write contention in production.
+
+### Ch 35 - Insert, Update, Delete
+
+`RETURNING` (PostgreSQL extension) avoids a round-trip to learn generated/default values.
+
+`UPDATE` internally does insert-new + mark-old-invisible under MVCC (xmin/xmax); row locks are per-tuple.
+
+`DELETE ... RETURNING` wrapped in a CTE is the recommended default pattern for interactive deletes (gives a summary of what was removed).
+
+`TRUNCATE` is technically DDL - bypasses per-tuple MVCC but is still transactional/rollback-safe.
+
+### Ch 36 - Isolation and Locking
+
+PostgreSQL doesn't implement read-uncommitted; defaults to read-committed; disallows phantom reads at repeatable-read (stricter than the SQL standard requires).
+
+Serializable Snapshot Isolation (SSI) guarantees the same effect as if transactions ran one at a time.
+
+Key concurrency-modeling lesson: replace shared-counter `UPDATE` columns with an append-only activity/event table - updating one popular row serializes all concurrent writers, while inserting into a fresh table never contends. Benchmark shows the insert-based design clearly outperforming the update-based one under load.
+
+### Ch 37 - Computing and Caching in SQL
+
+Views: computed at query time, no caching, no invalidation problem, but no performance win either.
+
+Materialized views: persisted snapshots (`refresh ... concurrently` needs a unique index) - the real "invalidation policy" is just your refresh schedule.
+
+### Ch 38 - Triggers
+
+Must be written in a procedural language (PL/pgSQL etc.) - plain SQL can't implement a trigger function.
+
+The classic "counter trigger" anti-pattern (check-then-update-or-insert) reintroduces exactly the single-row contention problem Ch.36 solved, and has a race condition on first-insert-of-the-day; fix correctness with `INSERT ... ON CONFLICT DO UPDATE`, but the underlying scalability bottleneck (still hammering one row) remains.
+
+### Ch 39 - Listen and Notify
+
+Async pub/sub over the wire protocol (`pg_notify`), useful for cache-refresh/invalidation daemons - but fire-and-forget with no durable queueing, so it can't be used as a guaranteed-delivery queue.
+
+### Ch 40 - Batch Update (MoMA)
+
+Standard pattern: stage new snapshot in a temp table -> `UPDATE ... FROM staging` on the natural key (skip no-op rows via row-value `<>` comparison) -> `INSERT ... SELECT WHERE NOT EXISTS` for new rows.
+
+Concurrent re-runs risk duplicate-key errors; fix with `LOCK TABLE` serialization or `INSERT ... ON CONFLICT DO NOTHING`.
+
+### Ch 41 - Interview: Kris Jenkins (YeSQL)
+
+"Performance is the tail, correctness is the dog" - get transaction boundaries right first, tune for real observed hotspots later, not speculatively.
+
+## Part VIII - PostgreSQL Extensions
+
+### Ch 42 - What's an Extension?
+
+Extensions add catalog objects (functions, types, operators, index access methods) via `create extension`, no restart needed; notable ones: Bloom, earthdistance, hstore, ltree, pg_trgm (contrib), PostGIS, ip4r, Citus, pg_partman, postgres-hll, MADlib (external).
+
+### Ch 43 - Auditing with hstore
+
+hstore's `-` (diff) operator between `hstore(old)` and `hstore(new)` in an after update trigger gives a clean before/after audit trail with no native JSONB equivalent for this specific diff capability.
+
+### Ch 44 - Last.fm Dataset
+
+Million Song Dataset loaded via pgloader (SQLite source, ~9.6M rows) as the base data for the trigram/intarray demos that follow.
+
+### Ch 45 - Trigrams for Typos (pg_trgm)
+
+`similarity()`/`%` operator for fuzzy/typo-tolerant matching (case-insensitive, unlike regex); `word_similarity()`/`%>` for matching a word against multi-word titles; GiST trigram index turns both regex and similarity search into single-digit-millisecond queries.
+
+### Ch 46 - Tags with intarray
+
+`query_int` + `@@` lets you evaluate boolean tag queries (`3&739`, i.e. AND/OR/NOT) against a GIN-indexed integer array of tag IDs - avoids the awkward multi-way joins a junction-table design would need for combined tag filters.
+
+### Ch 47-49 - Geolocation (pubs, earthdistance, ip4r)
+
+kNN pattern `ORDER BY pos <-> point(...) LIMIT n` with a GiST index turns a 20ms sequential scan into a sub-1ms indexed nearest-neighbor search.
+
+earthdistance's `<@>` gives real Earth-surface miles between points; ip4r + GiST gives sub-millisecond "which network contains this IP" lookups, combined end-to-end in an "emergency pub" IP-to-nearest-pub demo running in a few milliseconds.
+
+### Ch 50 - HyperLogLog
+
+`hll` type gives approximate distinct counts in a small fixed size (~1280 bytes for tens of billions of values); `hll_union_agg` correctly deduplicates when rolling up daily counts into weekly/monthly ones (naive summing of daily uniques would double-count).
+
+### Ch 51 - Interview: Craig Kerstiens (Citus Data)
+
+Considers PostgreSQL's extension ecosystem the biggest advancement of the last decade - it turned a relational database into a broader data platform while letting core PostgreSQL move cautiously.
+
+Main risk: managed/cloud PostgreSQL providers only support a limited extension allowlist.
+
+## Part IX - Closing Thoughts
+
+Reiterates the book's central message: think of SQL as a full programming language, follow "one resultset, one query," and treat SQL queries as maintained code (spec -> test -> review -> rewrite) across their whole lifecycle.
