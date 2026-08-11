@@ -83,6 +83,10 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
           ))}
         </div>
       )}
+      <p className="text-sm text-muted-foreground mb-4">
+        {sortedPosts.length} {sortedPosts.length === 1 ? "post" : "posts"} in
+        total
+      </p>
       <div className="space-y-4">
         {sortedPosts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="block">
