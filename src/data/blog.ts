@@ -75,3 +75,27 @@ async function getAllPosts(dir: string) {
 export async function getBlogPosts() {
   return getAllPosts(path.join(process.cwd(), "content"));
 }
+
+export async function getAdjacentPosts(slug: string) {
+  const posts = await getBlogPosts();
+
+  const sortedPosts = [...posts].sort((a, b) => {
+    if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
+      return -1;
+    }
+    return 1;
+  });
+
+  const currentIndex = sortedPosts.findIndex((post) => post.slug === slug);
+
+  if (currentIndex === -1) {
+    return { previousPost: null, nextPost: null };
+  }
+
+  return {
+    // Older post (published before the current one)
+    previousPost: sortedPosts[currentIndex + 1] ?? null,
+    // Newer post (published after the current one)
+    nextPost: sortedPosts[currentIndex - 1] ?? null,
+  };
+}

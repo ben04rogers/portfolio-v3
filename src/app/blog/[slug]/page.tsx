@@ -1,10 +1,11 @@
-import { getBlogPosts, getPost } from "@/data/blog";
+import { getAdjacentPosts, getBlogPosts, getPost } from "@/data/blog";
 import { personalData } from "@/data/data";
 import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
+import PostNavigation from "@/components/post-navigation";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -69,6 +70,8 @@ export default async function Blog({
     notFound();
   }
 
+  const { previousPost, nextPost } = await getAdjacentPosts(slug);
+
   return (
     <section id="blog">
       <script
@@ -128,6 +131,7 @@ export default async function Blog({
         className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.source }}
       ></article>
+      <PostNavigation previousPost={previousPost} nextPost={nextPost} />
     </section>
   );
 }
