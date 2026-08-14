@@ -5,7 +5,7 @@ summary: "My main takeaways from reading The Art of PostgreSQL by Dimitri Fontai
 tags: ["Books", "PostgreSQL", "SQL"]
 ---
 
-Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool.
+Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool. These are some notes I took as I read.
 
 ## Part I - Preface
 
@@ -23,11 +23,9 @@ Each of the 8 main parts ends with an interview with a notable PostgreSQL/SQL co
 
 SQL is declarative: you describe the desired result set, not the steps to get there; the model must be statically typed before the query runs.
 
-Worked example: NYSE daily volume dataset loaded via `\copy` into staging text columns, then cleaned with `alter table ... alter column type ... using replace(...)::bigint`.
-
 SQL injection is properly fixed at the protocol level (Parse/Bind/Execute separating query text from parameters), not by client-side string escaping - demonstrated with `PREPARE`/`EXECUTE` and asyncpg's `$1`-style parameters.
 
-Rewrites a ~60-line Python "fill missing calendar days" script as one SQL query using `generate_series()` + `LEFT JOIN` + `coalesce()`.
+`generate_series()` + `LEFT JOIN` + `coalesce()` can fill in missing rows (e.g. gaps in a date range) in one query, replacing what would otherwise be a manual loop in application code.
 
 Extends this to week-over-week % change using a CTE + `lag()` window function - showing SQL can replace "marketing analytics" code developers reflexively write in the app layer.
 
@@ -38,10 +36,6 @@ PostgreSQL is a concurrent data-access service, not just storage; SQL is its API
 ACID recap: atomicity/isolation enable safe concurrency; consistency comes from modeling/constraints; durability survives crashes.
 
 "Why PostgreSQL": open governance, public mailing-list development, documentation required for every patch, "release when ready" cadence, deep extensibility (native JSON/XML/array/range types via a catalog-driven operator/function dispatch system from its Berkeley/Stonebraker roots).
-
-### Ch 3 - Getting Ready
-
-Check `show server_version;` and match docs to it; `psql` is the primary tool used throughout the book (GUI tools fine if they support explain plans).
 
 ## Part III - Writing SQL Queries
 
@@ -57,7 +51,7 @@ Prefer plain-SQL stored procedures (`language sql`) over PL/pgSQL; only reach fo
 
 ### Ch 5 - A Small Application
 
-Sample "cdstore" app on the Chinook dataset (loaded via pgloader), queries kept in `.sql` files (via anosql) instead of embedded strings - version-controllable, directly runnable in `psql`.
+Keep queries in version-controlled `.sql` files instead of embedded strings - directly runnable in `psql`, diffable, reviewable like any other code.
 
 Top-N-per-genre implemented via `left join lateral` rather than looping in app code.
 
@@ -94,8 +88,6 @@ Rejects database-agnosticism as impractical - developing on SQLite and deploying
 ## Part IV - SQL Toolbox
 
 ### Ch 10-12 - Data, SQL, Statement Categories
-
-Dataset: Formula One history (f1db) via pgloader.
 
 DML (INSERT/UPDATE/DELETE), DDL (CREATE/ALTER/DROP), TCL (BEGIN/COMMIT/ROLLBACK, 2PC), DCL (GRANT/REVOKE).
 
@@ -199,7 +191,7 @@ Application object models (user workflows) and the database model (consistent vi
 
 Use `begin;`/`rollback;` in `psql` to iterate schema drafts without committing half-finished changes; random-data generators and Lorem Ipsum tables validate designs at realistic volume.
 
-Worked "articles/comments" Top-N-per-category example: nested lateral joins, then indexing drops runtime from ~500ms to ~150ms.
+Nested lateral joins solve Top-N-per-category queries; adding the right index on top can meaningfully cut runtime further.
 
 ### Ch 28 - Normalization
 
@@ -213,7 +205,7 @@ Surrogate keys (e.g. `bigserial`) don't prevent business-level duplicates on the
 
 ### Ch 29 - Geonames Case Study
 
-Real 11.5M-row worked normalization example (compound codes split into reference tables, comma-separated fields split into association tables via `regexp_split_to_table`); GiST point index gives ~13ms nearest-neighbor lookups across 11M+ rows.
+Compound codes can be split into reference tables and comma-separated fields split into association tables via `regexp_split_to_table`; a GiST point index keeps nearest-neighbor lookups fast even at tens of millions of rows.
 
 ### Ch 30 - Modelization Anti-Patterns
 
@@ -309,10 +301,6 @@ Extensions add catalog objects (functions, types, operators, index access method
 
 hstore's `-` (diff) operator between `hstore(old)` and `hstore(new)` in an after update trigger gives a clean before/after audit trail with no native JSONB equivalent for this specific diff capability.
 
-### Ch 44 - Last.fm Dataset
-
-Million Song Dataset loaded via pgloader (SQLite source, ~9.6M rows) as the base data for the trigram/intarray demos that follow.
-
 ### Ch 45 - Trigrams for Typos (pg_trgm)
 
 `similarity()`/`%` operator for fuzzy/typo-tolerant matching (case-insensitive, unlike regex); `word_similarity()`/`%>` for matching a word against multi-word titles; GiST trigram index turns both regex and similarity search into single-digit-millisecond queries.
@@ -325,7 +313,7 @@ Million Song Dataset loaded via pgloader (SQLite source, ~9.6M rows) as the base
 
 kNN pattern `ORDER BY pos <-> point(...) LIMIT n` with a GiST index turns a 20ms sequential scan into a sub-1ms indexed nearest-neighbor search.
 
-earthdistance's `<@>` gives real Earth-surface miles between points; ip4r + GiST gives sub-millisecond "which network contains this IP" lookups, combined end-to-end in an "emergency pub" IP-to-nearest-pub demo running in a few milliseconds.
+earthdistance's `<@>` gives real Earth-surface miles between points; ip4r + GiST gives sub-millisecond "which network contains this IP" lookups.
 
 ### Ch 50 - HyperLogLog
 
