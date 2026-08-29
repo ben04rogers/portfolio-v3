@@ -5,17 +5,13 @@ summary: "My main takeaways from reading The Art of PostgreSQL by Dimitri Fontai
 tags: ["Books", "PostgreSQL", "SQL"]
 ---
 
-Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're leaving a lot on the table if you treat SQL as a fallback rather than a first-class tool. These are some notes I took.
+Dimitri Fontaine's _The Art of PostgreSQL_ makes the case that SQL is the most underused tool in a developer's toolkit. The book is aimed at application developers who use PostgreSQL through an ORM and argues you're missing much of what SQL offers if you only reach for it when the ORM falls short. These are some notes I took.
 
 ## Part I - Preface
 
-Thesis: a developer's job is more than writing code - SQL is a first-class tool for producing results, not an afterthought.
+The book's premise is that most developers only use a fraction of what SQL/PostgreSQL can do, and don't know how to integrate raw SQL into a modern workflow (versioning, testing, review, deployment).
 
-Frames the book as a corrective: most developers only use a fraction of what SQL/PostgreSQL can do, and don't know how to integrate raw SQL into a modern workflow (versioning, testing, review, deployment).
-
-Central argument (via Dijkstra): count "lines of code" as lines spent, not produced - writing more in SQL means writing (and maintaining) less overall.
-
-Each of the 8 main parts ends with an interview with a notable PostgreSQL/SQL community figure, and the book is designed to be readable either end-to-end or per-part out of order.
+Central argument, in Dijkstra's terms: count "lines of code" as lines spent, not produced - writing more in SQL means writing (and maintaining) less overall.
 
 ## Part II - Introduction
 
@@ -23,19 +19,26 @@ Each of the 8 main parts ends with an interview with a notable PostgreSQL/SQL co
 
 SQL is declarative: you describe the desired result set, not the steps to get there; the model must be statically typed before the query runs.
 
-SQL injection is properly fixed at the protocol level (Parse/Bind/Execute separating query text from parameters), not by client-side string escaping - demonstrated with `PREPARE`/`EXECUTE` and asyncpg's `$1`-style parameters.
+SQL injection is really fixed by keeping query text and parameters separate at the database level, not by escaping strings yourself — `PREPARE`/`EXECUTE` and asyncpg's `$1`-style parameters show how.
 
 `generate_series()` + `LEFT JOIN` + `coalesce()` can fill in missing rows (e.g. gaps in a date range) in one query, replacing what would otherwise be a manual loop in application code.
 
-Extends this to week-over-week % change using a CTE + `lag()` window function - showing SQL can replace "marketing analytics" code developers reflexively write in the app layer.
-
 ### Ch 2 - Software Architecture
 
-PostgreSQL is a concurrent data-access service, not just storage; SQL is its API.
+Think of PostgreSQL as a concurrent data-access service rather than just a storage layer, with SQL as its API.
 
-ACID recap: atomicity/isolation enable safe concurrency; consistency comes from modeling/constraints; durability survives crashes.
+ACID recap:
 
-"Why PostgreSQL": open governance, public mailing-list development, documentation required for every patch, "release when ready" cadence, deep extensibility (native JSON/XML/array/range types via a catalog-driven operator/function dispatch system from its Berkeley/Stonebraker roots).
+- Atomicity and isolation make safe concurrency possible
+- Consistency depends on modeling and constraints
+- Durability guarantees survival through crashes
+
+Why PostgreSQL:
+
+- Open governance, with development happening on public mailing lists
+- Documentation required for every patch
+- A "release when ready" cadence rather than a fixed schedule
+- Deep extensibility - native JSON/XML/array/range types are built on a catalog-driven operator/function dispatch system, a legacy of its Berkeley/Stonebraker roots
 
 ## Part III - Writing SQL Queries
 
@@ -52,8 +55,6 @@ Prefer plain-SQL stored procedures (`language sql`) over PL/pgSQL; only reach fo
 ### Ch 5 - A Small Application
 
 Keep queries in version-controlled `.sql` files instead of embedded strings - directly runnable in `psql`, diffable, reviewable like any other code.
-
-Top-N-per-genre implemented via `left join lateral` rather than looping in app code.
 
 ### Ch 6 - The SQL REPL (psql)
 
@@ -89,7 +90,7 @@ Rejects database-agnosticism as impractical - developing on SQLite and deploying
 
 ### Ch 10-12 - Data, SQL, Statement Categories
 
-DML (INSERT/UPDATE/DELETE), DDL (CREATE/ALTER/DROP), TCL (BEGIN/COMMIT/ROLLBACK, 2PC), DCL (GRANT/REVOKE).
+SQL statements fall into four categories: changing data (`INSERT`/`UPDATE`/`DELETE`), changing schema (`CREATE`/`ALTER`/`DROP`), managing transactions (`BEGIN`/`COMMIT`/`ROLLBACK`), and managing permissions (`GRANT`/`REVOKE`). Notably, PostgreSQL treats schema changes as transactional, so they can be wrapped in a transaction and rolled back alongside data changes - something many other databases don't support.
 
 ### Ch 13 - Select, From, Where
 
@@ -101,7 +102,7 @@ Join-condition placement matters: a filter in `ON` vs `WHERE` changes whether a 
 
 ### Ch 14 - Order By, Limit, No Offset
 
-kNN search: `ORDER BY point <-> point LIMIT k` with a GiST index lets the whole search happen inside the index scan.
+kNN (k-nearest neighbors) search answers questions like "what are the 5 closest stores to this address?" Normally that requires calculating the distance from the target to every row, then sorting and taking the top results - slow on a large table. PostgreSQL can instead write this as `ORDER BY point <-> point LIMIT k` (`<->` is the distance operator), and if the column has a GiST index, the database walks the index outward from the target point, stopping as soon as it has `k` matches. No full scan, no separate sort step.
 
 `OFFSET` is actively discouraged (must scan+discard all prior rows); proper pagination uses keyset/seek pagination: `WHERE row(col1,col2) > (last1,last2) ORDER BY ... FETCH FIRST n ROWS ONLY`.
 
@@ -111,7 +112,7 @@ kNN search: `ORDER BY point <-> point LIMIT k` with a GiST index lets the whole 
 
 `GROUPING SETS`/`ROLLUP`/`CUBE` compute multiple aggregation levels in one pass.
 
-Aggregates can't nest directly - chain CTEs for "max of sums" style logic.
+You can't nest aggregates directly - e.g. `MAX(SUM(amount))` to find the customer with the highest total spend is invalid SQL, since `SUM` produces one row per customer and `MAX` needs those rows to already exist. The fix is to chain CTEs: one CTE computes `SUM(amount)` grouped by customer, then a second query runs `MAX()` over that result.
 
 `DISTINCT ON (expr)` (PostgreSQL-only) picks first row per group per `ORDER BY`.
 
@@ -243,10 +244,6 @@ Recommended sweet spot: normalized core schema + JSONB for evolving fields, prom
 
 ## Part VII - Data Manipulation and Concurrency Control
 
-### Ch 34 - Another Small Application
-
-Normalizes a flat, denormalized tweets table (violates 1NF/2NF/3NF) into proper users/message/follower/list/membership tables - argues normalization also reduces write contention in production.
-
 ### Ch 35 - Insert, Update, Delete
 
 `RETURNING` (PostgreSQL extension) avoids a round-trip to learn generated/default values.
@@ -327,4 +324,4 @@ Main risk: managed/cloud PostgreSQL providers only support a limited extension a
 
 ## Part IX - Closing Thoughts
 
-Reiterates the book's central message: think of SQL as a full programming language, follow "one resultset, one query," and treat SQL queries as maintained code (spec -> test -> review -> rewrite) across their whole lifecycle.
+The book closes by circling back to its opening argument: SQL is a full programming language in its own right, and should be treated that way. That means writing one query per result set instead of assembling data in the app, and running SQL through the same lifecycle as any other code - spec it, test it, review it, and rewrite it as requirements change - rather than writing it once and never touching it again.
