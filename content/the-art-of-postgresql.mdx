@@ -76,7 +76,15 @@ Set `application_name` per module to trace production queries back to source.
 
 Two reasons to index: (1) required to back UNIQUE/PRIMARY KEY/EXCLUDE constraints, (2) query performance - everything else is a deliberate trade-off (indexes cost write-side maintenance).
 
-Access method cheat sheet: B-tree (general/ordered), GiST (non-ordered/geometric/ranges), SP-GiST (uneven-density tries/quadtrees), GIN (arrays/full-text/composite containment), BRIN (huge naturally-ordered tables), Hash (equality only), Bloom (multi-column equality).
+Access method cheat sheet:
+
+- **B-tree** - general purpose, ordered data
+- **GiST** - non-ordered, geometric, ranges
+- **SP-GiST** - uneven-density tries/quadtrees
+- **GIN** - arrays, full-text, composite containment
+- **BRIN** - huge, naturally-ordered tables
+- **Hash** - equality only
+- **Bloom** - multi-column equality
 
 Workflow: `pg_stat_statements` to find costly queries -> `EXPLAIN (analyze, verbose, buffers)` to spot seq scans and estimate/actual mismatches.
 
@@ -196,9 +204,18 @@ Nested lateral joins solve Top-N-per-category queries; adding the right index on
 
 ### Ch 28 - Normalization
 
-Normal forms: 1NF (atomic values, no dupes), 2NF (no partial key dependency), 3NF (no transitive dependency), BCNF/4NF/5NF/DKNF for stricter guarantees - aim for BCNF/4NF in practice.
+Normal forms:
 
-Three classic anomalies from under-normalizing: update (duplicated facts go out of sync), insertion (can't record one fact without an unrelated one), deletion (deleting one fact forces deleting another).
+- **1NF** - atomic values, no duplicates
+- **2NF** - no partial key dependency
+- **3NF** - no transitive dependency
+- **BCNF/4NF/5NF/DKNF** - stricter guarantees; aim for BCNF/4NF in practice
+
+Three classic anomalies from under-normalizing:
+
+- **Update** - duplicated facts go out of sync
+- **Insertion** - can't record one fact without an unrelated one
+- **Deletion** - deleting one fact forces deleting another
 
 Worked "address field" example: normalization needs depend on the use case (a text field is fine for invoicing; a logistics business needs a full geographic hierarchy).
 
@@ -280,7 +297,11 @@ Async pub/sub over the wire protocol (`pg_notify`), useful for cache-refresh/inv
 
 ### Ch 40 - Batch Update (MoMA)
 
-Standard pattern: stage new snapshot in a temp table -> `UPDATE ... FROM staging` on the natural key (skip no-op rows via row-value `<>` comparison) -> `INSERT ... SELECT WHERE NOT EXISTS` for new rows.
+Standard pattern:
+
+1. Stage the new snapshot in a temp table
+2. `UPDATE ... FROM staging` on the natural key (skip no-op rows via row-value `<>` comparison)
+3. `INSERT ... SELECT WHERE NOT EXISTS` for new rows
 
 Concurrent re-runs risk duplicate-key errors; fix with `LOCK TABLE` serialization or `INSERT ... ON CONFLICT DO NOTHING`.
 
