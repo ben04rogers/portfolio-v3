@@ -5,6 +5,7 @@ import { About } from "@/components/about";
 import { Education } from "@/components/education";
 import { Work } from "@/components/work";
 import { RecentPosts } from "@/components/recent-posts";
+import { Reading } from "@/components/reading";
 import { Skills } from "@/components/skills";
 import { personalData, contactData } from "@/data/data";
 
@@ -84,6 +85,8 @@ export default function Page() {
       <Education delay={BLUR_FADE_DELAY * 7} />
 
       <RecentPosts delay={BLUR_FADE_DELAY * 9} />
+
+      <Reading delay={BLUR_FADE_DELAY * 10} />
 
       <Projects delay={BLUR_FADE_DELAY * 11} />
 
