@@ -37,7 +37,7 @@ export async function Reading({ delay = 0 }: ReadingProps) {
               rel="noopener noreferrer"
               className="inline-block max-w-full"
             >
-              <Card className="group relative overflow-hidden border border-border bg-gray-50 dark:bg-white/5 p-5 inline-flex w-fit max-w-full items-center gap-5 hover:bg-gray-100 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all duration-150 ease-out">
+              <Card className="group relative overflow-hidden border border-border bg-gray-50 dark:bg-white/5 p-5 inline-flex w-fit max-w-full md:min-w-[500px] items-center gap-5 hover:bg-gray-100 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all duration-150 ease-out">
                 <BookOpen
                   className="absolute -right-5 -bottom-5 w-28 h-28 text-black/[0.04] dark:text-white/[0.06] rotate-[-12deg] pointer-events-none"
                   strokeWidth={1}
