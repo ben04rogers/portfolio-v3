@@ -1,0 +1,38 @@
+---
+title: "A Quick Tip: Claude Code's /insights Command"
+publishedAt: "2026-09-14"
+summary: "Claude Code's built-in /insights command turns your local session history into a report on your actual coding habits, not just what the AI did."
+tags: ["Claude Code", "AI", "Productivity"]
+---
+
+If you use Claude Code regularly, there's a built-in command that's easy to miss: `/insights`. It analyses your local session history and reports on how you actually work.
+
+## What it does
+
+Run it inside any Claude Code session:
+
+```bash
+/insights
+```
+
+Claude Code scans your recent sessions on the machine and generates an interactive HTML report covering things like:
+
+- Which projects you spend the most time in
+- Which commands and features you reach for most
+- Recurring patterns in how you structure prompts
+- Friction points, like Claude claiming success without verifying, or suggesting a tool outside your stack
+- Context window usage trends over time
+
+## Why it's useful
+
+It's a personal, local report on how *you* work, not a usage dashboard for your org. It looks across weeks of your own sessions and surfaces habits you wouldn't otherwise notice: prompts you rewrite constantly, corrections you keep making, or friction that shows up every time you touch a specific part of the codebase.
+
+That data is actionable in a very specific way. Once you've got a report:
+
+- Fold recurring corrections into your `CLAUDE.md` so Claude stops making the same mistake
+- Turn multi-step workflows you repeat often into custom slash commands
+- Flag the sessions with the most friction and figure out if the prompt, not the model, was the problem
+
+## Using it well
+
+`/insights` is retrospective, so it's most useful once you have a few weeks of session history built up. Run it, make a couple of concrete changes to your config, then run it again in a few weeks to see if the friction points actually went away. Treated as a one-off curiosity it's a neat report; treated as a recurring check-in, it's closer to a coach for how you work with AI.
