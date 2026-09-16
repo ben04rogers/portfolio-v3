@@ -5,7 +5,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import PostNavigation from "@/components/post-navigation";
+import ScrollToTop from "@/components/scroll-to-top";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -96,6 +98,13 @@ export default async function Blog({
           }),
         }}
       />
+      <Link
+        href="/blog"
+        className="inline-flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400 hover:text-foreground transition-colors mb-6"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </Link>
       <div className="mb-8 text-center">
         <Suspense fallback={<p className="h-5" />}>
           <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
@@ -132,6 +141,7 @@ export default async function Blog({
         dangerouslySetInnerHTML={{ __html: post.source }}
       ></article>
       <PostNavigation previousPost={previousPost} nextPost={nextPost} />
+      <ScrollToTop />
     </section>
   );
 }
