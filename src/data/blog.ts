@@ -14,6 +14,7 @@ export type Metadata = {
   summary: string;
   image?: string;
   tags?: string[];
+  featured?: boolean;
 };
 
 function getMDXFiles(dir: string) {
@@ -74,6 +75,19 @@ async function getAllPosts(dir: string) {
 
 export async function getBlogPosts() {
   return getAllPosts(path.join(process.cwd(), "content"));
+}
+
+export async function getFeaturedPosts() {
+  const posts = await getBlogPosts();
+
+  return posts
+    .filter((post) => post.metadata.featured)
+    .sort((a, b) => {
+      if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
+        return -1;
+      }
+      return 1;
+    });
 }
 
 export async function getAdjacentPosts(slug: string) {
