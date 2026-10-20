@@ -1,0 +1,138 @@
+---
+title: "Git Worktrees and Claude Code"
+publishedAt: "2026-10-20"
+summary: "Git worktrees let you check out multiple branches of the same repo at once, which makes juggling features, bugfixes, PR reviews and parallel Claude Code sessions much easier."
+tags: ["Git", "Claude Code", "AI"]
+featured: true
+---
+
+Most of us have done the `git stash` shuffle: you're halfway through a feature, a bug report comes in or someone asks for a PR review, so you stash your changes, switch branches, do the thing, switch back and pop the stash. Hopefully nothing conflicts. Git worktrees fix this, and they work especially well alongside Claude Code.
+
+## What is a worktree?
+
+A worktree is an extra working directory attached to the same repository. Each worktree has its own files and its own checked-out branch, but they all share the same `.git` history, objects and remotes.
+
+In practice that means you can have `main`, `feature/billing` and `fix/login-redirect` checked out in three different folders at the same time, without cloning the repo three times.
+
+## The basic commands
+
+Create a worktree on a new branch:
+
+```bash
+git worktree add ../my-app-billing -b feature/billing
+```
+
+Create a worktree from a branch that already exists:
+
+```bash
+git worktree add ../my-app-hotfix fix/login-redirect
+```
+
+List your worktrees:
+
+```bash
+git worktree list
+```
+
+Remove one once you're done with it:
+
+```bash
+git worktree remove ../my-app-billing
+```
+
+A couple of rules to be aware of:
+
+- A branch can only be checked out in one worktree at a time. Git will refuse if you try to check out the same branch twice.
+- Commits made in any worktree are immediately visible to the others, since they share the same repository.
+- Untracked and gitignored files (`.env`, `node_modules`, `vendor`) don't come along. Each worktree is a fresh checkout, so you'll need to install dependencies and copy your env files.
+
+## When they're useful
+
+### Working on a feature and a bugfix at the same time
+
+Leave your feature branch exactly as it is, half-finished code and all, and open a separate worktree for the bugfix. No stashing, no WIP commits, and no forgetting what you were doing when you get back.
+
+### Switching from feature work to reviewing a PR
+
+Reviewing a PR properly usually means running it locally. Rather than tearing down your current branch, check the PR out into its own worktree, run the tests, click around, then remove it when you're done:
+
+```bash
+git fetch origin pull/123/head:pr-123
+git worktree add ../my-app-pr-123 pr-123
+```
+
+### Long-running tasks
+
+Running a slow test suite, a big build or a migration against one branch while carrying on with another is easy, because the two directories don't affect each other.
+
+### Running multiple Claude Code sessions
+
+This is where worktrees really pay off. If you run two Claude Code sessions in the same directory, they're editing the same files: one session's changes show up mid-task in the other, test runs pick up half-finished work, and things get messy fast.
+
+Give each session its own worktree and they're fully isolated. One session can build a feature while another fixes a bug, and you review each one as a normal branch when it's done.
+
+## Worktrees in Claude Code
+
+You don't have to manage worktrees by hand. Claude Code has built-in support through the `--worktree` (or `-w`) flag:
+
+```bash
+claude --worktree feature-billing
+```
+
+This creates a worktree under `.claude/worktrees/feature-billing/` on a new `worktree-feature-billing` branch, then starts a session inside it. Open another terminal and run it again with a different name to start a second, isolated session:
+
+```bash
+claude --worktree fix-login-redirect
+```
+
+Leave out the name and Claude will generate one for you.
+
+### Checking out a PR
+
+You can also pass a PR number or URL, and Claude Code will fetch it into its own worktree. This is a handy way to have Claude review or fix up a PR without touching your current branch:
+
+```bash
+claude --worktree "#123"
+```
+
+Quote the argument, otherwise your shell will treat the `#` as the start of a comment.
+
+### Copying env files
+
+Since a worktree only contains tracked files, your `.env` won't be there. Add a `.worktreeinclude` file to the project root using `.gitignore` syntax and Claude Code will copy any matching gitignored files into each new worktree:
+
+```text
+.env
+.env.local
+```
+
+### Cleaning up
+
+When you exit a worktree session, Claude checks whether the worktree has any uncommitted changes or new commits. If it's clean, it gets removed. If there's work in it, you're asked whether to keep or remove it, and if you keep it Claude prints the command to resume it later.
+
+### Worktrees for subagents
+
+Subagents can run in their own worktrees too, so parallel edits within a single session don't collide. You can ask Claude to "use worktrees for your agents", or make it permanent for a custom subagent with `isolation: worktree` in its frontmatter:
+
+```markdown
+---
+name: refactorer
+description: Applies mechanical refactors across many files
+isolation: worktree
+---
+
+Apply the requested refactor across every affected file, then run the tests
+and report the results.
+```
+
+## Tips
+
+1. **Install dependencies in each worktree** - A fresh checkout has no `node_modules` or `vendor` directory. Run your setup, or ask Claude to do it as its first step.
+
+2. **Watch out for shared resources** - Worktrees isolate files, not everything else. Two dev servers will fight over the same port, and two test suites pointed at the same local database will trip over each other.
+
+3. **Keep the number manageable** - Running lots of parallel sessions is easy; reviewing all of their output isn't. A couple of focused sessions you actually keep track of beats a handful you don't.
+
+4. **Clean up regularly** - Run `git worktree list` every so often and remove anything you've finished with. `git worktree prune` clears out references to worktrees whose directories have already been deleted.
+
+Worktrees have been part of Git for years, but running several AI coding sessions at once has made them far more useful. If you're running more than one Claude Code session on a repo, give each one its own worktree.
